@@ -1,5 +1,5 @@
 from setuptools import find_packages, setup
-pip install --upgrade setuptools
+
 try:
     from pip._internal.req import parse_requirements
     from pip._internal.download import PipSession
