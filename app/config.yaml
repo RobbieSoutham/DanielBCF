@@ -1,0 +1,6 @@
+TESTING: True
+SECRET_KEY: b'_5#y2L"F4Q8z\n\xec]/'
+MYSQL_USERNAME: 'dbc_main'
+MYSQL_PASSWORD: 'secret'
+MYSQL_DATABASE: 'danielbc_main'
+MYSQL_HOST: 'localhost'
