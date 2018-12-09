@@ -9,17 +9,17 @@
 <div class="container" id="form">
     <form method=post>
         {{ render_field(form.email) }}
+        {{ render_field(form.first_name) }}
+        {{ render_field(form.surname) }}
         {{ render_field(form.password) }}
-        {{ render_field(form.remember_me) }}
-        <small id="register" class="form-text text-muted">Need an
-            account? Register
-              <a href="{{ url_for('register') }}">here</a>.
-        <input type=submit class="btn btn-primary" value=Login>
+        {{ render_field(form.confirm) }}
+        {{ render_field(form.accept_tos) }}
+        {{ form.csrf_token }}
+        <input type=submit value=Register>
     </form>          
 </div>
 {% endblock %}
 
 {% block footer %}
-  {% include "include/footer.html" %}
+    {% include "include/footer.html" %}
 {% endblock %}
-

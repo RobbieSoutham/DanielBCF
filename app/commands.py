@@ -6,13 +6,25 @@ from flask.cli import AppGroup
 
 from . import app
 from .database.user import User
+from . import PATH, CONFIG
 
-@app.cli.command()
+
+db_cli = AppGroup('db')
+app.cli.add_command(db_cli)
+
+user_cli = AppGroup('user')
+app.cli.add_command(user_cli)
+
+@db_cli.command('init')
 def initdb():
-    os.system("cd app && cat schema.sql | yasha -v config.yaml - | mysql -uroot")
-    
+    os.system("""
+    cd app &&
+    cat {}/database/schema.sql |
+    yasha -v {} - |
+    mysql -uroot
+    """.format(PATH, CONFIG))
 
-@app.cli.command("create_user")
+@user_cli.command("create")
 @click.argument('email')
 def create_user(**values):
     values['first_name'] = raw_input("Enter first name: ")
@@ -21,10 +33,10 @@ def create_user(**values):
     User.new_user(**values)
     print("{} created.".format(values['email']))
 
-@app.cli.command("delete_user")
+
+@user_cli.command("delete")
 @click.argument('email')
 def delete_user(email):
     User.delete_user(email)
     print("{} deleted.".format(email))
-
 

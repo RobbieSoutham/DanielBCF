@@ -32,6 +32,7 @@ CREATE TABLE Users (
         -- +1 manager verified
 
     password VARCHAR(255) NOT NULL,
+    creation_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY (email)
 );

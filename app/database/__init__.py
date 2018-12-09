@@ -2,11 +2,9 @@
 """
 Database module.
 """
-
 from MySQLdb import connect
 
 from .. import app
-
 
 
 class Database(object):
