@@ -1,6 +1,6 @@
 -- To import your schemas into your database, run:
 -- `cd app && cat schema.sql | yasha -v config.yaml
---                           | mysql -u <username> -p <database>`
+--                           | mysql -u <username> -p <password>`
 -- from the project directory
 -- where <username> is your MySQL username and <database> is the MySQL
 -- database of interest.
@@ -13,10 +13,9 @@ use {{ MYSQL_DATABASE }};
 
 -- Setup db user.
 FLUSH PRIVILEGES;
-DROP USER IF EXISTS {{ MYSQL_USERNAME }};
-CREATE USER {{ MYSQL_USERNAME }} 
-    IDENTIFIED WITH mysql_native_password BY '{{ MYSQL_PASSWORD }}';
-GRANT ALL ON {{ MYSQL_DATABASE }}.* TO {{ MYSQL_USERNAME }};
+DROP USER IF EXISTS '{{ MYSQL_USERNAME }}'@'{{ MYSQL_HOST }}';
+CREATE USER '{{ MYSQL_USERNAME }}'@'{{ MYSQL_HOST }}' IDENTIFIED BY 'secret';
+GRANT ALL ON {{ MYSQL_DATABASE }}.* TO '{{ MYSQL_USERNAME }}'@'{{ MYSQL_HOST }}';
 FLUSH PRIVILEGES;
 
 -- Setup tables.
