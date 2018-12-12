@@ -1,0 +1,18 @@
+----- User -----
+Hi $firstname,
+            
+To continue complete your registration please confirm your email with the link below and wait patiently for the manager to confirm your identity.
+             
+http://www.danielbcf.tk/verify.php?email=$email&hash=$userHash
+            
+Many thanks,
+DBCF
+
+----- Manager -----
+Hi Daniel,
+            
+$firstname $surname would like to register an account for the website, please follow the link to activate their account.
+            
+ttp://www.danielbcf.tk/verify.php?email=$email&hash=$managerHash
+            
+Many thanks.
