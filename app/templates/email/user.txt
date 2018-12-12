@@ -1,0 +1,8 @@
+Hi $firstname,
+            
+To continue complete your registration please confirm your email with the link below and wait patiently for the manager to confirm your identity.
+             
+http://www.danielbcf.tk/verify.php?email=$email&hash=$userHash
+            
+Many thanks,
+DBCF
