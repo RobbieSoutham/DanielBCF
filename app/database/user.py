@@ -42,6 +42,9 @@ class User(UserMixin):
     
     @classmethod
     def login(cls, email, password):
-        user = cls(email)
-        if checkpw(password, user.hashed_password):
-            return user
+        try:
+            user = cls(email)
+            if checkpw(password, user.hashed_password):
+                return user
+        except UserNotFound:
+            pass

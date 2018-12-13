@@ -4,7 +4,6 @@ bcrypt==3.1.4
 cffi==1.11.5
 Click==7.0
 configparser==3.5.0
--e git+git@github.com:RobbieSoutham/DBCF-StocksX.git@a11761ca5b4020a750e1b389cd232d39817797a8#egg=DBCFStocksX
 enum34==1.1.6
 Flask==1.0.2
 Flask-Login==0.4.1

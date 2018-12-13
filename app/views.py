@@ -34,7 +34,7 @@ def login():
             flash('Logged in successfully.', 'success')
             return redirect(url_for('stocks'))
         
-        flask('Error! Login details incorrect.', 'error')
+        flash('Error! Login details incorrect.', 'danger')
 
     return render_template('index.html', form=form)
 
