@@ -4,13 +4,13 @@ from wtforms import (
 )
 from wtforms.validators import *
 from flask_wtf.csrf import CSRFProtect
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 
 from . import app
 
 CSRFProtect(app)
 
-class Registration(Form):
+class Registration(FlaskForm):
     email = StringField(
         'Email Address', [
             InputRequired("Please enter your email address."),
@@ -35,7 +35,7 @@ class Registration(Form):
             DataRequired("You must accept the TOS.")
     ])
 
-class Login(Form):
+class Login(FlaskForm):
     email = StringField(
         'Email Address', [
             InputRequired("Please enter your email address."),

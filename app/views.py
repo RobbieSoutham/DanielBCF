@@ -10,14 +10,39 @@ from app import app
 
 from database.user import User
 
-# TODO: Incorporate flask-login here
-# https://flask-login.readthedocs.io
+from flask_login import LoginManager, UserMixin, \
+    login_required, login_user, logout_user 
+
+# flask-login
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
+login_manager.user_loader(User)
 
 @app.route('/', methods=['GET', 'POST'])
-def index():
+def login():
     """Index at site root. Loads index.html"""
     form = forms.Login(request.form)
+
+    if form.validate_on_submit():
+        user = User.login(
+            form.email.data,
+            form.password.data.encode('utf-8')
+        )
+        if user:
+            login_user(user)
+            flash('Logged in successfully.', 'success')
+            return redirect(url_for('stocks'))
+        
+        flask('Error! Login details incorrect.', 'error')
+
     return render_template('index.html', form=form)
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -42,3 +67,8 @@ def register():
         "success"
     )
     return redirect(url_for('index'))
+
+@app.route('/stocks')
+@login_required
+def stocks():
+    return render_template('stocks.html')

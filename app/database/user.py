@@ -2,22 +2,46 @@
 """
 User module.
 """
-from bcrypt import hashpw, gensalt
+from bcrypt import hashpw, gensalt, checkpw
+from flask_login import UserMixin
 
 from . import Database
 
-class User():
+class UserNotFound(Exception):
+    pass
+
+class User(UserMixin):
+    _tablename = "Users"
+
+    def __init__(self, email):
+        try:
+            self._user = Database.find(self._tablename, "email", email)[0]
+        except IndexError:
+            raise UserNotFound(email)
+        self.id = email
+        self.first_name = self._user[1]
+        self.surname = self._user[2]
+        self.verified = self._user[3]
+        self.hashed_password = self._user[4]
+        self.creation_time = self._user[5]
+
     @classmethod
     def new_user(cls, **kwargs):
         kwargs['first_name'] = kwargs['first_name'].title()
         kwargs['surname'] = kwargs['surname'].title()
         kwargs['password'] = hashpw(kwargs['password'], gensalt())
         Database.insert_into(
-            "Users",
+            cls._tablename,
             ["email", "first_name", "surname", "password"],
             kwargs
         )
     
     @classmethod
     def delete_user(cls, email):
-        Database.delete("Users", "email", email)
+        Database.delete(cls._tablename, "email", email)
+    
+    @classmethod
+    def login(cls, email, password):
+        user = cls(email)
+        if checkpw(password, user.hashed_password):
+            return user

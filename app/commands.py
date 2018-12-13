@@ -40,3 +40,18 @@ def delete_user(email):
     User.delete_user(email)
     print("{} deleted.".format(email))
 
+@user_cli.command("details")
+@click.argument('email')
+def delete_user(email):
+    user = User(email)
+    print(
+"""\
+email: {}
+first_name: {}
+surname: {}
+verification: {}
+password: {} """.format(
+        user.email, user.first_name, user.surname,
+        user.verified, user.password
+    ))
+    
