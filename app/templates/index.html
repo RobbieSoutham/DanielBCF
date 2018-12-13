@@ -2,7 +2,10 @@
 {% extends "layout/base.html" %}
 
 {% block head %}
-    <link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet">
+<div class="page-header">
+    <h1>DanielBCF Stocks X</h1>
+</div>
+<link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -12,9 +15,7 @@
         {{ render_field(form.password) }}
         {{ render_field(form.remember_me) }}
         {{ form.csrf_token }}
-        <small id="register" class="form-text text-muted">Need an
-            account? Register
-              <a href="{{ url_for('register') }}">here</a>.
+        <small id="register" class="form-text text-muted">Need anaccount? Register <a href="{{ url_for('register') }}">here</a>.</small>
         <input type=submit class="btn btn-primary" value=Login>
     </form>          
 </div>

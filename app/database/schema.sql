@@ -39,6 +39,7 @@ CREATE TABLE Users (
 CREATE TABLE Products (
     id INT NOT NULL,
     name INT NOT NULL,
+    order_qty INT NOT NULL,
 
     PRIMARY KEY (id)
 );

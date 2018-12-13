@@ -3,19 +3,26 @@
 
 {% block head %}
     <link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet">
+    <div class="page-header">
+        <h1>Register</h1>
+    </div>
 {% endblock %}
 
 {% block content %}
 <div class="container" id="form">
-    <form method=post>
+    <form method=post novalidate>
         {{ render_field(form.email) }}
         {{ render_field(form.first_name) }}
         {{ render_field(form.surname) }}
-        {{ render_field(form.password) }}
-        {{ render_field(form.confirm) }}
-        {{ render_field(form.accept_tos) }}
+
+        <div class="row">
+            {{ render_field(form.password) }}`
+            {{ render_field(form.confirm) }}`
+        </div>
+        
+
         {{ form.csrf_token }}
-        <input type=submit value=Register>
+        <input type=submit class="submit btn btn-primary" value=Register>
     </form>          
 </div>
 {% endblock %}
