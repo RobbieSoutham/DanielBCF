@@ -6,6 +6,7 @@ from flask.cli import AppGroup
 
 from . import app
 from .database.user import User
+from .database.product import Product
 from . import PATH, CONFIG
 
 
@@ -14,6 +15,9 @@ app.cli.add_command(db_cli)
 
 user_cli = AppGroup('user')
 app.cli.add_command(user_cli)
+
+product_cli = AppGroup('product')
+app.cli.add_command(product_cli)
 
 @db_cli.command('init')
 def initdb():
@@ -24,6 +28,16 @@ def initdb():
     mysql -uroot
     """.format(PATH, CONFIG))
 
+product_cli.command("create")
+@product_cli.command("create")
+@click.argument('id')
+def create_product(**values):
+    values['name'] = raw_input("Enter the name: ")
+    values['order_qty'] = raw_input("Enter the order quantity: ")
+    Product.new_product(**values)
+    print("{} created.".format(values['id']))
+
+@user_cli.command("create")
 @user_cli.command("create")
 @click.argument('email')
 def create_user(**values):
@@ -54,4 +68,3 @@ password: {} """.format(
         user.email, user.first_name, user.surname,
         user.verified, user.password
     ))
-    
