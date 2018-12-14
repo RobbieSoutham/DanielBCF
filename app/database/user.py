@@ -18,11 +18,11 @@ class User(UserMixin):
             self._user = Database.find(self._tablename, "email", email)[0]
         except IndexError:
             raise UserNotFound(email)
-        self.id = email
+        self.email = email
         self.first_name = self._user[1]
         self.surname = self._user[2]
         self.verified = self._user[3]
-        self.hashed_password = self._user[4]
+        self.password = self._user[4]
         self.creation_time = self._user[5]
 
     @classmethod
@@ -44,7 +44,7 @@ class User(UserMixin):
     def login(cls, email, password):
         try:
             user = cls(email)
-            if checkpw(password, user.hashed_password):
+            if checkpw(password, user.password):
                 return user
         except UserNotFound:
             pass

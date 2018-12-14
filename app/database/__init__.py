@@ -5,6 +5,7 @@ Database module.
 from MySQLdb import connect
 
 from .. import app
+from flask import jsonify
 
 
 class Database(object):
@@ -55,3 +56,13 @@ class Database(object):
                     "'{}'".format(value)
             ))
             return c.fetchall()
+
+    @classmethod
+    def get(cls, table):
+        with cls() as c:
+            results = []
+            query = "SELECT * FROM {}".format(table)
+            result = c.execute(query)
+            for row in result:
+                results.append({'id': row[0], 'product_id': row[1], 'site_id': row[2], 'stock_healthy': row[3]})
+            return jsonify(result)

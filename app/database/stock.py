@@ -3,14 +3,13 @@
 Products module.
 """
 
-from flask import jsonify
 from . import Database
 
 class ProductNotFound(Exception):
     pass
 
-class Product():
-    _tablename = "Products"
+class Stock():
+    _tablename = "Stock"
 
     def __init__(self, id):
         try:
@@ -18,23 +17,23 @@ class Product():
         except IndexError:
             raise ProductNotFound(id)
         self.id = id
-        self.name = self._tablename[1]
-        self.order_qty = self._tablename[2]
+        self.product_id = self._tablename[1]
+        self.site_id = self._tablename[2]
+        self.stock_healthy = self._tablename[2]
 
     @classmethod
-    def new_product(cls, **kwargs):
-        kwargs['name'] = kwargs['name'].title()
-        kwargs['order_qty'] = kwargs['order_qty'].title()
+    def new_stock(cls, **kwargs):
+        kwargs['product_id'] = kwargs['product_id'].title()
         Database.insert_into(
             cls._tablename,
-            ["id", "name", "order_qty"],
+            ["id", "product_id", "site_id", "stock_healthy"],
             kwargs
         )
     
     @classmethod
-    def delete_product(cls, id):
+    def delete_stock(cls, id):
         Database.delete(cls._tablename, "id", id)
 
     @classmethod
-    def getProducts(cls):
-        return jsonify(Database.get("Products"))
+    def getStock(cls):
+        return Database.get("Stock")

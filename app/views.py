@@ -9,6 +9,7 @@ from . import forms
 from app import app
 
 from database.user import User
+from database.sites import Sites
 
 from flask_login import LoginManager, UserMixin, \
     login_required, login_user, logout_user 
@@ -67,8 +68,12 @@ def register():
         "success"
     )
     return redirect(url_for('index'))
-
 @app.route('/stocks')
 @login_required
 def stocks():
-    return render_template('stocks.html')
+    slist = "Stock.getStock()"
+    return render_template('stocks.html', slist=slist)
+
+@app.route('/stock_list')
+def stock_list():
+    Sites.getSites()

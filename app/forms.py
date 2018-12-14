@@ -47,4 +47,3 @@ class Login(FlaskForm):
     remember_me = BooleanField(
         'Remember me'
     )
-

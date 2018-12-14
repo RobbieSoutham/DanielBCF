@@ -9,8 +9,8 @@ from . import Database
 class ProductNotFound(Exception):
     pass
 
-class Product():
-    _tablename = "Products"
+class Sites():
+    _tablename = "Sites"
 
     def __init__(self, id):
         try:
@@ -19,22 +19,22 @@ class Product():
             raise ProductNotFound(id)
         self.id = id
         self.name = self._tablename[1]
-        self.order_qty = self._tablename[2]
+        self.address = self._tablename[2]
 
     @classmethod
-    def new_product(cls, **kwargs):
+    def new_site(cls, **kwargs):
         kwargs['name'] = kwargs['name'].title()
-        kwargs['order_qty'] = kwargs['order_qty'].title()
+        kwargs['address'] = kwargs['address'].title()
         Database.insert_into(
             cls._tablename,
-            ["id", "name", "order_qty"],
+            ["id", "name", "address"],
             kwargs
         )
     
     @classmethod
-    def delete_product(cls, id):
+    def delete_site(cls, id):
         Database.delete(cls._tablename, "id", id)
 
     @classmethod
-    def getProducts(cls):
-        return jsonify(Database.get("Products"))
+    def getSites(cls):
+        return Database.get("Sites")

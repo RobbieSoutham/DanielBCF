@@ -38,7 +38,7 @@ CREATE TABLE Users (
 
 CREATE TABLE Products (
     id INT NOT NULL,
-    name INT NOT NULL,
+    name VARCHAR(32) NOT NULL,
     order_qty INT NOT NULL,
 
     PRIMARY KEY (id)
@@ -46,22 +46,21 @@ CREATE TABLE Products (
 
 CREATE TABLE Sites (
     id INT NOT NULL AUTO_INCREMENT,
-    name INT NOT NULL,
+    name varchar(32) NOT NULL,
     address VARCHAR(256) NOT NULL,
-
     PRIMARY KEY (id)
 );
 
 CREATE TABLE Stock (
     id INT NOT NULL AUTO_INCREMENT,
     product_id INT NOT NULL,
-    site_id INT NOT NULL,
+    site_id varchar(32) NOT NULL,
     stock_healthy BOOLEAN,
         -- NULL = ordered
         -- false = low
         -- true = healthy
 
-    PRIMARY KEY (id),
-    FOREIGN KEY (product_id) REFERENCES Products(id),
-    FOREIGN KEY (site_id) REFERENCES Stock(id)
+    PRIMARY KEY (id)
+    /*FOREIGN KEY (product_id) REFERENCES Products(id),
+    FOREIGN KEY (site_id) REFERENCES site(id)*/
 );
