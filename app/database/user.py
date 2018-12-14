@@ -13,6 +13,9 @@ class UserNotFound(Exception):
 class User(UserMixin):
     _tablename = "Users"
 
+    def get_id(self):
+        return(self.email)
+        
     def __init__(self, email):
         try:
             self._user = Database.find(self._tablename, "email", email)[0]
