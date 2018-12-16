@@ -6,7 +6,7 @@ from flask import (
 )
 
 from MySQLdb import IntegrityError
-from wtforms import form
+from . import forms
 from app import app
 
 from database.user import User
@@ -35,7 +35,7 @@ def login():
         if user:
             login_user(user)
             flash('Logged in successfully.', 'success')
-            return redirect(url_for('stocks'))
+            return redirect(url_for('stock'))
         
         flash('Error! Login details incorrect.', 'danger')
 
