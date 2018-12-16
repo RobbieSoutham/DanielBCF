@@ -4,6 +4,7 @@ Products module.
 """
 
 from . import Database
+from flask import jsonify
 
 class ProductNotFound(Exception):
     pass
@@ -23,10 +24,9 @@ class Stock():
 
     @classmethod
     def new_stock(cls, **kwargs):
-        kwargs['product_id'] = kwargs['product_id'].title()
         Database.insert_into(
             cls._tablename,
-            ["id", "product_id", "site_id", "stock_healthy"],
+            ["id", "product_id", "site_id"],
             kwargs
         )
     
@@ -36,4 +36,12 @@ class Stock():
 
     @classmethod
     def getStock(cls):
-        return Database.get("Stock")
+        data = []
+        content = {}
+        results = Database.join("Stock.id, Products.name, Stock.stock_healthy, Stock.site_id", "Stock", "Products", "product_id", "id")
+        for result in results:
+                content = {'id': result[0], 'name': result[1], 'site_id': result[2], 'stock_healthy': result[3]}
+                data.append(content)
+                content = {}
+
+        return jsonify(data)

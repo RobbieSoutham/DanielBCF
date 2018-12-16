@@ -107,7 +107,6 @@ password: {} """.format(
 def create_stock(**values):
     values['product_id'] = raw_input("Enter the product ID: ")
     values['site_id'] =  raw_input("Enter the site ID: ")
-    values['stock_healthy'] = True
     Stock.new_stock(**values)
     print("{} created.".format(values['id']))
 
@@ -136,8 +135,8 @@ stock_healthy: {} """.format(
 @sites_cli.command("create")
 @click.argument('id')
 def create_site(**values):
-    values['name'] = raw_input("Enter the product ID: ")
-    values['address'] =  raw_input("Enter the site ID: ")
+    values['name'] = raw_input("Enter the site name: ")
+    values['address'] =  raw_input("Enter the site address: ")
     Sites.new_site(**values)
     print("{} created.".format(values['id']))
 

@@ -7,6 +7,8 @@ from MySQLdb import connect
 from .. import app
 from flask import jsonify
 
+import json
+
 
 class Database(object):
     """ Base Database Class """
@@ -39,8 +41,8 @@ class Database(object):
 
     @classmethod
     def delete(cls, table, column, value):
-        with cls() as c: c.execute(
-            "DELETE FROM {} WHERE {}={}".format(
+        with cls() as c:
+            c.execute("DELETE FROM {} WHERE {}={}".format(
                 table,
                 column,
                 "'{}'".format(value)
@@ -56,13 +58,16 @@ class Database(object):
                     "'{}'".format(value)
             ))
             return c.fetchall()
-
+    
     @classmethod
     def get(cls, table):
         with cls() as c:
-            results = []
-            query = "SELECT * FROM {}".format(table)
-            result = c.execute(query)
-            for row in result:
-                results.append({'id': row[0], 'product_id': row[1], 'site_id': row[2], 'stock_healthy': row[3]})
-            return jsonify(result)
+            c.execute("SELECT * FROM {}".format(table))
+            return c.fetchall()
+
+    @classmethod
+    def join(cls, select, table1, table2, atrib1, atrib2):
+        with cls() as c:
+            c.execute("SELECT {} FROM {} INNER JOIN {} ON {}.{} = {}.{}".format(select, table1, table2, table1, atrib1, table2, atrib2 ))
+            results = c.fetchall()
+            return results

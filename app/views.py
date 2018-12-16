@@ -4,12 +4,14 @@ from flask import (
     render_template, request, flash,
     redirect, url_for, g
 )
+
 from MySQLdb import IntegrityError
-from . import forms
+from wtforms import form
 from app import app
 
 from database.user import User
 from database.sites import Sites
+from database.stock import Stock
 
 from flask_login import LoginManager, UserMixin, \
     login_required, login_user, logout_user 
@@ -68,12 +70,18 @@ def register():
         "success"
     )
     return redirect(url_for('index'))
-@app.route('/stocks')
+
+@app.route('/stock')
 @login_required
-def stocks():
-    slist = "Stock.getStock()"
-    return render_template('stocks.html', slist=slist)
+def stock():
+    return render_template('stock.html')
 
 @app.route('/stock_list')
+@login_required
 def stock_list():
-    Sites.getSites()
+    return Stock.getStock()
+
+@app.route('/sites_list')
+@login_required
+def sites_list():
+    return Sites.getSites()

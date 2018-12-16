@@ -29,7 +29,6 @@ CREATE TABLE Users (
         -- NULL unverified
         -- +1 user verified
         -- +1 manager verified
-
     password VARCHAR(255) NOT NULL,
     creation_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
@@ -55,7 +54,7 @@ CREATE TABLE Stock (
     id INT NOT NULL AUTO_INCREMENT,
     product_id INT NOT NULL,
     site_id varchar(32) NOT NULL,
-    stock_healthy BOOLEAN,
+    stock_healthy BOOLEAN DEFAULT True,
         -- NULL = ordered
         -- false = low
         -- true = healthy

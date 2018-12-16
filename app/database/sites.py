@@ -37,4 +37,11 @@ class Sites():
 
     @classmethod
     def getSites(cls):
-        return Database.get("Sites")
+        data = []
+        content = {}
+        results =  Database.get("Sites")
+        for result in results:
+            content = {'id': result[0], 'name': result[1], 'address': result[2]}
+            data.append(content)
+            content = {}
+        return jsonify(data)

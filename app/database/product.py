@@ -3,7 +3,6 @@
 Products module.
 """
 
-from flask import jsonify
 from . import Database
 
 class ProductNotFound(Exception):
