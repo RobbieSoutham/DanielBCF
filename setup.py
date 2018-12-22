@@ -11,7 +11,7 @@ install_reqs = parse_requirements('./requirements.txt', session = PipSession())
 reqs = [str(ir.req) for ir in install_reqs]
 
 setup(
-    name='DBCFStocksX',
+    name='DanielBCF',
     version='1.0.0',
     packages=find_packages(),
     include_package_data=True,
