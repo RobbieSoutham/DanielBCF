@@ -10,19 +10,18 @@
 
 {% block content %}
 <div class="container" id="form">
-    <form method=post novalidate>
+    <form method="post" novalidate>
         {{ render_field(form.email) }}
         {{ render_field(form.first_name) }}
         {{ render_field(form.surname) }}
 
         <div class="row">
-            {{ render_field(form.password) }}`
-            {{ render_field(form.confirm) }}`
+            {{ render_field(form.password) }}
+            {{ render_field(form.confirm) }}
         </div>
         
-
         {{ form.csrf_token }}
-        <input type=submit class="submit btn btn-primary" value=Register>
+        <input type="submit" class="submit btn btn-primary" value="Register">
     </form>          
 </div>
 {% endblock %}

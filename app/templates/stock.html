@@ -2,9 +2,6 @@
 
 {% block head %}
     <link href="{{ url_for('static', filename='css/stock.css') }}" rel="stylesheet" />
-
-    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
     
     <title>Stock</title>
 {% endblock %}
@@ -42,7 +39,7 @@
                   </select>
                 </div>
                 <div class="modal-footer">
-                  <button onclick="loadSites()" type="button" class="btn btn-primary" data-dismiss="modal">Continue</button>
+                  <button onclick="load_stock()" type="button" class="btn btn-primary" data-dismiss="modal">Continue</button>
                 </div>
               </div>
             </div>
@@ -58,22 +55,23 @@
                         <h5 class="modal-title">Are you sure you would like to make this change?</h5>
                     </div>
                     <div class="modal-footer">
-                      <button id="change" onclick="" type="button" class="btn btn-success" data-dismiss="modal">Yes</button>
-                      <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                      <button class="change" onclick="" type="button" class="btn btn-success" data-dismiss="modal">Yes</button>
+                      <button class="change" type="button" class="btn btn-danger" data-dismiss="modal">No</button>
                     </div>
                 </div>
             </div>
     </div>
 
 <div id="container">
-    <table class="table table-striped table-bordered" id="stock">
+    <input class="form-control" id="search" type="text" placeholder="Search..">
+    <table class="table  table-bordered" id="stock">
         <thead>
-            <tr>
             <th>Name</th>
             <th>Status</th>
             <th></th>
-            </tr>
         </thead>
+        <tbody id="stock_body">
+        </tbody>
     </table>
 {% endblock %}
 {% block scripts %}
@@ -83,7 +81,8 @@
         stat_class = ""
         
         $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-
+        
+        //Pulling site JSON data from route, add to drop down
         $.ajax({
             type: "GET",
             url: $SCRIPT_ROOT + "sites_list",
@@ -95,15 +94,26 @@
                     html += "<option value='" + item.id + "'>" + item.name + "</option>"
                 });
                 $('#sites').append(html);
+                
             }
         });
         $('#modal_init').modal('show');
+        
+        //Add search functionality to search bar
+        $("#search").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#stock tbody tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
     });
 
-    function loadSites(){
+    //
+    function load_stock(){
         site = $("#sites").val();
         $('#modal_init').modal('hide');
-
+        
+        //Pull stock JSON from route
         $.ajax({
             type: "GET",
             url: $SCRIPT_ROOT + "stock_list",
@@ -118,7 +128,7 @@
                             status = "Normal";
                             colour = "#28a745"
                         }
-                        else if (items.stock_healthy == 0){
+                        else if (item.stock_healthy == 0){
                             status = "Low"
                             colour = "##ffc107"
 
@@ -133,23 +143,24 @@
                         html += "<tr><td>" + item.name + "</td>center><td class='status' style='background-color: " + colour + ";'>" + status + "</td></center><td>" +  btns_html;
                     }
                 });
-                $('#stock').append(html);
+                //Append every stock item to the table
+                $('#stock tbody').append(html);
             }
         });
 
     }
-    function confirm(id, type){
-        $("#change").attr("onclick","set_out(" + id + ", " + type +")");
+    function confirm(id, to_status){
+        //Pass the item id and the change as parameters the set_stock function if confirmed
+        $("#change").attr("onclick","set_out(" + id + ", " + to_status +")");
         
-        
-        $('#change').value = id
         $('#modal_confirm').modal('show');
     }
 
-    function set_stock(id, type){
+    function set_stock(id, to_status){
         $.ajax({
             type: 'POST',
             url: '../portal/curriculum.php',
+            
             data: [],
             success: function(data)
             {

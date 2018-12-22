@@ -29,3 +29,16 @@ body {
 .navbar > ul > li{
 	padding-left: 50%;
 }
+.alert-success{
+	position: absolute;
+	margin-right: auto;
+	margin-left: auto;
+	width: 50% !important;
+	overflow: auto !important;
+	margin: auto !important;
+	left: 0 !important;
+	bottom: 0 !important;
+	right: 0 !important;
+	text-align: center;
+
+}

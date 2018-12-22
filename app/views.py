@@ -12,9 +12,9 @@ from app import app
 from database.user import User
 from database.sites import Sites
 from database.stock import Stock
-
+from database import Database
 from flask_login import LoginManager, UserMixin, \
-    login_required, login_user, logout_user 
+    login_required, login_user, logout_user
 
 # flask-login
 login_manager = LoginManager()
@@ -51,25 +51,27 @@ def logout():
 def register():
     """Register. Loads register.html"""
     form = forms.Registration(request.form)
+    
     if request.method == 'GET' or not form.validate():
         return render_template('register.html', form=form)
+       
+    else:
+        try:
+            User.new_user(
+                email=form.email.data,
+                first_name=form.first_name.data,
+                surname=form.surname.data,
+                password=form.password.data.encode('utf-8'),
+            )
+        except IntegrityError:
+            flash("User with email already exists.", "danger")
+            return redirect(url_for('register'))
 
-    try:
-        User.new_user(
-            email=form.email.data,
-            first_name=form.first_name.data,
-            surname=form.surname.data,
-            password=form.password.data.encode('utf-8'),
+        flash(
+            "Registration complete. Please check your email for verification.",
+            "success"
         )
-    except IntegrityError:
-        flash("User with email already exists.", "danger")
-        return redirect(url_for('register'))
-
-    flash(
-        "Registration complete. Please check your email for verification.",
-        "success"
-    )
-    return redirect(url_for('index'))
+        return redirect(url_for('login'))
 
 @app.route('/stock')
 @login_required

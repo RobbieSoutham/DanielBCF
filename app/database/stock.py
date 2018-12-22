@@ -38,7 +38,7 @@ class Stock():
     def getStock(cls):
         data = []
         content = {}
-        results = Database.join("Stock.id, Products.name, Stock.stock_healthy, Stock.site_id", "Stock", "Products", "product_id", "id")
+        results = Database.join("Stock.id, Products.name, Stock.site_id, Stock.stock_healthy", "Stock", "Products", "product_id", "id")
         for result in results:
                 content = {'id': result[0], 'name': result[1], 'site_id': result[2], 'stock_healthy': result[3]}
                 data.append(content)

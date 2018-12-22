@@ -30,10 +30,6 @@ class Registration(FlaskForm):
     confirm = PasswordField('Repeat Password', [
         EqualTo('password', message='Passwords must match.')
     ])
-    accept_tos = BooleanField(
-        'I accept the terms of service.', [
-            DataRequired("You must accept the TOS.")
-    ])
 
 class Login(FlaskForm):
     email = StringField(

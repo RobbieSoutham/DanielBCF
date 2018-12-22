@@ -59,7 +59,7 @@ CREATE TABLE Stock (
         -- false = low
         -- true = healthy
 
-    PRIMARY KEY (id)
-    /*FOREIGN KEY (product_id) REFERENCES Products(id),
-    FOREIGN KEY (site_id) REFERENCES site(id)*/
+    PRIMARY KEY (id),
+    FOREIGN KEY (product_id) REFERENCES Products(id),
+    FOREIGN KEY (site_id) REFERENCES site(id)
 );
