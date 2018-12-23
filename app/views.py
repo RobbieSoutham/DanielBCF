@@ -5,14 +5,18 @@ from flask import (
     redirect, url_for, g
 )
 
+from bcrypt import hashpw, gensalt, checkpw
 from MySQLdb import IntegrityError
+from itsdangerous import URLSafeSerializer
+from flask_mail import Mail, Message
+
 from . import forms
 from app import app
 
 from database.user import User
 from database.sites import Sites
 from database.stock import Stock
-from database import Database
+
 from flask_login import LoginManager, UserMixin, \
     login_required, login_user, logout_user
 
@@ -22,6 +26,7 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.user_loader(User)
 
+s = URLSafeSerializer(app.config["SECRET_KEY"])
 @app.route('/', methods=['GET', 'POST'])
 def login():
     """Index at site root. Loads index.html"""
@@ -71,7 +76,22 @@ def register():
             "Registration complete. Please check your email for verification.",
             "success"
         )
+        manager_t = s.dump(email)
+        user_t = s.dump(email)
+        msg = Message("Confirm Email", sender="DanielBCF", recipients=email)
+        link = url_for("confirm_email", token=manager_t, external=True)
+        msg.body = "Your link is {}".format(link)
+        mail.send(msg)
         return redirect(url_for('login'))
+
+@app.route('/confirm_email/<token>')
+def confirm_email(manager_t):
+    try:
+        email = s.loads(manager_t, salt=None)
+    except:
+        return "The token is invalid"
+    user.verify()
+
 
 @app.route('/stock')
 @login_required

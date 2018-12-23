@@ -51,3 +51,6 @@ class User(UserMixin):
                 return user
         except UserNotFound:
             pass
+    @classmethod
+    def verify(email):
+        Database.update("Users", "verified", "IFNULL(verified, 0) + 1", "email", email)

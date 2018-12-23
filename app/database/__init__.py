@@ -38,6 +38,19 @@ class Database(object):
                 ', '.join(attributes),
                 ', '.join(["'{}'".format(values[a]) for a in attributes])
         ))
+    
+    @classmethod
+    def update(cls, table, attribute, value1, value2, value3):
+        for a in attributes:
+            if a not in values:
+                raise TypeError("Attribute {} not in values.".format(a))
+
+        with cls() as c: c.execute(
+            "UPDATE {} SET {} = ({}) WHERE {} = {}".format(
+                table,
+                ', '.join(attributes),
+                ', '.join(["'{}'".format(values[a]) for a in attributes])
+        ))
 
     @classmethod
     def delete(cls, table, column, value):
