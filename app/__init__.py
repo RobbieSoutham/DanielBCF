@@ -15,5 +15,4 @@ with open(CONFIG, 'r') as config:
         **yaml.load(config)
     )
 
-import commands
-from app import views, errors
+from app import views, errors, commands

@@ -12,21 +12,33 @@ from flask_mail import Mail, Message
 
 from . import forms
 from app import app
+from . import database
 
-from database.user import User
-from database.sites import Sites
-from database.stock import Stock
+
+from app.database.user import User
+from app.database.sites import Sites
+from app.database.stock import Stock
 
 from flask_login import LoginManager, UserMixin, \
     login_required, login_user, logout_user
 
-# flask-login
+#Flask login setup
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.user_loader(User)
 
 s = URLSafeSerializer(app.config["SECRET_KEY"])
+app.config.update(
+    MAIL_SERVER = '64.233.184.109',
+    MAIL_PORT = 587,
+    MAIL_USE_TLS = True,
+    MAIL_USERNAME = 'rjsoutham@gmail.com',
+    MAIL_PASSWORD = 'rviiwhwizyddbxbp',
+    MAIL_DEFAULT_SENDER = 'noreply@danielbcf.tk'
+)
+mail = Mail(app)
+
 @app.route('/', methods=['GET', 'POST'])
 def login():
     """Index at site root. Loads index.html"""
@@ -35,7 +47,7 @@ def login():
     if form.validate_on_submit():
         user = User.login(
             form.email.data,
-            form.password.data.encode('utf-8')
+            form.password.data.encode("utf-8")
         )
         if user:
             login_user(user)
@@ -66,7 +78,7 @@ def register():
                 email=form.email.data,
                 first_name=form.first_name.data,
                 surname=form.surname.data,
-                password=form.password.data.encode('utf-8'),
+                password=form.password.data.encode("utf-8"),
             )
         except IntegrityError:
             flash("User with email already exists.", "danger")
@@ -76,21 +88,24 @@ def register():
             "Registration complete. Please check your email for verification.",
             "success"
         )
-        manager_t = s.dump(email)
-        user_t = s.dump(email)
-        msg = Message("Confirm Email", sender="DanielBCF", recipients=email)
-        link = url_for("confirm_email", token=manager_t, external=True)
-        msg.body = "Your link is {}".format(link)
+        manager_t = s.dumps(form.email.data)
+        user_t = s.dumps(form.email.data, salt="email-confirm")
+        msg = Message("Confirm Email", sender="", recipients=["rjsoutham@gmail.com"])
+        #link = "url_for(confirm_email, token=manager_t, external=True)"
+        msg.body = render_template("email/manager.txt")
         mail.send(msg)
+        print(manager_t)
         return redirect(url_for('login'))
 
-@app.route('/confirm_email/<token>')
+@app.route('/confirm_email/<manager_t>')
 def confirm_email(manager_t):
     try:
-        email = s.loads(manager_t, salt=None)
+        email = s.loads(manager_t)
     except:
-        return "The token is invalid"
-    user.verify()
+        return "Error"
+    print (email)
+    User.verify(email)
+    return "success"
 
 
 @app.route('/stock')
