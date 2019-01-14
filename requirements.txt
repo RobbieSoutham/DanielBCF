@@ -14,3 +14,4 @@ itsdangerous==0.24
 bcrypt
 pyyaml
 mysql-python
+yasha

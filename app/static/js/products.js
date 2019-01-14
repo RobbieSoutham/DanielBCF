@@ -10,7 +10,7 @@ $(function() {
             status = "";
             $.each(data, function (i, item) {
                     
-                    html += "<tr><td>" + item.id + "</td>center><center><td><</td></center><td>";
+                    html += "<tr><td>" + item.name + "</td>center><center><td> " + item.id + "</td></center><td><center>" + item.order_qty + "</td></center><td><center><a>" + item.cossh + "</a></td></center><center><td><img src='" + $SCRIPT_ROOT + "/static/open-iconic-master/svg/account-login.svg' alt='account login'></td></center>";
                 
             });
             console.log(html)
