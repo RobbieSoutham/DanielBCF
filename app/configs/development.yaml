@@ -1,9 +1,22 @@
 TESTING: False
 DEBUG: True
 SECRET_KEY: b'_5#y2L"F4Q8z\n\xec]/'
+<<<<<<< HEAD
 MYSQL_USERNAME: 'b1715cb9ccbce3'
 MYSQL_PASSWORD: '93e3a15b'
 MYSQL_DATABASE: 'heroku_84234294ffed68f'
 MYSQL_HOST: 'eu-cdbr-west-02.cleardb.net'
+=======
+MYSQL_USERNAME: 'dbc_main'
+MYSQL_PASSWORD: 'secret'
+MYSQL_DATABASE: 'danielbc_main'
+MYSQL_HOST: 'localhost'
+>>>>>>> b60099a019e5b6d1670347f78567d84c159bc9a0
 
 
+MAIL_SERVER: '64.233.184.109'
+MAIL_PORT: 587
+MAIL_USE_TLS: True
+MAIL_USERNAME: 'rjsoutham@gmail.com'
+MAIL_PASSWORD: 'rviiwhwizyddbxbp'
+MAIL_DEFAULT_SENDER: 'noreply@danielbcf.tk'

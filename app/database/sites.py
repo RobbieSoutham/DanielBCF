@@ -9,7 +9,7 @@ from . import Database
 class ProductNotFound(Exception):
     pass
 
-class Sites():
+class Site():
     _tablename = "Sites"
 
     def __init__(self, id):

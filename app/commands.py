@@ -6,9 +6,9 @@ from flask.cli import AppGroup
 
 from . import app
 from .database.user import User
-from .database.product import Product
+from .database.products import Product
 from .database.stock import Stock
-from .database.sites import Sites
+from .database.sites import Site
 
 import MySQLdb
 

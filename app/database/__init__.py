@@ -75,5 +75,4 @@ class Database(object):
     def join(cls, select, table1, table2, atrib1, atrib2):
         with cls() as c:
             c.execute("SELECT {} FROM {} INNER JOIN {} ON {}.{} = {}.{}".format(select, table1, table2, table1, atrib1, table2, atrib2 ))
-            results = c.fetchall()
-            return results
+            return c.fetchall()

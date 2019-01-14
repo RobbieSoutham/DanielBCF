@@ -16,8 +16,11 @@ from . import database
 
 
 from app.database.user import User
-from app.database.sites import Sites
+from app.database.sites import Site
 from app.database.stock import Stock
+from app.database.products import Product
+
+from flask import jsonify
 
 from flask_login import LoginManager, UserMixin, \
     login_required, login_user, logout_user
@@ -29,17 +32,10 @@ login_manager.login_view = "login"
 login_manager.user_loader(User)
 
 s = URLSafeSerializer(app.config["SECRET_KEY"])
-app.config.update(
-    MAIL_SERVER = '64.233.184.109',
-    MAIL_PORT = 587,
-    MAIL_USE_TLS = True,
-    MAIL_USERNAME = 'rjsoutham@gmail.com',
-    MAIL_PASSWORD = 'rviiwhwizyddbxbp',
-    MAIL_DEFAULT_SENDER = 'noreply@danielbcf.tk'
-)
 mail = Mail(app)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route("/", methods=["GET", "POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     """Index at site root. Loads index.html"""
     form = forms.Login(request.form)
@@ -51,26 +47,26 @@ def login():
         )
         if user:
             login_user(user)
-            flash('Logged in successfully.', 'success')
-            return redirect(url_for('stock'))
+            flash("Logged in successfully.", "success")
+            return redirect(url_for("stock"))
         
-        flash('Error! Login details incorrect.', 'danger')
+        flash("Error! Login details incorrect.", "danger")
 
-    return render_template('index.html', form=form)
+    return render_template("index.html", form=form)
 
 @app.route("/logout")
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for("login"))
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route("/register", methods=["GET", "POST"])
 def register():
     """Register. Loads register.html"""
     form = forms.Registration(request.form)
     
-    if request.method == 'GET' or not form.validate():
-        return render_template('register.html', form=form)
+    if request.method == "GET" or not form.validate():
+        return render_template("register.html", form=form)
        
     else:
         try:
@@ -82,7 +78,7 @@ def register():
             )
         except IntegrityError:
             flash("User with email already exists.", "danger")
-            return redirect(url_for('register'))
+            return redirect(url_for("register"))
 
         flash(
             "Registration complete. Please check your email for verification.",
@@ -94,9 +90,9 @@ def register():
         msg.body = render_template("email/manager.txt", manager_t=manager_t, first_name=form.first_name.data, surname=form.surname.data)
         mail.send(msg)
         print(manager_t)
-        return redirect(url_for('login'))
+        return redirect(url_for("login"))
 
-@app.route('/confirm_email/<manager_t>')
+@app.route("/confirm_email/<manager_t>")
 def confirm_email(manager_t):
     try:
         email = s.loads(manager_t)
@@ -107,17 +103,21 @@ def confirm_email(manager_t):
     return "success"
 
 
-@app.route('/stock')
+@app.route("/stock")
 @login_required
 def stock():
-    return render_template('stock.html')
+    return render_template("stock.html")
 
-@app.route('/change_stock')
+@app.route("/products")
+@login_required
+def products():
+    return render_template("products.html")
+
+@app.route("/change_stock")
 @login_required
 def change_stock():
-    id = request.args.get('id')
-    to_status = request.args.get('to_status')
-    print(to_status)
+    id = request.args.get("id")
+    to_status = request.args.get("to_status")
     if to_status == "true":
         to_status = True
     elif to_status == "false":
@@ -128,11 +128,21 @@ def change_stock():
     Stock.update_stock(id, to_status)
     return "one"
 
+<<<<<<< HEAD
 @app.route('/stock_list')
+=======
+@app.route("/stock_list")
+@login_required
+>>>>>>> b60099a019e5b6d1670347f78567d84c159bc9a0
 def stock_list():
     return Stock.get_stock()
 
-@app.route('/sites_list')
+@app.route("/sites_list")
 @login_required
 def sites_list():
-    return Sites.getSites()
+    return Site.getSites()
+
+@app.route("/product_list")
+@login_required
+def product_list():
+    return Product.get_products()

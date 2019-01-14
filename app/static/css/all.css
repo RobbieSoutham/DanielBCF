@@ -2,20 +2,9 @@ body {
 	background-image: url(../images/bg/login.jpg)
 }
 
-.page-header > h1 {
-	font-family: 'Unlock', cursive;
-	font-weight: 60px;
-}
-
-.page-header{
-	margin-bottom: 25px;
-	text-align: center;
-	color: black;
-	border: none !important;
-}
-
 .navbar{
 	padding-top: 0px;
+	text-align: center;
 	border-radius: 0px !important;
 	padding: 0rem 1rem !important;
 }
@@ -25,9 +14,14 @@ body {
 #welcome{
 	position: absolute;
 	right: 0px;
+	padding-right: 2rem;
 }
 .navbar > ul > li{
 	padding-left: 50%;
+}
+.navbar > ul{
+	display: relative;
+    align-items: center;
 }
 .alert-success{
 	position: absolute;
@@ -41,4 +35,13 @@ body {
 	right: 0 !important;
 	text-align: center;
 
+}
+btn{
+	margin: 0 auto;
+	display: block;
+	background-color: #005ce6;
+}
+.page-header{
+	margin-top: 0px !important;
+	margin-bottom: 2rem;
 }

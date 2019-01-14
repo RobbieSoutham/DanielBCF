@@ -14,6 +14,11 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>  
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> 
 
+    <script>
+      //Creating script root variable to use urls dynamically outside of the template
+      $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
+
     <!-- Page specific head -->
     {% block head %}{% endblock %}
     
@@ -22,6 +27,45 @@
 
     <!-- Main css file -->
     <link href="{{ url_for('static', filename='css/all.css') }}" rel="stylesheet">
+
+    <!--Adding menu bar to specific pages-->
+    {% if "login" in url_for(request.endpoint) or "register" in url_for(request.endpoint) %}
+    {% else %}
+
+    <div class="page-header">
+      <nav class = "navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class ="navbar-brand" href="{{ url_for('stock') }}">DanielBCF<br><small class="text-muted">Stock management</small></a>
+
+         <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('stock') }}">Stock</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="COSSH">Stock</a>
+            </li>
+          <!--Giving the link to products route for the manager only-->
+          {% if "Robbie" in current_user.first_name %}
+          <li class="nav-item">
+            <a class="nav-link"  href="{{ url_for('products') }}">Products</a>
+          </li>
+          {% endif %}
+                    
+        </ul>
+        <div id="welcome">
+          <span>Hi {{ current_user.first_name }}! </span>
+          <a href="{{ url_for('logout') }}">Logout</a>  
+        </div>
+      </nav>
+      </div>
+    <script>
+      $(document).ready(function () {
+      $("#{{request.endpoint}}").addClass("active"); })
+    </script>
+    {% endif %}
+
   </head>
 
   <body>
