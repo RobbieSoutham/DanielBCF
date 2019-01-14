@@ -9,6 +9,7 @@ body {
 	padding: 0rem 1rem !important;
 }
 .navbar-brand{
+	position: relative;
 	padding: 10px 10px !important;
 }
 #welcome{
@@ -44,4 +45,15 @@ btn{
 .page-header{
 	margin-top: 0px !important;
 	margin-bottom: 2rem;
+}
+.navar > div{
+	padding-right: 52em !important;
+	display: inline-block !important;
+}
+#collapse{
+	position: absolute;
+	right: 0px;
+}
+.navbar-toggler{
+	
 }

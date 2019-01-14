@@ -33,33 +33,38 @@
     {% else %}
 
     <div class="page-header">
-      <nav class = "navbar navbar-expand-lg navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          
         <a class ="navbar-brand" href="{{ url_for('stock') }}">DanielBCF<br><small class="text-muted">Stock management</small></a>
-
-         <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('stock') }}">Stock</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="COSSH">Stock</a>
+        <div class="collapse navbar-collapse" id="navbar">
+          <ul class="navbar-nav mFr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('stock') }}">Stock</a>
             </li>
-          <!--Giving the link to products route for the manager only-->
-          {% if "Robbie" in current_user.first_name %}
-          <li class="nav-item">
-            <a class="nav-link"  href="{{ url_for('products') }}">Products</a>
-          </li>
-          {% endif %}
-                    
-        </ul>
+            <li class="nav-item">
+                <a class="nav-link" href="COSSH">COSSH</a>
+            </li>
+            <!--Giving the link to products route for the manager only-->
+            {% if "Robbie" in current_user.first_name %}
+            <li class="nav-item">
+              <a class="nav-link"  href="{{ url_for('products') }}">Products</a>
+            </li>
+            {% endif %}               
+          </ul>
+        </div>
+          <div id="collapse">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" panded="false">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+          </div>
         <div id="welcome">
           <span>Hi {{ current_user.first_name }}! </span>
           <a href="{{ url_for('logout') }}">Logout</a>  
         </div>
-      </nav>
       </div>
+      
+      </nav>
+    </div>
     <script>
       $(document).ready(function () {
       $("#{{request.endpoint}}").addClass("active"); })

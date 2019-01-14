@@ -128,12 +128,8 @@ def change_stock():
     Stock.update_stock(id, to_status)
     return "one"
 
-<<<<<<< HEAD
-@app.route('/stock_list')
-=======
 @app.route("/stock_list")
 @login_required
->>>>>>> b60099a019e5b6d1670347f78567d84c159bc9a0
 def stock_list():
     return Stock.get_stock()
 

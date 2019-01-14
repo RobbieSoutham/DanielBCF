@@ -1,0 +1,33 @@
+.text-muted{
+	color: #4d4d4d !important;
+}
+
+.error{
+	color: red;
+}
+
+#container{
+	width: 100%;
+}
+.table{
+	background-color: white;
+	color: black;
+	width: 100%;
+}
+
+.status{
+	text-align: center;
+	color: white;
+}
+
+.btn-group{
+	width: 100%;
+}
+.btn-group > button{
+	width: 50% !important;
+	
+}
+
+#search{
+	border-radius: 0px;
+}

@@ -4,19 +4,19 @@
     <link href="{{ url_for('static', filename='css/products.css') }}" rel="stylesheet" />
     <script src={{ url_for('static', filename='js/products.js') }} ></script>
     
-    <title>Stock</title>
+    <title>Products</title>
 {% endblock %}
 
 {% block content %}
 <div id="container">
         <input class="form-control" id="search" type="text" placeholder="Search..">
-        <table class="table  table-bordered" id="stock">
+        <table class="table  table-bordered" id="products">
             <thead>
                 <th>Product</th>
                 <th>Status</th>
                 <th></th>
             </thead>
-            <tbody id="stock_body">
+            <tbody id="products_body">
             </tbody>
         </table>
     </div>

@@ -40,12 +40,10 @@ class Product():
         
         data = []
         content = {}
-        results = Database.find("Products", "id", "*")
+        results = Database.get("Products")
         print("dv")
         for result in results:
-                print(result[3])
-                content = {'id': result[0], 'name': result[1], 'site_id': result[2], 'stock_healthy': result[3]}
+                content = {'id': result[0], 'name': result[1], 'order_qty': result[2]}
                 data.append(content)
                 content = {}
-
         return jsonify(data)
