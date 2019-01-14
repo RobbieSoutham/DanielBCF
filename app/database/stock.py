@@ -35,7 +35,7 @@ class Stock():
         Database.delete(cls._tablename, "id", id)
 
     @classmethod
-    def getStock(cls):
+    def get_stock(cls):
         data = []
         content = {}
         results = Database.join("Stock.id, Products.name, Stock.site_id, Stock.stock_healthy", "Stock", "Products", "product_id", "id")
@@ -45,3 +45,8 @@ class Stock():
                 content = {}
 
         return jsonify(data)
+
+    @classmethod
+    def update_stock(cls, id, to_status):
+        Database.update(cls._tablename, "stock_healthy", to_status, "id", id)
+        return "Sucess"

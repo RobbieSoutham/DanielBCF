@@ -55,8 +55,8 @@
                         <h5 class="modal-title">Are you sure you would like to make this change?</h5>
                     </div>
                     <div class="modal-footer">
-                      <button class="change" onclick="" type="button" class="btn btn-success" data-dismiss="modal">Yes</button>
-                      <button class="change" type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                      <button type=" button"class="btn change" onclick="" type="button" class="btn btn-success" data-dismiss="modal">Yes</button>
+                      <button type="button" class="btn" data-dismiss="modal">No</button>
                     </div>
                 </div>
             </div>
@@ -108,10 +108,10 @@
   });
     });
 
-    //
     function load_stock(){
         site = $("#sites").val();
         $('#modal_init').modal('hide');
+        out_btn_state, low_btn_state = "btn_Enabled";
         
         //Pull stock JSON from route
         $.ajax({
@@ -126,52 +126,55 @@
                     
                         if (item.stock_healthy == 1){
                             status = "Normal";
-                            colour = "#28a745"
+                            colour = "#28a745";        
                         }
                         else if (item.stock_healthy == 0){
-                            status = "Low"
-                            colour = "##ffc107"
-
+                            status = "Low";
+                            colour = "#ffc107";
+                            low_btn_state = "btn_Disabled";
+                            out_btn_state = "btn_Enabled";
                         }
                         else{
-                            status = "Ordered"
-                            colour = "#dc3545"
+                            status = "Ordered";
+                            colour = "#dc3545";
+                            out_btn_stat, low_btn_state = "btn_Disabled";
                         }
 
-                        btns_html = "<center><div class='btn-group' role='group'><button type='button' onclick='confirm(" + item.id + ", false);' class='btn btn-warning'>Low</button><button type='button' onclick='confirm(" + item.id + ", null);' class='btn btn-danger'>Out</button></div></center>"
-
+                        btns_html = "<center><div class='btn-group' role='group'><button type='button' onclick='confirm(" + item.id + ", false);' class='btn btn-warning " + low_btn_state + "'>Low</button><button type='button' onclick='confirm(" + item.id + ", undefined);' class='btn btn-danger " + out_btn_state + "'>Out</button></div></center>"
                         html += "<tr><td>" + item.name + "</td>center><td class='status' style='background-color: " + colour + ";'>" + status + "</td></center><td>" +  btns_html;
                     }
                 });
-                //Append every stock item to the table
+                //Append every stock item to the table          
                 $('#stock tbody').append(html);
+                $(".btn_Disabled").attr("disabled", true);
             }
+            
         });
+        
 
     }
     function confirm(id, to_status){
         //Pass the item id and the change as parameters the set_stock function if confirmed
-        $("#change").attr("onclick","set_out(" + id + ", " + to_status +")");
+        $(".change").attr("onclick","set_stock(" + id + ", " + to_status +")");
         
         $('#modal_confirm').modal('show');
     }
 
     function set_stock(id, to_status){
+        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
         $.ajax({
-            type: 'POST',
-            url: '../portal/curriculum.php',
-            
-            data: [],
-            success: function(data)
-            {
-            $('#stock').html(data);
-            }
-        });
-        
-        }
-        function set_out(id) {
+            type:  "GET",
+            url: $SCRIPT_ROOT + "change_stock",
+            data: {id: id, to_status: to_status},
 
+            success: function(data){
+                alert(to_status);
+                $("#stock tbody tr").remove();
+                load_stock()
         }
+        
+        });
+    }
 </script>
 {% endblock %}
 

@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "VENV/bin/python"
+    "python.pythonPath": "VENV/bin/python",
+    "python.linting.enabled": false
 }

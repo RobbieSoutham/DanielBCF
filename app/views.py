@@ -91,8 +91,7 @@ def register():
         manager_t = s.dumps(form.email.data)
         user_t = s.dumps(form.email.data, salt="email-confirm")
         msg = Message("Confirm Email", sender="", recipients=["rjsoutham@gmail.com"])
-        #link = "url_for(confirm_email, token=manager_t, external=True)"
-        msg.body = render_template("email/manager.txt")
+        msg.body = render_template("email/manager.txt", manager_t=manager_t, first_name=form.first_name.data, surname=form.surname.data)
         mail.send(msg)
         print(manager_t)
         return redirect(url_for('login'))
@@ -113,10 +112,26 @@ def confirm_email(manager_t):
 def stock():
     return render_template('stock.html')
 
+@app.route('/change_stock')
+@login_required
+def change_stock():
+    id = request.args.get('id')
+    to_status = request.args.get('to_status')
+    print(to_status)
+    if to_status == "true":
+        to_status = True
+    elif to_status == "false":
+        to_status = False
+    else:
+        to_status = "NULL"
+    print(to_status)
+    Stock.update_stock(id, to_status)
+    return "one"
+
 @app.route('/stock_list')
 @login_required
 def stock_list():
-    return Stock.getStock()
+    return Stock.get_stock()
 
 @app.route('/sites_list')
 @login_required

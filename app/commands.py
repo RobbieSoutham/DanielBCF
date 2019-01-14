@@ -43,8 +43,8 @@ def initdb():
 @product_cli.command("create")
 @click.argument('id')
 def create_product(**values):
-    values['name'] = raw_input("Enter the name: ")
-    values['order_qty'] = raw_input("Enter the order quantity: ")
+    values['name'] = input("Enter the name: ")
+    values['order_qty'] = input("Enter the order quantity: ")
     Product.new_product(**values)
     print("{} created.".format(values['id']))
 
@@ -72,8 +72,8 @@ order quantity: {} """.format(
 @click.argument('email')
 def create_user(email, **values):
     values['email'] = email
-    values['first_name'] = raw_input("Enter first name: ")
-    values['surname'] = raw_input("Enter surname: ")
+    values['first_name'] = input("Enter first name: ")
+    values['surname'] = input("Enter surname: ")
     values['password'] = getpass("Enter password (hidden): ")
     User.new_user(**values)
     print("{} created.".format(values['email']))
@@ -105,8 +105,8 @@ password: {} """.format(
 @stock_cli.command("create")
 @click.argument('id')
 def create_stock(**values):
-    values['product_id'] = raw_input("Enter the product ID: ")
-    values['site_id'] =  raw_input("Enter the site ID: ")
+    values['product_id'] = input("Enter the product ID: ")
+    values['site_id'] =  input("Enter the site ID: ")
     Stock.new_stock(**values)
     print("{} created.".format(values['id']))
 
@@ -135,8 +135,8 @@ stock_healthy: {} """.format(
 @sites_cli.command("create")
 @click.argument('id')
 def create_site(**values):
-    values['name'] = raw_input("Enter the site name: ")
-    values['address'] =  raw_input("Enter the site address: ")
+    values['name'] = input("Enter the site name: ")
+    values['address'] =  input("Enter the site address: ")
     Sites.new_site(**values)
     print("{} created.".format(values['id']))
 
@@ -147,7 +147,7 @@ def delete_site(id):
     Sites.delete_site(id)
     print("{} deleted.".format(id))
 
-@stock_cli.command("details")
+@sites_cli.command("details")
 @click.argument('id')
 def site_details(id):
     sites = Sites(id)
