@@ -10,6 +10,8 @@ from .database.product import Product
 from .database.stock import Stock
 from .database.sites import Sites
 
+import MySQLdb
+
 from . import PATH, CONFIG
 
 
