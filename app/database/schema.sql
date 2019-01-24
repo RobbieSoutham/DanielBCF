@@ -19,7 +19,7 @@ GRANT ALL ON {{ MYSQL_DATABASE }}.* TO '{{ MYSQL_USERNAME }}'@'{{ MYSQL_HOST }}'
 FLUSH PRIVILEGES;
 
 -- Setup tables.
-CREATE TABLE Users (
+CREATE TABLE Users(
     email VARCHAR(32) NOT NULL UNIQUE,
 
     first_name VARCHAR(32) NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE Users (
     PRIMARY KEY (email)
 );
 
-CREATE TABLE Products (
+CREATE TABLE Products(
     id INT NOT NULL,
     name VARCHAR(32) NOT NULL,
     order_qty INT NOT NULL,
@@ -43,17 +43,17 @@ CREATE TABLE Products (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE Sites (
+CREATE TABLE Sites(
     id INT NOT NULL AUTO_INCREMENT,
     name varchar(32) NOT NULL,
     address VARCHAR(256) NOT NULL,
     PRIMARY KEY (id)
 );
 
-CREATE TABLE Stock (
+CREATE TABLE Stock(
     id INT NOT NULL AUTO_INCREMENT,
     product_id INT NOT NULL,
-    site_id varchar(32) NOT NULL,
+    site_id int NOT NULL,
     stock_healthy BOOLEAN DEFAULT True,
         -- NULL = ordered
         -- false = low
@@ -61,5 +61,5 @@ CREATE TABLE Stock (
 
     PRIMARY KEY (id),
     FOREIGN KEY (product_id) REFERENCES Products(id),
-    FOREIGN KEY (site_id) REFERENCES site(id)
+    FOREIGN KEY (site_id) REFERENCES Sites(id)
 );

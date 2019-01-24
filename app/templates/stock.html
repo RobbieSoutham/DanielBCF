@@ -111,7 +111,8 @@
     function load_stock(){
         site = $("#sites").val();
         $('#modal_init').modal('hide');
-        out_btn_state, low_btn_state = "btn_Enabled";
+        out_btn_state = "btn_enabled";
+        low_btn_state = "btn_enabled";
         
         //Pull stock JSON from route
         $.ajax({
@@ -131,13 +132,13 @@
                         else if (item.stock_healthy == 0){
                             status = "Low";
                             colour = "#ffc107";
-                            low_btn_state = "btn_Disabled";
-                            out_btn_state = "btn_Enabled";
+                            low_btn_state = "btn_disabled";
+                            out_btn_state = "btn_enabled";
                         }
                         else{
                             status = "Ordered";
                             colour = "#dc3545";
-                            out_btn_stat, low_btn_state = "btn_Disabled";
+                            out_btn_state, low_btn_state = "btn_disabled";
                         }
 
                         btns_html = "<center><div class='btn-group' role='group'><button type='button' onclick='confirm(" + item.id + ", false);' class='btn btn-warning " + low_btn_state + "'>Low</button><button type='button' onclick='confirm(" + item.id + ", undefined);' class='btn btn-danger " + out_btn_state + "'>Out</button></div></center>"
@@ -146,7 +147,7 @@
                 });
                 //Append every stock item to the table          
                 $('#stock tbody').append(html);
-                $(".btn_Disabled").attr("disabled", true);
+                $(".btn_disabled").attr("disabled", true);
             }
             
         });
