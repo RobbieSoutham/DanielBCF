@@ -1,9 +1,15 @@
 TESTING: False
 DEBUG: True
 SECRET_KEY: b'_5#y2L"F4Q8z\n\xec]/'
-MYSQL_USERNAME: 'id7241580_bcf1'
-MYSQL_PASSWORD: 'wds19651'
-MYSQL_DATABASE: 'id7241580_main'
-MYSQL_HOST: 'reparative-twig.000webhostapp.com'
+MYSQL_USERNAME: 'dbc_main'
+MYSQL_PASSWORD: 'secret'
+MYSQL_DATABASE: 'danielbc_main'
+MYSQL_HOST: 'localhost'
 
 
+MAIL_SERVER: '64.233.184.109'
+MAIL_PORT: 587
+MAIL_USE_TLS: True
+MAIL_USERNAME: 'rjsoutham@gmail.com'
+MAIL_PASSWORD: 'rviiwhwizyddbxbp'
+MAIL_DEFAULT_SENDER: 'noreply@danielbcf.tk'

@@ -4,6 +4,7 @@ Products module.
 """
 
 from . import Database
+from flask import jsonify
 
 class ProductNotFound(Exception):
     pass
@@ -35,5 +36,16 @@ class Product():
         Database.delete(cls._tablename, "id", id)
 
     @classmethod
-    def getProducts(cls):
-        return jsonify(Database.get("Products"))
+    def get_products(cls):
+        
+        data = []
+        content = {}
+        results = Database.find("Products", "id", "*")
+        print("dv")
+        for result in results:
+                print(result[3])
+                content = {'id': result[0], 'name': result[1], 'site_id': result[2], 'stock_healthy': result[3]}
+                data.append(content)
+                content = {}
+
+        return jsonify(data)
