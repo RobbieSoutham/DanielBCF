@@ -6,6 +6,7 @@ Flask==1.0.2
 Flask-Login==0.4.1
 Flask-Script==2.0.5
 Flask-WTF==0.14.2
+flask_mail
 futures==3.1.1
 gunicorn==18.0
 isort==4.3.4
