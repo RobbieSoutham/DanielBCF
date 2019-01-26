@@ -4,7 +4,6 @@
     <link href="{{ url_for('static', filename='css/products.css') }}" rel="stylesheet" />
     <link href="{{ url_for('static', filename='open-iconic-master/font/css/open-iconic.css')}}" rel="stylesheet">
     <script src={{ url_for('static', filename='js/products.js') }} ></script>
-    
     <title>Products</title>
 {% endblock %}
 
@@ -13,14 +12,31 @@
         <input class="form-control" id="search" type="text" placeholder="Search..">
         <table class="table  table-bordered" id="products">
             <thead>
-                <th>Product</th>
-                <th>Status</th>
-                <th></th>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Order Quantity</th>
+                <th>COSSH</th>
             </thead>
             <tbody id="products_body">
             </tbody>
         </table>
+</div>
+<div class="modal" id="modal_edit" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <text id="modal-title"></text>
+            </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+              <button type=" button" class="btn change" onclick="" type="button" class="btn btn-success" data-dismiss="modal">Yes</button>
+              <button type="button" class="btn" data-dismiss="modal">No</button>
+            </div>
+        </div>
     </div>
+</div>
 {% endblock %}
 {% block scripts %}
 {% endblock %}
