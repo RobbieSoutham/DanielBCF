@@ -2,7 +2,7 @@ from functools import wraps
 
 from flask import (
     render_template, request, flash,
-    redirect, url_for, g
+    redirect, url_for, g, flask_mail
 )
 
 from bcrypt import hashpw, gensalt, checkpw
