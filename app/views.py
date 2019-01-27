@@ -129,7 +129,6 @@ def change_stock():
     return "one"
 
 @app.route('/stock_list')
-@login_required
 def stock_list():
     return Stock.get_stock()
 
