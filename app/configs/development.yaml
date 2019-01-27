@@ -1,9 +1,9 @@
 TESTING: False
 DEBUG: True
 SECRET_KEY: b'_5#y2L"F4Q8z\n\xec]/'
-MYSQL_USERNAME: 'id7241580_bcf1'
-MYSQL_PASSWORD: 'wds19651'
-MYSQL_DATABASE: 'id7241580_main'
-MYSQL_HOST: 'reparative-twig.000webhostapp.com'
+MYSQL_USERNAME: 'b1715cb9ccbce3'
+MYSQL_PASSWORD: '93e3a15b'
+MYSQL_DATABASE: 'heroku_84234294ffed68f'
+MYSQL_HOST: 'eu-cdbr-west-02.cleardb.net'
 
 
