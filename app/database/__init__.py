@@ -16,7 +16,7 @@ class Database(object):
         self.conn = connect(
             host=app.config['MYSQL_HOST'],
             user=app.config['MYSQL_USERNAME'],
-            passwrd=app.config['MYSQL_PASSWORD'],
+            password=app.config['MYSQL_PASSWORD'],
             db=app.config['MYSQL_DATABASE']
         )
         self.cursor = self.conn.cursor()
