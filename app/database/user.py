@@ -53,6 +53,7 @@ class User(UserMixin):
                 return user
         except UserNotFound:
             pass
+            
     @classmethod
     def verify(cls, email):
         Database.update(cls._tablename, "verified", "Coalesce(verified, -1) + 1", "email", email)

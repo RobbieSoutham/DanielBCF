@@ -24,7 +24,7 @@ body {
 	display: relative;
     align-items: center;
 }
-.alert-success{
+.alert{
 	position: absolute;
 	margin-right: auto;
 	margin-left: auto;
@@ -54,6 +54,11 @@ btn{
 	position: absolute;
 	right: 0px;
 }
-.navbar-toggler{
-	
+
+input[type=checkbox]{
+	width: 15px;
+	height: 15px;
+	display: inline-block;
+	vertical-align: middle;
+	padding-left: 10px;
 }

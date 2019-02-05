@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+{% if "rob@devthe.com" in current_user.email %}
 <div id="container">
         <input class="form-control" id="search" type="text" placeholder="Search..">
         <table class="table  table-bordered" id="products">
@@ -37,6 +38,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 {% endblock %}
 {% block scripts %}
 {% endblock %}

@@ -45,10 +45,13 @@
                 <a class="nav-link" href="COSSH">COSSH</a>
             </li>
             <!--Giving the link to products route for the manager only-->
-            {% if "Robbie" in current_user.first_name %}
+            {% if "rob@devthe.com" in current_user.email %}
             <li class="nav-item">
               <a class="nav-link"  href="{{ url_for('products') }}">Products</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link"  href="{{ url_for('sites') }}">Sites</a>
+              </li>
             {% endif %}               
           </ul>
         </div>

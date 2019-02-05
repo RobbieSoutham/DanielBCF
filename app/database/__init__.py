@@ -40,7 +40,6 @@ class Database(object):
     
     @classmethod
     def update(cls, table, attribute, value1, value2, value3):
-        print("UPDATE {} SET {} = ({}) WHERE {} = {}".format(table, attribute, value1, value2, value3))
         with cls() as c: c.execute(
             "UPDATE {} SET {} = {} WHERE {} = '{}'".format(table, attribute, value1, value2, value3)
         )
@@ -56,10 +55,6 @@ class Database(object):
 
     @classmethod
     def find(cls, table, column, value):
-        print("SELECT * FROM {} WHERE {}={}".format(
-                    table,
-                    column,
-                    "'{}'".format(value)))
         with cls() as c:
             c.execute(
                 "SELECT * FROM {} WHERE {}={}".format(

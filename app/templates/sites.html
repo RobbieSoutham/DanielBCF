@@ -1,13 +1,46 @@
 {% extends "layout/base.html" %}
 
 {% block head %}
-    <link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/sites.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='open-iconic-master/font/css/open-iconic.css')}}" rel="stylesheet">
+    <script src={{ url_for('static', filename='js/sites.js') }} ></script>
+    <title>Products</title>
 {% endblock %}
 
 {% block content %}
-<div class="container" id="form">
-    <h1>Sites</h1>>     
+{% if "rob@devthe.com" in current_user.email %}
+<div id="container">
+        <input class="form-control" id="search" type="text" placeholder="Search..">
+        <table class="table  table-bordered" id="products">
+            <thead>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Order Quantity</th>
+                <th>COSSH</th>
+            </thead>
+            <tbody id="products_body">
+            </tbody>
+        </table>
 </div>
+<div class="modal" id="modal_edit" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <text id="modal-title"></text>
+            </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+              <button type=" button" class="btn change" onclick="" type="button" class="btn btn-success" data-dismiss="modal">Yes</button>
+              <button type="button" class="btn" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+{% block scripts %}
 {% endblock %}
 
 {% block footer %}
