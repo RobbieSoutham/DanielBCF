@@ -1,0 +1,56 @@
+.text-muted{
+	color: #4d4d4d !important;
+}
+
+.error{
+	color: red;
+}
+
+#container{
+	width: 100%;
+}
+.table{
+	background-color: white;
+	color: black;
+	width: 100%;
+}
+
+.status{
+	text-align: center;
+	color: white;
+}
+
+.btn-group{
+	width: 100%;
+}
+.btn-group > button{
+	width: 50% !important;
+	
+}
+#sites{
+	table-layout: fixed;
+}
+#search{
+	border-radius: 0px;
+}
+#edit{
+	background: none;
+	border: none;
+}
+#edit:hover{
+	cursor: pointer;
+}
+#edit:focus{
+	outline: none !important;
+}
+#edit > img{
+	width: 25px;
+	height: auto;
+	filter: invert(0.5) sepia(1) saturate(5) hue-rotate(175deg);
+}
+#edit > img:hover{
+	width: 25px;
+	height: auto;
+	filter: invert(0.5) sepia(1) saturate(5) hue-rotate(500deg);
+
+}

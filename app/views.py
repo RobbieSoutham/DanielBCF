@@ -20,7 +20,7 @@ from app.database.sites import Site
 from app.database.stock import Stock
 from app.database.products import Product
 
-from flask import jsonify
+from flask import jsonify, request, abort
 
 from flask_login import LoginManager, UserMixin, \
     login_required, login_user, logout_user, current_user
@@ -108,10 +108,10 @@ def stock():
 
 
 @app.route("/", methods=["GET", "POST"])
-@app.route("/cossh")
+@app.route("/COSSH")
 @login_required
 def cossh():
-    return render_template("stock.html")
+    return render_template("cossh.html")
 
 
 @app.route("/products")
@@ -121,38 +121,54 @@ def products():
         return render_template("products.html")
     else:
         return render_template("denied.html")
-        
+
 @app.route("/sites")
 @login_required
 def sites():
     return render_template("sites.html")
 
+
+#AJAX routs
 @app.route("/change_stock")
 @login_required
 def change_stock():
-    id = request.args.get("id")
-    to_status = request.args.get("to_status")
-    if to_status == "true":
-        to_status = True
-    elif to_status == "false":
-        to_status = False
+    #Check if the request is xhr (ajax) or from a user
+    if request.is_xhr:
+        id = request.args.get("id")
+        to_status = request.args.get("to_status")
+        if to_status == "true":
+            to_status = True
+        elif to_status == "false":
+            to_status = False
+        else:
+            to_status = "NULL"
+    
+        Stock.update_stock(id, to_status)
+        return "Ok"
     else:
-        to_status = "NULL"
-    print(to_status)
-    Stock.update_stock(id, to_status)
-    return "one"
+        return abort(404)
 
 @app.route("/stock_list")
 @login_required
 def stock_list():
-    return Stock.get_stock()
+    if request.is_xhr:
+        return Stock.get_stock()
+    else:
+        return Stock.get_stock()
+    
 
 @app.route("/sites_list")
 @login_required
 def sites_list():
-    return Site.getSites()
-
+    if request.is_xhr:
+        return Site.getSites()
+    else:
+        return abort(404)
+    
 @app.route("/product_list")
 @login_required
 def product_list():
-    return Product.get_products()
+    if request.is_xhr:
+        return Product.get_products()
+    else:
+        return abort(404)

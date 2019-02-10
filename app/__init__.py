@@ -4,7 +4,7 @@ import yaml
 
 PATH = os.path.dirname(__file__)
 CONFIG = PATH + "/configs/{}.yaml".format(
-    os.environ.get('FLASK_ENV', "production")
+    os.environ.get('FLASK_ENV', "development")
 )
 
 # Creates our Flask application.

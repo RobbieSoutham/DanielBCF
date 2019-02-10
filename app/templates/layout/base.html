@@ -27,6 +27,7 @@
 
     <!-- Main css file -->
     <link href="{{ url_for('static', filename='css/all.css') }}" rel="stylesheet">
+    <script src={{ url_for('static', filename='js/ajax_calls.js') }} ></script>
 
     <!--Adding menu bar to specific pages-->
     {% if "login" in url_for(request.endpoint) or "register" in url_for(request.endpoint) %}

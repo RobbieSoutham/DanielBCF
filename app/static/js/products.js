@@ -1,28 +1,18 @@
+function ajax_insert(item){
+    btn_html = "<center><button type='btn' id='edit' onclick=\"edit(" + item.id + ", '" + item.name + "', " + item.order_qty + ", '" + item.cossh + "');\"><img src='" + $SCRIPT_ROOT + "/static/open-iconic-master/svg/pencil.svg' alt='pencil'></button><center>";
+    html = "<tr><td>" + item.name + "</td><td> " + item.id + "</td><td>" + item.order_qty + "</td><td><a href=" + item.cossh + ">" + item.cossh + "</a></td><center><td>" + btn_html + "</td></center>";
+    return html;
+}
 $(function() {
-    
-    //Pulling site JSON data from route, add to drop down
-    $.ajax({
-        type: "GET",
-        url: $SCRIPT_ROOT + "product_list",
-        dataType: 'json',
-        success: function (data) {
-            var html = '';
-            status = "";
-            $.each(data, function (i, item) {
-                    btn_html = "<center><button type='btn' id='edit' onclick=\"edit(" + item.id + ", '" + item.name + "', " + item.order_qty + ", '" + item.cossh + "');\"><img src='" + $SCRIPT_ROOT + "/static/open-iconic-master/svg/pencil.svg' alt='pencil'></button><center>";
-                    html += "<tr><td>" + item.name + "</td>center><center><td> " + item.id + "</td></center><td><center>" + item.order_qty + "</td></center><td><center><a href=" + item.cossh + ">Link</a></td></center><center><td>" + btn_html + "</td></center>";
-                
-            });
-            console.log(btn_html)
-            //Append every product item to the table          
-            $('#products tbody').append(html);
-        }
-        
-    });
+    ajax_return("product_list");
 });
 
-function edit(id, name, order_qty, cossh){
+function edit(id, name, address){
     $('#modal-title').text(name);
     $('#modal_edit').modal('show');
     
+}
+
+function ajax_follow(){
+
 }

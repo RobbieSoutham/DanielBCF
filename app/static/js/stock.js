@@ -1,23 +1,44 @@
-$(function() {
-    status = ""
-    stat_class = ""
-    
-    
-    //Pulling site JSON data from route, add to drop down
-    $.ajax({
-        type: "GET",
-        url: $SCRIPT_ROOT + "sites_list",
-        dataType: 'json',
-        success: function (data) {
-            var html = '';
-            $.each(data, function (i, item) {
-
-                html += "<option value='" + item.id + "'>" + item.name + "</option>"
-            });
-            $('#sites').append(html);
-            
+function ajax_insert(item, route){
+    if (route == "sites_list"){
+        html = "<option value='" + item.id + "'>" + item.name + "</option>";
+        return html;
+    }
+    else if (route == "stock_list"){
+        status = ""
+        stat_class = ""
+        site = $("#sites").val();
+        out_btn_state = "btn_enabled";
+        low_btn_state = "btn_enabled";
+        html = '';
+        status = "";
+        if (item.site_id == site){
+            if (item.stock_healthy == 1){
+                status = "Normal";
+                colour = "#28a745"; 
+                out_btn_state = "btn_enabled";
+                low_btn_state = "btn_enabled";
+            }
+            else if (item.stock_healthy ==  null){
+                status = "Ordered";
+                colour = "#dc3545";
+                out_btn_state = "btn_disabled"
+                low_btn_state = "btn_disabled";
+            }
+            else if (item.stock_healthy == 0){
+                status = "Low";
+                colour = "#ffc107";
+                low_btn_state = "btn_disabled";
+                out_btn_state = "btn_enabled";
+            }
+           
+            btns_html = "<td><center><div class='btn-group' role='group'><button type='button' onclick='confirm(" + item.id + ", false);' class='btn btn-warning " + low_btn_state + "'>Low</button><button type='button' onclick='confirm(" + item.id + ", undefined);' class='btn btn-danger " + out_btn_state + "'>Out</button></div></center></td>"
+            html = "<tr><td>" + item.name + "</td>center><td class='status' style='background-color: " + colour + ";'>" + status + "</td></center>" +  btns_html;
+            return html;
         }
-    });
+    }
+}
+$(function() {
+    ajax_return("sites_list", "#sites");
     $('#modal_init').modal('show');
     
     //Add search functionality to search bar
@@ -29,77 +50,21 @@ $(function() {
 });
 });
 
-function load_stock(){
-    site = $("#sites").val();
+function load_content(){
     $('#modal_init').modal('hide');
-    out_btn_state = "btn_enabled";
-    low_btn_state = "btn_enabled";
     
     //Pull stock JSON from route
-    $.ajax({
-        type: "GET",
-        url: $SCRIPT_ROOT + "stock_list",
-        dataType: 'json',
-        success: function (data) {
-            var html = '';
-            status = "";
-            console.log(low_btn_state)
-            $.each(data, function (i, item) {
-                if (item.site_id == site){
-                    console.log(item.stock_healthy)
-                    if (item.stock_healthy == 1){
-                        status = "Normal";
-                        colour = "#28a745"; 
-                        out_btn_state = "btn_enabled";
-                        low_btn_state = "btn_enabled";
-                        console.log("Normal")
-                    }
-                    else if (item.stock_healthy ==  null){
-                        status = "Ordered";
-                        colour = "#dc3545";
-                        out_btn_state = "btn_disabled"
-                        low_btn_state = "btn_disabled";
-                        console.log("out")
-                    }
-                    else if (item.stock_healthy == 0){
-                        status = "Low";
-                        colour = "#ffc107";
-                        low_btn_state = "btn_disabled";
-                        out_btn_state = "btn_enabled";
-                        console.log("low")
-                    }
-                   
-                    console.log(low_btn_state)
-                    btns_html = "<center><div class='btn-group' role='group'><button type='button' onclick='confirm(" + item.id + ", false);' class='btn btn-warning " + low_btn_state + "'>Low</button><button type='button' onclick='confirm(" + item.id + ", undefined);' class='btn btn-danger " + out_btn_state + "'>Out</button></div></center>"
-                    html += "<tr><td>" + item.name + "</td>center><td class='status' style='background-color: " + colour + ";'>" + status + "</td></center><td>" +  btns_html;
-                }
-            });
-            //Append every stock item to the table          
-            $('#stock tbody').append(html);
-            $(".btn_disabled").attr("disabled", true);
-        }
-        
-    });
-    
+    ajax_return("stock_list", "tbody");
 
+}
+
+function ajax_follow(){
+    //Disable buttons with the disabled class
+    $(".btn_disabled").attr("disabled", true);
 }
 function confirm(id, to_status){
+
     //Pass the item id and the change as parameters the set_stock function if confirmed
-    $(".change").attr("onclick","set_stock(" + id + ", " + to_status +")");
-    
+    $(".change").attr("onclick","ajax_change('change_stock', {id: " + id + ", to_status: '" + to_status + "'});");  
     $('#modal_confirm').modal('show');
-}
-
-function set_stock(id, to_status){
-    $.ajax({
-        type:  "GET",
-        url: $SCRIPT_ROOT + "change_stock",
-        data: {id: id, to_status: to_status},
-
-        success: function(data){
-            $("#stock tbody tr").remove();
-            load_stock()
-    }
-    
-    });
 }
