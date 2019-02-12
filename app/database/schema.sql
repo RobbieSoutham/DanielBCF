@@ -36,7 +36,7 @@ CREATE TABLE Users(
 );
 
 CREATE TABLE Products(
-    id INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(32) NOT NULL,
     order_qty INT NOT NULL,
 

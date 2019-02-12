@@ -43,12 +43,11 @@ def initdb():
 
 #Product commands
 @product_cli.command("create")
-@click.argument('id')
 def create_product(**values):
     values['name'] = input("Enter the name: ")
     values['order_qty'] = input("Enter the order quantity: ")
     Product.new_product(**values)
-    print("{} created.".format(values['id']))
+    print("{} created.".format(values['name']))
 
 @product_cli.command("delete")
 @click.argument('id')
@@ -135,12 +134,11 @@ stock_healthy: {} """.format(
 
 #Site commands
 @sites_cli.command("create")
-@click.argument('id')
 def create_site(**values):
     values['name'] = input("Enter the site name: ")
     values['address'] =  input("Enter the site address: ")
-    Sites.new_site(**values)
-    print("{} created.".format(values['id']))
+    Site.new_site(**values)
+    print("{} created.".format(values['name']))
 
 
 @sites_cli.command("delete")
