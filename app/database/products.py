@@ -25,9 +25,12 @@ class Product():
     def new_product(cls, **kwargs):
         kwargs['name'] = kwargs['name'].title()
         kwargs['order_qty'] = kwargs['order_qty'].title()
+        print(cls._tablename,
+            ["name", "order_qty"],
+            kwargs)
         Database.insert_into(
             cls._tablename,
-            ["id", "name", "order_qty"],
+            [ "name", "order_qty"],
             kwargs
         )
     
@@ -41,7 +44,7 @@ class Product():
         data = []
         content = {}
         results = Database.get("Products")
-        print("dv")
+
         for result in results:
                 content = {'id': result[0], 'name': result[1], 'order_qty': result[2]}
                 data.append(content)

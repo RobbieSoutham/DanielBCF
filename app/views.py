@@ -160,15 +160,12 @@ def stock_list():
 @app.route("/sites_list")
 @login_required
 def sites_list():
-    if request.is_xhr:
-        return Site.getSites()
-    else:
-        return abort(404)
+    return Site.get_sites()
     
 @app.route("/product_list")
 @login_required
 def product_list():
-    if request.is_xhr:
-        return Product.get_products()
-    else:
-        return abort(404)
+    #if request.is_xhr:
+    return Product.get_products()
+    #else:
+       # return abort(404)
