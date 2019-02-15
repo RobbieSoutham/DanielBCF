@@ -9,6 +9,7 @@
 
 {% block content %}
 <div id="container">
+        <button onclick="$('#modal_add').modal('show');"class="buttons" id="add"><img src="{{ url_for('static', filename='open-iconic-master/svg/plus.svg') }}" alt='plus'></button>
         <input class="form-control" id="search" type="text" placeholder="Search..">
         <table class="table  table-bordered" id="products">
             <thead>
@@ -37,6 +38,46 @@
         </div>
     </div>
 </div>
+<div class="modal" id="modal_add" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <text id="modal-title">Add Site</text>
+                </button>
+                </div>
+                <div class="modal-body">        
+                    <div class="form-row">
+                            <div class="col">
+                                <label class="form-check-label" for="name">Product Name:</label>
+                            </div>
+                            <div class="col">
+                                <label type="text" class="form-control" name="name"></label>
+                            </div>
+                    </div>
+                    <div class="form-row">
+                            <div class="col">
+                                <label class="form-check-label" for="id">Product ID:</label>
+                            </div>
+                            <div class="col">
+                                <label type="text" class="form-control" name="id"></label>
+                            </div>
+                    </div>
+                    <div class="form-row">
+                            <div class="col">
+                                <label class="form-check-label" for="cossh">Product COSSH:</label>
+                            </div>
+                            <div class="col">
+                                <label type="text" class="form-control" name="cossh"></label>
+                            </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn change" onclick="add_site();" type="button" class="btn" data-dismiss="modal">Add</button>
+                  <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block scripts %}
 {% endblock %}

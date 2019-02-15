@@ -1,6 +1,17 @@
 body {
 	background-image: url(../images/bg/login.jpg)
 }
+.text-muted{
+	color: #4d4d4d !important;
+}
+
+.error{
+	color: red;
+}
+
+#container{
+	width: 100%;
+}
 
 .navbar{
 	padding-top: 0px;
@@ -8,22 +19,27 @@ body {
 	border-radius: 0px !important;
 	padding: 0rem 1rem !important;
 }
+
 .navbar-brand{
 	position: relative;
 	padding: 10px 10px !important;
 }
+
 #welcome{
 	position: absolute;
 	right: 0px;
 	padding-right: 2rem;
 }
+
 .navbar > ul > li{
 	padding-left: 50%;
 }
+
 .navbar > ul{
 	display: relative;
     align-items: center;
 }
+
 .alert{
 	position: absolute;
 	margin-right: auto;
@@ -37,28 +53,90 @@ body {
 	text-align: center;
 
 }
-btn{
-	margin: 0 auto;
-	display: block;
-	background-color: #005ce6;
-}
+
 .page-header{
 	margin-top: 0px !important;
 	margin-bottom: 2rem;
 }
+
+form{
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .navar > div{
 	padding-right: 52em !important;
 	display: inline-block !important;
 }
+
 #collapse{
 	position: absolute;
 	right: 0px;
 }
 
-input[type=checkbox]{
-	width: 15px;
-	height: 15px;
-	display: inline-block;
-	vertical-align: middle;
-	padding-left: 10px;
+.table{
+	background-color: white;
+	color: black;
+	width: 100%;
+}
+
+.btn-group{
+	width: 100%;
+}
+
+.btn-group > button{
+	width: 50% !important;
+	
+}
+
+#sites{
+	table-layout: fixed;
+}
+#search{
+	border-radius: 0px;
+}
+
+.buttons{
+	background: none;
+	border: none;
+}
+
+.buttons:hover{
+	cursor: pointer;
+}
+
+.buttons:focus{
+	outline: none !important;
+}
+
+.buttons > img{
+	width: 25px;
+	height: auto;
+}
+
+.buttons > img:hover{
+	width: 25px;
+	height: auto;
+}
+
+#edit > IMG{
+	filter: invert(0.5) sepia(1) saturate(5) hue-rotate(175deg);
+}
+
+#edit:hover{
+	filter: invert(0.5) sepia(1) saturate(5) hue-rotate(500deg);
+}
+
+#add{
+	filter: invert(0.5) sepia(1) saturate(5) hue-rotate(50deg);
+	float: right;
+	padding-bottom: 5px;
+}
+
+#add:hover{
+	filter: invert(0.5) sepia(1) saturate(5) hue-rotate(100deg);
+}
+#password{
+	margin-right: 0px !important;
 }

@@ -3,12 +3,13 @@
 {% block head %}
     <link href="{{ url_for('static', filename='css/sites.css') }}" rel="stylesheet" />
     <link href="{{ url_for('static', filename='open-iconic-master/font/css/open-iconic.css')}}" rel="stylesheet">
-    <script src={{ url_for('static', filename='js/sites.js') }} ></script>
+    <script src="{{ url_for('static', filename='js/sites.js') }}"></script>
     <title>Sites</title>
 {% endblock %}
 
 {% block content %}
 <div id="container">
+        <button onclick="$('#modal_add').modal('show');"class="buttons" id="add"><img src="{{ url_for('static', filename='open-iconic-master/svg/plus.svg') }}" alt='plus'></button>
         <input class="form-control" id="search" type="text" placeholder="Search..">
         <table class="table  table-bordered" id="sites">
             <thead>
@@ -36,6 +37,38 @@
         </div>
     </div>
 </div>
+<div class="modal" id="modal_add" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <text id="modal-title">Add Site</text>
+                </button>
+                </div>
+                <div class="modal-body">        
+                    <div class="form-row">
+                            <div class="col">
+                                <label class="form-check-label" for="name">Site Name:</label>
+                            </div>
+                            <div class="col">
+                                <label type="text" class="form-control" name="name"></label>
+                            </div>
+                    </div>
+                    <div class="form-row">
+                            <div class="col">
+                                <label class="form-check-label" for="ddress">Site Address:</label>
+                            </div>
+                            <div class="col">
+                                <label type="text" class="form-control" name="address"></label>
+                            </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn change" onclick="add_site();" type="button" class="btn" data-dismiss="modal">Add</button>
+                  <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block scripts %}
 {% endblock %}
