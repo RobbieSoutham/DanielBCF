@@ -32,14 +32,19 @@ class Site():
         )
 
         #Grab newly added site ID
-        site_id = Database.find(cls._tablename, "name", kwargs['name'])
-
+        site_id = Database.find(cls._tablename, "name", kwargs['name'])[0][0]
+        print(site_id)
         #Pull products from DB
         products = Database.get("Products")
 
-        for product in product:
+        for product in products:
             #Add a new record for each product to the stock table for the site
-                Database.insert_into(product[0], site_id, True)
+            kwargs['product_id'] = product[0]
+            kwargs['site_id'] = site_id
+            kwargs['stock_healthy'] = 1
+            Database.insert_into("Stock", ["product_id", "site_id", "stock_healthy"],
+            kwargs
+        )
     
     @classmethod
     def delete_site(cls, id):

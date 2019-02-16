@@ -69,10 +69,10 @@ def register():
     else:
         try:
             User.new_user(
-                email=form.email.data,
-                first_name=form.first_name.data,
-                surname=form.surname.data,
-                password=form.password.data.encode("utf-8"),
+                email = form.email.data,
+                first_name = form.first_name.data,
+                surname = form.surname.data,
+                password = form.password.data.encode("utf-8"),
             )
         except IntegrityError:
             flash("User with email already exists.", "danger")
@@ -147,6 +147,14 @@ def change_stock():
         return "Ok"
     else:
         return abort(404)
+
+@app.route("/add_site")
+@login_required
+def add_site():
+    Site.new_site(
+        name = request.args.get("name"),
+        address = request.args.get("address")
+        )
 
 @app.route("/stock_list")
 @login_required

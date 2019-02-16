@@ -37,6 +37,10 @@ class Database(object):
                 ', '.join(attributes),
                 ', '.join(['"{}"'.format(values[a]) for a in attributes])
         ))
+        print("INSERT INTO {} ({}) VALUES ({})".format(
+                table,
+                ', '.join(attributes),
+                ', '.join(['"{}"'.format(values[a]) for a in attributes])))
     
     @classmethod
     def update(cls, table, attribute, value1, value2, value3):
