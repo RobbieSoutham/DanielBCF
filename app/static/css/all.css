@@ -51,6 +51,7 @@ body {
 	bottom: 0 !important;
 	right: 0 !important;
 	text-align: center;
+	list-style: none;
 
 }
 
@@ -120,7 +121,7 @@ form{
 	height: auto;
 }
 
-#edit > IMG{
+#edit > img{
 	filter: invert(0.5) sepia(1) saturate(5) hue-rotate(175deg);
 }
 
@@ -133,7 +134,13 @@ form{
 	float: right;
 	padding-bottom: 5px;
 }
+#delete > img{
+	filter: invert(0.5) sepia(1) saturate(100) hue-rotate(0deg);
+}
 
+#delete:hover{
+	filter: invert(0.5) sepia(1) saturate(100) hue-rotate(20deg);
+}
 #add:hover{
 	filter: invert(0.5) sepia(1) saturate(5) hue-rotate(100deg);
 }

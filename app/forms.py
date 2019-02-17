@@ -43,3 +43,16 @@ class Login(FlaskForm):
     remember_me = BooleanField(
         'Remember me'
     )
+
+class site(FlaskForm):
+    name = StringField(
+        'Site Name', [
+            InputRequired(),
+    ])
+    address = StringField(
+        'Site Address', [
+            InputRequired(),
+    ])
+    site_id = StringField(
+        ''
+    )

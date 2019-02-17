@@ -1,3 +1,6 @@
 .form-row{
 	padding-top: 5px;
 }
+#site_id:parent, #site_id{
+	display: none;
+}

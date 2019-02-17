@@ -1,3 +1,4 @@
+{% from "include/_formhelpers.html" import render_field %}
 {% extends "layout/base.html" %}
 
 {% block head %}
@@ -9,7 +10,7 @@
 
 {% block content %}
 <div id="container">
-        <button onclick="$('#modal_add').modal('show');"class="buttons" id="add"><img src="{{ url_for('static', filename='open-iconic-master/svg/plus.svg') }}" alt='plus'></button>
+        <button onclick="$('#modal').modal('show');"class="buttons" id="add"><img src="{{ url_for('static', filename='open-iconic-master/svg/plus.svg') }}" alt='plus'></button>
         <input class="form-control" id="search" type="text" placeholder="Search..">
         <table class="table  table-bordered" id="sites">
             <thead>
@@ -21,72 +22,29 @@
             </tbody>
         </table>
 </div>
-<div class="modal" id="modal_edit" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <text id="modal-title"></text>
-            </button>
-            </div>
-            <div class="modal-body">
-                    <div class="modal-body">        
-                            <div class="form-row">
-                                    <div class="col">
-                                        <label class="form-check-label" for="name">Site Name:</label>
-                                    </div>
-                                    <div class="col">
-                                        <input id="edit_name" type="text" class="form-control" name="name"></label>
-                                    </div>
-                            </div>
-                            <div class="form-row">
-                                    <div class="col">
-                                        <label class="form-check-label" for="ddress">Site Address:</label>
-                                    </div>
-                                    <div class="col">
-                                        <input id="edit_address" type="text" class="form-control" name="address"></label>
-                                    </div>
-                            </div>
-                        </div>
-            </div>
-            <div class="modal-footer">
-              <button type=" button" class="btn change" onclick="" type="button" class="btn" data-dismiss="modal">Submit</button>
-              <button type="button" class="btn" data-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal" id="modal_add" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+<div class="modal" id="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <form method="post" id="form" onsubmit="modal_submit();">    
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <text id="modal-title">Add Site</text>
-                </button>
-                </div>
-                <div class="modal-body">        
-                    <div class="form-row">
-                            <div class="col">
-                                <label class="form-check-label" for="name">Site Name:</label>
-                            </div>
-                            <div class="col">
-                                <input id="add_name" type="text" class="form-control" name="name"></label>
-                            </div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <text id="modal-title">Add Site</text>
+                    </button>
                     </div>
-                    <div class="form-row">
-                            <div class="col">
-                                <label class="form-check-label" for="ddress">Site Address:</label>
-                            </div>
-                            <div class="col">
-                                <input id="add_address" type="text" class="form-control" name="address"></label>
-                            </div>
+                    <div class="modal-body">   
+                        {{ render_field(form.name) }}
+                        {{ render_field(form.address) }}
+                        {{ render_field(form.site_id) }}
+                        {{ form.csrf_token }}
                     </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn change" onclick="add_site();" type="button" class="btn" data-dismiss="modal">Add</button>
-                  <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                    <div class="modal-footer">
+                    <button type="submit" class="btn change" type="button" class="btn" >Add</button>
+                    <button type="button" class="btn" onclick="reset_modal();" data-dismiss="modal">Cancel</button>
+                    </div>
                 </div>
             </div>
-        </div>
+            </form>
     </div>
+
 {% endblock %}
 {% block scripts %}
 {% endblock %}

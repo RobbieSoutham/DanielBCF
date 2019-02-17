@@ -22,7 +22,7 @@ function ajax_return(route, append_to = "tbody"){
 }
 function ajax_change(route, data){
     $.ajax({
-        type:  "GET",
+        type: "GET",
         url: $SCRIPT_ROOT + route,
         data: data,
 

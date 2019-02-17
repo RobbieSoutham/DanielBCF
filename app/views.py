@@ -122,10 +122,37 @@ def products():
     else:
         return render_template("denied.html")
 
+@app.route("/sites", methods=["GET", "POST"])
 @app.route("/sites")
 @login_required
 def sites():
-    return render_template("sites.html")
+    form = forms.site(request.form)
+    if request.method == "GET":
+        return render_template("sites.html", form=form)
+    else:
+        if form.site_id.data == "":
+                #Adding site
+                try:
+                    print(form.name)
+                    Site.new_site(
+                        name = form.name.data,
+                        address = form.address.data
+                        
+                    )
+                    print()
+                    return ('', 204)
+                except:
+                    flash("Error.", "danger")
+                    
+        else:
+            #Changing site
+            Site.update_site(
+                name = form.name,
+                address = form.address
+            )
+            return ('', 204)
+    return ('', 204)
+    
 
 
 #AJAX routs
@@ -148,13 +175,11 @@ def change_stock():
     else:
         return abort(404)
 
-@app.route("/add_site")
+@app.route("/delete_site")
 @login_required
-def add_site():
-    Site.new_site(
-        name = request.args.get("name"),
-        address = request.args.get("address")
-        )
+def delete_site():
+    Site.delete_site(request.args.get("id"))
+    return ""
 
 @app.route("/stock_list")
 @login_required
@@ -169,7 +194,7 @@ def stock_list():
 @login_required
 def sites_list():
     return Site.get_sites()
-    
+
 @app.route("/product_list")
 @login_required
 def product_list():
