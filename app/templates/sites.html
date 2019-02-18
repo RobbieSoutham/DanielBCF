@@ -23,7 +23,7 @@
         </table>
 </div>
 <div class="modal" id="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-    <form method="post" id="form" onsubmit="modal_submit();">    
+    <form method="post" id="form" onsubmit="return false;" novalidate>    
         <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -37,7 +37,7 @@
                         {{ form.csrf_token }}
                     </div>
                     <div class="modal-footer">
-                    <button type="submit" class="btn change" type="button" class="btn" >Add</button>
+                    <button type="" class="btn change" type="button" class="btn" onclick="modal_submit();">Add</button>
                     <button type="button" class="btn" onclick="reset_modal();" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>

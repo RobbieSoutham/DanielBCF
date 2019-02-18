@@ -14,6 +14,10 @@ from . import forms
 from app import app
 from . import database
 
+from flask_wtf.csrf import CSRFProtect
+
+csrf = forms.csrf
+
 
 from app.database.user import User
 from app.database.sites import Site
@@ -122,36 +126,42 @@ def products():
     else:
         return render_template("denied.html")
 
+
 @app.route("/sites", methods=["GET", "POST"])
 @app.route("/sites")
 @login_required
+@csrf.exempt
 def sites():
     form = forms.site(request.form)
     if request.method == "GET":
         return render_template("sites.html", form=form)
-    else:
+    elif form.validate():
         if form.site_id.data == "":
                 #Adding site
                 try:
-                    print(form.name)
                     Site.new_site(
                         name = form.name.data,
                         address = form.address.data
                         
                     )
-                    print()
-                    return ('', 204)
+                    return jsonify(True)
                 except:
-                    flash("Error.", "danger")
+                    return jsonify("An error occurred, the site was not added.")
                     
         else:
-            #Changing site
-            Site.update_site(
-                name = form.name,
-                address = form.address
-            )
-            return ('', 204)
-    return ('', 204)
+            try:
+                #Changing site
+                Site.update_site(
+                    name = form.name,
+                    address = form.address
+                )
+                return jsonify(True)
+            except:
+                return jsonify("An error occurred, the site was not updated.")
+    else:
+        for fieldName, errorMessages in form.errors.items():
+            for error in errorMessages:
+                return jsonify(error)
     
 
 

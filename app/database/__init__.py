@@ -54,7 +54,7 @@ class Database(object):
             c.execute("DELETE FROM {} WHERE {}={}".format(
                 table,
                 column,
-                "'{}'".format(value)
+                "{}".format(value)
         ))
 
     @classmethod

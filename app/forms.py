@@ -8,7 +8,8 @@ from flask_wtf import FlaskForm
 
 from . import app
 
-CSRFProtect(app)
+csrf = CSRFProtect(app)
+csrf.exempt("/sites")
 
 class Registration(FlaskForm):
     email = StringField(
@@ -47,11 +48,11 @@ class Login(FlaskForm):
 class site(FlaskForm):
     name = StringField(
         'Site Name', [
-            InputRequired(),
+            DataRequired("Please enter a site name.")
     ])
     address = StringField(
         'Site Address', [
-            InputRequired(),
+            DataRequired("Please enter a site address")
     ])
     site_id = StringField(
         ''

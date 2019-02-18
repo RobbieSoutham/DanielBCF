@@ -52,6 +52,7 @@ body {
 	right: 0 !important;
 	text-align: center;
 	list-style: none;
+	z-index: 1050;
 
 }
 
