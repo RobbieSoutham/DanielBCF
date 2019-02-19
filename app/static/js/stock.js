@@ -32,7 +32,7 @@ function ajax_insert(item, route){
             }
            
             btns_html = "<td><center><div class='btn-group' role='group'><button type='button' onclick='confirm(" + item.id + ", false);' class='btn btn-warning " + low_btn_state + "'>Low</button><button type='button' onclick='confirm(" + item.id + ", undefined);' class='btn btn-danger " + out_btn_state + "'>Out</button></div></center></td>"
-            html = "<tr><td>" + item.name + "</td>center><td class='status' style='background-color: " + colour + ";'>" + status + "</td></center>" +  btns_html;
+            html = "<tr><td class='name'>" + item.name + "</td>center><td class='status' style='background-color: " + colour + ";'>" + status + "</td></center>" +  btns_html;
             return html;
         }
     }
@@ -40,14 +40,6 @@ function ajax_insert(item, route){
 $(function() {
     ajax_return("sites_list", "#sites");
     $('#modal_init').modal('show');
-    
-    //Add search functionality to search bar
-    $("#search").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#stock tbody tr").filter(function() {
-    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-});
-});
 });
 
 function load_content(){

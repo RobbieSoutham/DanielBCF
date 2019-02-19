@@ -17,6 +17,7 @@
     <script>
       //Creating script root variable to use urls dynamically outside of the template
       $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+      $END_POINT = {{request.endpoint|tojson|safe}};
     </script>
 
     <!-- Page specific head -->
@@ -27,7 +28,9 @@
 
     <!-- Main css file -->
     <link href="{{ url_for('static', filename='css/all.css') }}" rel="stylesheet">
-    <script src={{ url_for('static', filename='js/ajax_calls.js') }} ></script>
+    <script src={{ url_for('static', filename='js/ajax_calls.js') }}></script>
+    <script src={{ url_for('static', filename='js/search.js') }}></script>
+    <script src={{ url_for('static', filename='js/nav.js') }}></script>
 
     <!--Adding menu bar to specific pages-->
     {% if "login" in url_for(request.endpoint) or "register" in url_for(request.endpoint) %}
@@ -40,18 +43,18 @@
         <div class="collapse navbar-collapse" id="navbar">
           <ul class="navbar-nav mFr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('stock') }}">Stock</a>
+              <a class="nav-link" id="nav_stock" href="{{ url_for('stock') }}">Stock</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="COSSH">COSSH</a>
+                <a class="nav-link" id="nav_cossh" href="COSSH">COSSH</a>
             </li>
             <!--Giving the link to products route for the manager only-->
             {% if "rob@devthe.com" in current_user.email %}
             <li class="nav-item">
-              <a class="nav-link"  href="{{ url_for('products') }}">Products</a>
+              <a class="nav-link"  id="nav_products" href="{{ url_for('products') }}">Products</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"  href="{{ url_for('sites') }}">Sites</a>
+                <a class="nav-link" id="nav_sites" href="{{ url_for('sites') }}">Sites</a>
               </li>
             {% endif %}               
           </ul>
@@ -69,10 +72,7 @@
       
       </nav>
     </div>
-    <script>
-      $(document).ready(function () {
-      $("#{{request.endpoint}}").addClass("active"); })
-    </script>
+
     {% endif %}
 
   </head>

@@ -30,10 +30,9 @@ class Site():
             ["name", "address"],
             kwargs
         )
-        print()
+
         #Grab newly added site ID
         site_id = Database.find(cls._tablename, "name", kwargs['name'])[0][0]
-        print(site_id)
         #Pull products from DB
         products = Database.get("Products")
 

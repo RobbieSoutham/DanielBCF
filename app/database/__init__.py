@@ -28,6 +28,11 @@ class Database(object):
 
     @classmethod
     def insert_into(cls, table, attributes, values):
+        print("INSERT INTO {} ({}) VALUES ({})".format(
+        table,
+        ', '.join(attributes),
+        ', '.join(['"{}"'.format(values[a]) for a in attributes])))
+    
         for a in attributes:
             if a not in values:
                 raise TypeError("Attribute {} not in values.".format(a))
@@ -37,11 +42,7 @@ class Database(object):
                 ', '.join(attributes),
                 ', '.join(['"{}"'.format(values[a]) for a in attributes])
         ))
-        print("INSERT INTO {} ({}) VALUES ({})".format(
-                table,
-                ', '.join(attributes),
-                ', '.join(['"{}"'.format(values[a]) for a in attributes])))
-    
+
     @classmethod
     def update(cls, table, attribute, value1, value2, value3):
         with cls() as c: c.execute(

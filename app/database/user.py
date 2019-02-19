@@ -26,7 +26,6 @@ class User(UserMixin):
         self.surname = self._user[2]
         self.verified = self._user[3]
         self.password = self._user[4]
-        self.creation_time = self._user[5]
 
     @classmethod
     def new_user(cls, **kwargs):

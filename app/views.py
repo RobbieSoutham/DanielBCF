@@ -41,7 +41,7 @@ mail = Mail(app)
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Index at site root. Loads index.html"""
-    form = forms.Login(request.form)
+    form = forms.login(request.form)
 
     if form.validate_on_submit():
         user = User.login(
@@ -65,7 +65,7 @@ def logout():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register. Loads register.html"""
-    form = forms.Registration(request.form)
+    form = forms.registration(request.form)
     
     if request.method == "GET" or not form.validate():
         return render_template("register.html", form=form)
@@ -121,50 +121,22 @@ def cossh():
 @app.route("/products")
 @login_required
 def products():
+    form = forms.products(request.form)
     if current_user.email == "rob@devthe.com":
-        return render_template("products.html")
+        form = forms.products(request.form)
+        return render_template("products.html", form=form)
     else:
         return render_template("denied.html")
+
+
 
 
 @app.route("/sites", methods=["GET", "POST"])
 @app.route("/sites")
 @login_required
-@csrf.exempt
 def sites():
-    form = forms.site(request.form)
-    if request.method == "GET":
-        return render_template("sites.html", form=form)
-    elif form.validate():
-        if form.site_id.data == "":
-                #Adding site
-                try:
-                    Site.new_site(
-                        name = form.name.data,
-                        address = form.address.data
-                        
-                    )
-                    return jsonify(True)
-                except:
-                    return jsonify("An error occurred, the site was not added.")
-                    
-        else:
-            try:
-                #Changing site
-                Site.update_site(
-                    name = form.name,
-                    address = form.address
-                )
-                return jsonify(True)
-            except:
-                return jsonify("An error occurred, the site was not updated.")
-    else:
-        for fieldName, errorMessages in form.errors.items():
-            for error in errorMessages:
-                return jsonify(error)
-    
-
-
+    form = forms.sites(request.form)
+    return render_template("sites.html", form=form)
 #AJAX routs
 @app.route("/change_stock")
 @login_required
@@ -191,6 +163,12 @@ def delete_site():
     Site.delete_site(request.args.get("id"))
     return ""
 
+@app.route("/delete_product")
+@login_required
+def delete_product():
+    Product.delete_product(request.args.get("id"))
+    return ""
+
 @app.route("/stock_list")
 @login_required
 def stock_list():
@@ -212,3 +190,72 @@ def product_list():
     return Product.get_products()
     #else:
        # return abort(404)
+
+
+@app.route("/modal_forms", methods=["GET", "POST"])
+@login_required
+def modal_forms():
+    if request.method == "GET":
+        return abort(404)
+    else:
+        #Load the form depending on the page theyre on
+        print(request.form.get('page'))
+        if request.form.get('page') == "sites":
+            form = forms.sites(request.form)
+        else:
+            form = forms.products(request.form)
+        if form.validate():
+            if request.form.get('page') == "sites":
+                #User on sites page
+                if form.site_id.data == "":
+                        #Adding site
+                        try:
+                            Site.new_site(
+                                name = form.name.data,
+                                address = form.address.data
+                                
+                            )
+                            return jsonify(1)
+                        except:
+                            return jsonify("An error occurred, the site was not added.")
+                            
+                else:
+                    try:
+                        #Changing site
+                        Site.update_site(
+                            site_id = form.site_id.data,
+                            name = form.name.data,
+                            address = form.address.data
+                        )
+                        return jsonify(true)
+                    except:
+                        return jsonify("An error occurred, the site was not updated.")
+            else:
+                #User on products page
+                if form.edit.data == 0:
+                        #Adding Product
+                        print("sdf")
+                        Product.new_product(
+                            id = form.product_id.data,
+                            name = form.name.data,
+                            order_qty = form.order_qty.data,
+                            cossh = form.cossh.data
+                                
+                        )
+                        return jsonify(1)
+                else:
+                    try:
+                        #Changing Product
+                        Product.update_product(
+                            id = form.product_id.data,
+                            name = form.name.data,
+                            order_qty = form.order_qty.data,
+                            cossh = form.cossh.data
+                        )
+                        return jsonify(1)
+                    except:
+                        return jsonify("An error occurred, the product was not updated.")
+        else:
+            for fieldName, errorMessages in form.errors.items():
+                for error in errorMessages:
+                    return jsonify(error)

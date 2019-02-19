@@ -30,30 +30,30 @@ CREATE TABLE Users(
         -- +1 user verified
         -- +1 manager verified
     password VARCHAR(255) NOT NULL,
-    creation_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY (email)
 );
 
 CREATE TABLE Products(
-    id INT NOT NULL AUTO_INCREMENT,
+    id VARCHAR(32) NOT NULL,
     name VARCHAR(32) NOT NULL,
     order_qty INT NOT NULL,
+    cossh VARCHAR(2083)
 
     PRIMARY KEY (id)
 );
 
 CREATE TABLE Sites(
     id INT NOT NULL AUTO_INCREMENT,
-    name varchar(32) NOT NULL,
+    name VARCHAR(32) NOT NULL,
     address VARCHAR(256) NOT NULL,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE Stock(
     id INT NOT NULL AUTO_INCREMENT,
-    product_id INT NOT NULL,
-    site_id int NOT NULL,
+    product_id VARCHAR(32) NOT NULL,
+    site_id INT NOT NULL,
     stock_healthy BOOLEAN DEFAULT True,
         -- NULL = ordered
         -- false = low

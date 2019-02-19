@@ -11,49 +11,69 @@ from . import app
 csrf = CSRFProtect(app)
 csrf.exempt("/sites")
 
-class Registration(FlaskForm):
+class registration(FlaskForm):
     email = StringField(
         'Email Address', [
-            InputRequired("Please enter your email address."),
-            Email("This field requires a valid email address")
+            InputRequired("Please enter your email address:"),
+            Email("This field requires a valid email address:")
     ])
-    first_name = StringField('First Name', [
-        DataRequired("Please enter your first name."),
+    first_name = StringField('First Name:', [
+        DataRequired("Please enter your first name:"),
         length(max=32)
     ])
-    surname = StringField('Surname', [
+    surname = StringField('Surname:', [
         DataRequired("Please enter your surname."),
         length(max=32)
     ])
-    password = PasswordField('New Password', [
+    password = PasswordField('Password:', [
         DataRequired("Please enter a password.")
     ])
-    confirm = PasswordField('Repeat Password', [
+    confirm = PasswordField('Repeat Password:', [
         EqualTo('password', message='Passwords must match.')
     ])
 
-class Login(FlaskForm):
+class login(FlaskForm):
     email = StringField(
-        'Email Address', [
-            InputRequired("Please enter your email address."),
+        'Email Address:', [
+            InputRequired("Please enter your email address"),
             Email("This field requires a valid email address")
     ])
-    password = PasswordField('New Password', [
+    password = PasswordField('New Password:', [
         DataRequired("Please enter a password.")
     ])
     remember_me = BooleanField(
-        'Remember me'
+        'Remember me:'
     )
 
-class site(FlaskForm):
+class sites(FlaskForm):
     name = StringField(
-        'Site Name', [
+        'Site Name:', [
             DataRequired("Please enter a site name.")
     ])
     address = StringField(
-        'Site Address', [
-            DataRequired("Please enter a site address")
+        'Site Address:', [
+            DataRequired("Please enter a site address.")
     ])
     site_id = StringField(
+        'Site ID:'
+    )
+    
+class products(FlaskForm):
+    product_id = StringField(
+        'Product ID:', [
+            DataRequired("Please enter a product ID.")
+    ])
+    name = StringField(
+        'Product Name:', [
+            DataRequired("Please enter a product name.")
+    ])
+    cossh = StringField(
+        'COSSH:'
+    )
+    order_qty = StringField(
+        'Order Quantity:', [
+            DataRequired("Please enter an order quantity.")
+    ])
+    edit = BooleanField(
         ''
     )

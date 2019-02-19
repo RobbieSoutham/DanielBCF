@@ -24,16 +24,28 @@ class Product():
     @classmethod
     def new_product(cls, **kwargs):
         kwargs['name'] = kwargs['name'].title()
-        kwargs['order_qty'] = kwargs['order_qty'].title()
         print(cls._tablename,
-            ["name", "order_qty"],
+            ["id", "name", "order_qty", "cossh"],
             kwargs)
+
         Database.insert_into(
             cls._tablename,
-            [ "name", "order_qty"],
+            ["id", "name", "order_qty", "cossh"],
             kwargs
         )
     
+    
+    #Pull sites from DB
+        sites = Database.get("Sites")
+
+        for site in sites:
+            #Add a new record for each site to the stock table for the site
+            kwargs['site_id'] = sites[0][0]
+            kwargs['product_id'] = kwargs['id']
+            kwargs['stock_healthy'] = 1
+            Database.insert_into("Stock", ["product_id", "site_id", "stock_healthy"],
+            kwargs
+        )
     @classmethod
     def delete_product(cls, id):
         Database.delete(cls._tablename, "id", id)
