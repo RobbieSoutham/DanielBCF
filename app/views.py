@@ -112,7 +112,7 @@ def register():
 @app.route("/confirm_email/<token>")
 def confirm_email(token):
     try:
-        email = s.loads(manager_t)
+        email = s.loads(token)
     except:
         return "Error"
     print(email)
@@ -122,7 +122,7 @@ def confirm_email(token):
 @app.route("/confirm_account/<token>")
 def confirm_account(token):
     try:
-        email = s.loads(manager_t)
+        email = s.loads(token)
     except:
         return "Error"
     print(email)
