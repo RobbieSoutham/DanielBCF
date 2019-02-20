@@ -31,7 +31,6 @@ login_manager.login_view = "login"
 login_manager.user_loader(User)
 
 mail = SendGrid(app)
-from_email = Email("no-reply@DanielBCF.tk")
 
 s = URLSafeSerializer(app.config["SECRET_KEY"])
 
