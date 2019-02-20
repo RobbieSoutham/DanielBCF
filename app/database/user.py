@@ -24,16 +24,13 @@ class User(UserMixin):
         self.email = email
         self.first_name = self._user[1]
         self.surname = self._user[2]
-        self.verified = self._user[3]
-        self.password = self._user[4]
+        self.password = self._user[3]
 
     @classmethod
     def new_user(cls, **kwargs):
-        kwargs['first_name'] = kwargs['first_name'].title()
-        kwargs['surname'] = kwargs['surname'].title()
+        kwargs['first_name'] = "'" + kwargs['first_name'] + "'"
+        kwargs['surname'] = "'" + kwargs['surname'] + "'"
         
-        #Hash the password and convert it back into unicode to be stored in the DB
-        kwargs['password'] = hashpw(kwargs['password'], gensalt()).decode('unicode_escape')
         Database.insert_into(
             cls._tablename,
             ["email", "first_name", "surname", "password"],
@@ -54,5 +51,8 @@ class User(UserMixin):
             pass
             
     @classmethod
-    def verify(cls, email):
-        Database.update(cls._tablename, "verified", "Coalesce(verified, -1) + 1", "email", email)
+    def registered(cls, email):
+        if not Database.find(cls._tablename, "email", email):
+            return False
+        else:
+            return True

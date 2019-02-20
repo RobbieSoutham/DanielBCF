@@ -2,7 +2,7 @@ Hi {{ first_name }},
             
 To continue complete your registration please confirm your email with the link below and wait patiently for the manager to confirm your identity.
              
-{{ url_for('confirm_email', manager_t=user_t, _external = true) }}
+{{ url_for("confirm_email", token=user_t, _external = true) }}
             
 Many thanks,
 DBCF

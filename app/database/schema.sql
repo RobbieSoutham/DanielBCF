@@ -21,15 +21,20 @@ FLUSH PRIVILEGES;
 -- Setup tables.
 CREATE TABLE Users(
     email VARCHAR(32) NOT NULL UNIQUE,
-
     first_name VARCHAR(32) NOT NULL,
     surname VARCHAR(32) NOT NULL,
-
-    verified BIT(1),
-        -- NULL unverified
-        -- +1 user verified
-        -- +1 manager verified
     password VARCHAR(255) NOT NULL,
+    PRIMARY KEY (email)
+);
+
+CREATE TABLE Temp_users(
+    email VARCHAR(32) NOT NULL UNIQUE,
+    first_name VARCHAR(32) NOT NULL,
+    surname VARCHAR(32) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+
+    user_verified BOOLEAN DEFAULT FALSE,
+    manager_verified BOOLEAN DEFAULT FALSE,
 
     PRIMARY KEY (email)
 );
@@ -38,7 +43,7 @@ CREATE TABLE Products(
     id VARCHAR(32) NOT NULL,
     name VARCHAR(32) NOT NULL,
     order_qty INT NOT NULL,
-    cossh VARCHAR(2083)
+    cossh VARCHAR(2083),
 
     PRIMARY KEY (id)
 );

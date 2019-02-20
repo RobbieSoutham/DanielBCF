@@ -42,8 +42,7 @@ class Product():
             #Add a new record for each site to the stock table for the site
             kwargs['site_id'] = sites[0][0]
             kwargs['product_id'] = kwargs['id']
-            kwargs['stock_healthy'] = 1
-            Database.insert_into("Stock", ["product_id", "site_id", "stock_healthy"],
+            Database.insert_into("Stock", ["product_id", "site_id"],
             kwargs
         )
     @classmethod

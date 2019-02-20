@@ -8,21 +8,21 @@ from flask import (
 from bcrypt import hashpw, gensalt, checkpw
 from MySQLdb import IntegrityError
 from itsdangerous import URLSafeSerializer
-import sendgrid
+#import sendgrid
 import os
-from sendgrid.helpers.mail import *
+#from sendgrid.helpers.mail import *
 
 from . import forms
 from app import app
 from . import database
 
 from app.database.user import User
+from app.database.temp_user import Temp_user
 from app.database.sites import Site
 from app.database.stock import Stock
 from app.database.products import Product
 
 from flask import jsonify, request, abort
-from flask_mail import Mail, Message
 
 from flask_login import LoginManager, UserMixin, \
     login_required, login_user, logout_user, current_user
@@ -33,9 +33,8 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.user_loader(User)
 
-mail = Mail(app)
-sg = sendgrid.SendGridAPIClient(apikey="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")
-from_email = Email("no-reply@DanielBCF.tk")
+#sg = sendgrid.SendGridAPIClient(apikey="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")
+#from_email = Email("no-reply@DanielBCF.tk")
 
 s = URLSafeSerializer(app.config["SECRET_KEY"])
 
@@ -71,40 +70,65 @@ def register():
     if request.method == "GET" or not form.validate():
         return render_template("register.html", form=form)
        
-    else:
-        try:
-            User.new_user(
-                email = form.email.data,
-                first_name = form.first_name.data,
-                surname = form.surname.data,
-                password = form.password.data.encode("utf-8"),
+    elif not User.registered(form.email.data):
+            try:
+                Temp_user.new_user(
+                    email = form.email.data,
+                    first_name = form.first_name.data,
+                    surname = form.surname.data,
+                    password = form.password.data.encode("utf-8"),
+                )
+            except IntegrityError:
+                flash("User with email already exists.", "danger")
+                return redirect(url_for("register"))
+
+            flash("Registration complete. Please check your email for verification.", "success")
+            manager_t = s.dumps(form.email.data)
+            user_t = s.dumps(form.email.data, salt="email-confirm")
+            mail = Mail(
+                from_email,
+                "User Confirmation",
+                Email("rjsoutham@gmail.com"),
+                Content("text/html", render_template("email/user.txt", user_t=user_t, first_name=form.first_name.data, surname=form.surname.data)),
             )
-        except IntegrityError:
-            flash("User with email already exists.", "danger")
-            return redirect(url_for("register"))
+            response = sg.client.mail.send.post(request_body=mail.get())
+            print(response.status_code)
+            print(response.body)
+            print(response.headers)
 
-        flash(
-            "Registration complete. Please check your email for verification.",
-            "success"
-        )
-        manager_t = s.dumps(form.email.data)
+            mail = Mail(
+                from_email,         
+                "Confirm Email",
+                form.email.data,
+                Content("text/html", render_template("email/manager.txt", manager_t=manager_t, first_name=form.first_name.data, surname=form.surname.data)),
+            )
+            response = sg.client.mail.send.post(request_body=mail.get())
+            print(response.status_code)
+            return redirect(url_for("login"))
+    else:
+        flash("User with email already exists.", "danger")
+        return redirect(url_for("register"))  
 
-
-        msg = Message("sf", sender="no-reply@danielbcf.tk", recipients="rjsoutham@gmail.com".split())
-        msg.body = "sdf"
-        mail.send(msg)
-        return redirect(url_for("login"))
-        
-
-@app.route("/confirm_email/<manager_t>")
-def confirm_email(manager_t):
+@app.route("/confirm_email/<token>")
+def confirm_email(token):
     try:
         email = s.loads(manager_t)
     except:
         return "Error"
     print(email)
-    User.verify(email)
+    Temp_user.user_verify(email)
     return "success"
+
+@app.route("/confirm_account/<token>")
+def confirm_account(token):
+    try:
+        email = s.loads(manager_t)
+    except:
+        return "Error"
+    print(email)
+    Temp_user.manager_verify(email)
+    return "success"
+
 @app.route("/", methods=["GET", "POST"])
 @app.route("/stock")
 @login_required

@@ -32,7 +32,7 @@ class Site():
         )
 
         #Grab newly added site ID
-        site_id = Database.find(cls._tablename, "name", kwargs['name'])[0][0]
+        site_id = Database.find(cls._tablename, "id", kwargs['id'])[0][0]
         #Pull products from DB
         products = Database.get("Products")
 
@@ -40,8 +40,7 @@ class Site():
             #Add a new record for each product to the stock table for the site
             kwargs['product_id'] = product[0]
             kwargs['site_id'] = site_id
-            kwargs['stock_healthy'] = 1
-            Database.insert_into("Stock", ["product_id", "site_id", "stock_healthy"],
+            Database.insert_into("Stock", ["product_id", "site_id"],
             kwargs
         )
     
