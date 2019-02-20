@@ -86,18 +86,7 @@ def register():
             "Registration complete. Please check your email for verification.",
             "success"
         )
-        manager_t = s.dumps(form.email.data)
-        user_t = s.dumps(form.email.data, salt="email-confirm")
-        mail = Mail(
-            from_email,         
-            "User Confirmation",
-            Email("rjsoutham@gmail.com"),
-            Content("text/html", render_template("email/user.txt", user_t=user_t, first_name=form.first_name.data, surname=form.surname.data)),
-        )
-        response = sg.client.mail.send.post(request_body=mail.get())
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
+
 
         mail = Mail(
             from_email,         
