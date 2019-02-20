@@ -81,10 +81,13 @@ def register():
             except IntegrityError:
                 flash("User with email already exists.", "danger")
                 return redirect(url_for("register"))
-
-            flash("Registration complete. Please check your email for verification.", "success")
+            
+            #Generate tokens for verification
             manager_t = s.dumps(form.email.data)
-            user_t = s.dumps(form.email.data, salt="email-confirm")
+            user_t = s.dumps(form.email.data)
+
+            #Send manger confirmation email
+            
             mail = Mail(
                 from_email,
                 "User Confirmation",
@@ -96,6 +99,7 @@ def register():
             print(response.body)
             print(response.headers)
 
+            #Send user confirmation email
             mail = Mail(
                 from_email,         
                 "Confirm Email",
@@ -104,6 +108,8 @@ def register():
             )
             response = sg.client.mail.send.post(request_body=mail.get())
             print(response.status_code)
+
+            flash("Registration complete. Please check your email for verification.", "success")
             return redirect(url_for("login"))
     else:
         flash("User with email already exists.", "danger")
