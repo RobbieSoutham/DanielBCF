@@ -88,8 +88,8 @@ def register():
             mail = Mail(
                 from_email,
                 "User Confirmation",
-                "rjsoutham@gmail.com",
-                "dfg",
+                Email("rjsoutham@gmail.com"),
+                Content("text/plain", "hello"),
             )
             response = sg.client.mail.send.post(request_body=mail.get())
             print(response.status_code)
@@ -99,8 +99,8 @@ def register():
             mail = Mail(
                 from_email,         
                 "Confirm Email",
-                form.email.data,
-                "gfdsg",
+                Email(form.email.data),
+                Content("text/plain", "hello"),
             )
             response = sg.client.mail.send.post(request_body=mail.get())
             print(response.status_code)
