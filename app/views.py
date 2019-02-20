@@ -90,7 +90,7 @@ def register():
         manager_t = s.dumps(form.email.data)
 
 
-        msg = Message("sf", sender="no-reply@danielbcf.tk", recipients="rjsoutham@gmail.com")
+        msg = Message("sf", sender="no-reply@danielbcf.tk", recipients="rjsoutham@gmail.com".split())
         msg.body = "sdf"
         mail.send(msg)
         return redirect(url_for("login"))
