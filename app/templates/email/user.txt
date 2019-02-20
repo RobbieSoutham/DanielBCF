@@ -2,7 +2,7 @@ Hi {{ first_name }},
             
 To continue complete your registration please confirm your email with the link below and wait patiently for the manager to confirm your identity.
              
-{{ url_for('verify', email=email, user_hash=user_hash }}
+{{ url_for('verify', email=email, user_hash=user_hash) }}
             
 Many thanks,
 DBCF
