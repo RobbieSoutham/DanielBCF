@@ -32,7 +32,6 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.user_loader(User)
 
-mail = sendgrid(app)
 sg = sendgrid.SendGridAPIClient(apikey="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")
 from_email = Email("no-reply@DanielBCF.tk")
 
