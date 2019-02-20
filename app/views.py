@@ -89,7 +89,7 @@ def register():
                 from_email,
                 "User Confirmation",
                 "rjsoutham@gmail.com",
-                Content("text/html", render_template("email/user.txt", user_t=user_t, first_name=form.first_name.data, surname=form.surname.data)),
+                "dfg",
             )
             response = sg.client.mail.send.post(request_body=mail.get())
             print(response.status_code)
@@ -100,7 +100,7 @@ def register():
                 from_email,         
                 "Confirm Email",
                 form.email.data,
-                Content("text/html", render_template("email/manager.txt", manager_t=manager_t, first_name=form.first_name.data, surname=form.surname.data)),
+                "gfdsg",
             )
             response = sg.client.mail.send.post(request_body=mail.get())
             print(response.status_code)
