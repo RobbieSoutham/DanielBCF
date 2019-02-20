@@ -9,8 +9,8 @@ from bcrypt import hashpw, gensalt, checkpw
 from MySQLdb import IntegrityError
 from itsdangerous import URLSafeSerializer
 import sendgrid
-from sendgrid.helpers.mail import *
 import os
+from sendgrid.helpers.mail import *
 
 from . import forms
 from app import app
@@ -32,9 +32,9 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.user_loader(User)
 
-sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
+mail = SendGrid(app)
+sg = sendgrid.SendGridAPIClient(apikey="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")
 from_email = Email("no-reply@DanielBCF.tk")
-subject = "Account Confirmation"
 
 s = URLSafeSerializer(app.config["SECRET_KEY"])
 
@@ -88,12 +88,19 @@ def register():
         )
         manager_t = s.dumps(form.email.data)
         user_t = s.dumps(form.email.data, salt="email-confirm")
-        to_email = Email("rjsoutham@gmail.com")
-        content = Content(render_template("email/manager.txt", manager_t=manager_t, first_name=form.first_name.data, surname=form.surname.data))
-        mail = Mail(from_email, subject, to_email, content)
+        mail = Mail(
+            from_email,         
+            #render_template("email/manager.txt", manager_t=manager_t, first_name=form.first_name.data, surname=form.surname.data)
+            "xfdgjk",
+            Email("rjsoutham@gmail.com"),
+            Content("text/plain", "fslkdf"),
+        )
         response = sg.client.mail.send.post(request_body=mail.get())
         print(response.status_code)
+        print(response.body)
+        print(response.headers)
         return redirect(url_for("login"))
+        
 
 @app.route("/confirm_email/<manager_t>")
 def confirm_email(manager_t):
