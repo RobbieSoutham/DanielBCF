@@ -15,4 +15,5 @@ bcrypt
 pyyaml
 mysql-python
 yasha
-flask-sendgrid
+sendgrid
+flask_mail

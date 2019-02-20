@@ -22,6 +22,7 @@ from app.database.stock import Stock
 from app.database.products import Product
 
 from flask import jsonify, request, abort
+from flask_mail import Mail, Message
 
 from flask_login import LoginManager, UserMixin, \
     login_required, login_user, logout_user, current_user
@@ -89,14 +90,28 @@ def register():
         user_t = s.dumps(form.email.data, salt="email-confirm")
         mail = Mail(
             from_email,         
-            "Confirm Email",
+            "User Confirmation",
             Email("rjsoutham@gmail.com"),
-            Content("text/html", render_template("email/manager.txt", manager_t=manager_t, first_name=form.first_name.data, surname=form.surname.data)),
+            Content("text/html", render_template("email/user.txt", user_t=user_t, first_name=form.first_name.data, surname=form.surname.data)),
         )
         response = sg.client.mail.send.post(request_body=mail.get())
         print(response.status_code)
         print(response.body)
         print(response.headers)
+
+        mail = Mail(
+            from_email,         
+            "Confirm Email",
+            form.email.data,
+            Content("text/html", render_template("email/manager.txt", manager_t=manager_t, first_name=form.first_name.data, surname=form.surname.data)),
+        )
+        response = sg.client.mail.send.post(request_body=mail.get())
+        print(response.status_code)
+
+
+        msg = message("sf", sender="no-reply@danielbcf.tk", recipients="rjsoutham@gmail.com")
+        msg.body = "sdf"
+        mail.send(message)
         return redirect(url_for("login"))
         
 
@@ -110,6 +125,15 @@ def confirm_email(manager_t):
     User.verify(email)
     return "success"
 
+@app.route("/confirm_email/<user_t>")
+def confirm_email(manager_t):
+    try:
+        email = s.loads(manager_t)
+    except:
+        return "Error"
+    print(email)
+    User.verify(email)
+    return "success"
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/stock")
