@@ -28,8 +28,6 @@ class User(UserMixin):
 
     @classmethod
     def new_user(cls, **kwargs):
-        kwargs['first_name'] = "'" + kwargs['first_name'] + "'"
-        kwargs['surname'] = "'" + kwargs['surname'] + "'"
         
         Database.insert_into(
             cls._tablename,
