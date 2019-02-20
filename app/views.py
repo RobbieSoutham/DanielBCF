@@ -8,7 +8,9 @@ from flask import (
 from bcrypt import hashpw, gensalt, checkpw
 from MySQLdb import IntegrityError
 from itsdangerous import URLSafeSerializer
-from flask_sendgrid import SendGrid
+import sendgrid
+import os
+from sendgrid.helpers.mail import *
 
 from . import forms
 from app import app
@@ -30,7 +32,8 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.user_loader(User)
 
-mail = SendGrid(app)
+sg = sendgrid.SendGridAPIClient(apikey="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")
+from_email = Email("no-reply@DanielBCF.tk")
 
 s = URLSafeSerializer(app.config["SECRET_KEY"])
 
@@ -84,12 +87,17 @@ def register():
         )
         manager_t = s.dumps(form.email.data)
         user_t = s.dumps(form.email.data, salt="email-confirm")
-        mail.send_email(
-        from_email='someone@yourdomain.com',
-        to_email= "rjsosutham@gmail.com",
-        subject='Subject',
-        text='Body'
+        mail = Mail(
+            from_email,         
+            "Confirm Email",
+            Email("rjsoutham@gmail.com"),
+            Content("text/html", render_template("email/manager.txt", manager_t=manager_t, first_name=form.first_name.data, surname=form.surname.data)),
         )
+        response = sg.client.mail.send.post(request_body=mail.get())
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+        return redirect(url_for("login"))
         
 
 @app.route("/confirm_email/<manager_t>")
