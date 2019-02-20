@@ -45,7 +45,7 @@ class Temp_user(UserMixin):
         Database.delete(cls._tablename, "email", email)
 
 
-    @classmethod
+    
     def verify(cls, temp_user):
         User.new_user(
             email = temp_user[0],
@@ -60,7 +60,7 @@ class Temp_user(UserMixin):
     def user_verify(cls, email):
         temp_user = Database.find(cls._tablename, "email", email)[0]
         if temp_user[5] == 1:
-            Temp_user.verify(temp_user)
+            verify(temp_user)
         else:
             Database.update(cls._tablename, "user_verified", "1", "email", email)
     

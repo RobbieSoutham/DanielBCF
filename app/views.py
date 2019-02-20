@@ -86,12 +86,12 @@ def register():
             manager_t = s.dumps(form.email.data)
             user_t = s.dumps(form.email.data)
 
-            #Send manger confirmation email
+            #Send user confirmation email
             
             mail = Mail(
                 from_email,
                 "User Confirmation",
-                Email("rjsoutham@gmail.com"),
+                Email(form.email.data),
                 Content("text/html", render_template("email/user.html", user_t=user_t, first_name=form.first_name.data, surname=form.surname.data)),
             )
             response = sg.client.mail.send.post(request_body=mail.get())
@@ -99,11 +99,11 @@ def register():
             print(response.body)
             print(response.headers)
 
-            #Send user confirmation email
+            #Send manager confirmation email
             mail = Mail(
                 from_email,         
                 "Confirm Email",
-                Email(form.email.data),
+                Email("rjsoutham@gmail.com"),
                 Content("text/html", render_template("email/manager.html", manager_t=manager_t, first_name=form.first_name.data, surname=form.surname.data)),
             )
             response = sg.client.mail.send.post(request_body=mail.get())
