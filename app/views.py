@@ -86,7 +86,7 @@ def register():
             "Registration complete. Please check your email for verification.",
             "success"
         )
-
+        manager_t = s.dumps(form.email.data)
 
         mail = Mail(
             from_email,         
