@@ -8,9 +8,7 @@ from flask import (
 from bcrypt import hashpw, gensalt, checkpw
 from MySQLdb import IntegrityError
 from itsdangerous import URLSafeSerializer
-import sendgrid
-import os
-from sendgrid.helpers.mail import *
+from flask_sendgrid import SendGrid
 
 from . import forms
 from app import app
@@ -87,18 +85,12 @@ def register():
         )
         manager_t = s.dumps(form.email.data)
         user_t = s.dumps(form.email.data, salt="email-confirm")
-        mail = Mail(
-            from_email,         
-            #render_template("email/manager.txt", manager_t=manager_t, first_name=form.first_name.data, surname=form.surname.data)
-            "xfdgjk",
-            Email("rjsoutham@gmail.com"),
-            Content("text/plain", "fslkdf"),
+        mail.send_email(
+        from_email='someone@yourdomain.com',
+        to_email= "rjsosutham@gmail.com",
+        subject='Subject'
+        text='Body',
         )
-        response = sg.client.mail.send.post(request_body=mail.get())
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
-        return redirect(url_for("login"))
         
 
 @app.route("/confirm_email/<manager_t>")
