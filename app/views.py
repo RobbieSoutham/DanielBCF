@@ -10,6 +10,7 @@ from MySQLdb import IntegrityError
 from itsdangerous import URLSafeSerializer
 import sendgrid
 from sendgrid.helpers.mail import *
+import os
 
 from . import forms
 from app import app

@@ -1,0 +1,15 @@
+TESTING: False
+DEBUG: True
+SECRET_KEY: b'_5#y2L"F4Q8z\n\xec]/'
+
+MYSQL_USERNAME: 'b6e1da88695842:'
+MYSQL_PASSWORD: '13ef074bb5ae1e4'
+MYSQL_DATABASE: 'heroku_5470ca94133a4e9'
+MYSQL_HOST: 'eu-cdbr-west-02.cleardb.net'
+
+MAIL_SERVER: '64.233.184.109'
+MAIL_PORT: 587
+MAIL_USE_TLS: True
+MAIL_USERNAME: 'rjsoutham@gmail.com'
+MAIL_PASSWORD: 'rviiwhwizyddbxbp'
+MAIL_DEFAULT_SENDER: 'noreply@danielbcf.tk'
