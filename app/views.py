@@ -8,9 +8,9 @@ from flask import (
 from bcrypt import hashpw, gensalt, checkpw
 from MySQLdb import IntegrityError
 from itsdangerous import URLSafeSerializer
-import sendgrid
+#import sendgrid
 import os
-from sendgrid.helpers.mail import *
+#from sendgrid.helpers.mail import *
 
 from . import forms
 from app import app
@@ -33,8 +33,8 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.user_loader(User)
 
-sg = sendgrid.SendGridAPIClient(apikey="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")
-from_email = Email("no-reply@DanielBCF.tk")
+#sg = sendgrid.SendGridAPIClient(apikey="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")
+#from_email = Email("no-reply@DanielBCF.tk")
 
 s = URLSafeSerializer(app.config["SECRET_KEY"])
 
@@ -90,7 +90,7 @@ def register():
             print(user_t)
 
             #Send user confirmation email
-            
+            '''
             mail = Mail(
                 from_email,
                 "User Confirmation",
@@ -111,7 +111,7 @@ def register():
             )
             response = sg.client.mail.send.post(request_body=mail.get())
             print(response.status_code)
-            
+            '''
             flash("Registration complete. Please check your email for verification.", "success")
             return redirect(url_for("login"))
     else:
@@ -126,7 +126,8 @@ def confirm_email(token):
         return "Error"
     print(email)
     Temp_user.user_verify(email)
-    return "success"
+    flash("Email verified.", "success")
+    return redirect(url_for("login"))
 
 @app.route("/confirm_account/<token>")
 def confirm_account(token):
@@ -136,7 +137,8 @@ def confirm_account(token):
         return "Error"
     print(email)
     Temp_user.manager_verify(email)
-    return "success"
+    flash("Account verified.", "success")
+    return redirect(url_for("login"))
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/stock")
@@ -194,7 +196,7 @@ def change_stock():
 @app.route("/delete_site")
 @login_required
 def delete_site():
-    Site.delete_site(request.args.get("id"))
+    Site.delete_site(request.args.get("name"))
     return ""
 
 @app.route("/delete_product")
@@ -240,33 +242,38 @@ def modal_forms():
             form = forms.products(request.form)
         if form.validate():
             if request.form.get('page') == "sites":
-                #User on sites page
-                if form.site_id.data == "":
-                        #Adding site
+                    #User on sites page
+                    if form.edit.data == 0:
                         try:
+                            #Adding site
                             Site.new_site(
                                 name = form.name.data,
                                 address = form.address.data
-                                
+                                        
                             )
                             return jsonify(1)
+                        except IntegrityError:
+                            return jsonify("This site is already in the database.")
                         except:
-                            return jsonify("An error occurred, the site was not added.")
+                            return jsonify("An error occurred, the product was not updated.")
                             
-                else:
-                    try:
-                        #Changing site
-                        Site.update_site(
-                            site_id = form.site_id.data,
-                            name = form.name.data,
-                            address = form.address.data
-                        )
-                        return jsonify(true)
-                    except:
-                        return jsonify("An error occurred, the site was not updated.")
+                    else:
+                        #try:
+                            #Changing site
+                            Site.update_site(
+                                previous_name = form.previous_name.data,
+                                name = form.name.data,
+                                address = form.address.data
+                            )
+                            return jsonify(1)
+                        #except:
+                            #return jsonify("An error occurred, the site was not updated.")
             else:
                 #User on products page
-                if form.edit.data == 0:
+                print("***")
+                print(form.edit.data)
+                if form.edit.data == False:
+                    try:
                         #Adding Product
                         print("sdf")
                         Product.new_product(
@@ -276,19 +283,22 @@ def modal_forms():
                             cossh = form.cossh.data
                                 
                         )
-                        return jsonify(1)
+                        return jsonify(1)  
+                    except:
+                        return jsonify("An error occurred, the product was not added.")
                 else:
-                    try:
+                    #try:
                         #Changing Product
                         Product.update_product(
+                            previous_id = form.previous_id.data,
                             id = form.product_id.data,
                             name = form.name.data,
                             order_qty = form.order_qty.data,
                             cossh = form.cossh.data
                         )
                         return jsonify(1)
-                    except:
-                        return jsonify("An error occurred, the product was not updated.")
+                    #except:
+                       # return jsonify("An error occurred, the product was not updated.")
         else:
             for fieldName, errorMessages in form.errors.items():
                 for error in errorMessages:

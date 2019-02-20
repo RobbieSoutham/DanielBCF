@@ -7,9 +7,12 @@ function ajax_insert(item){
 $(function() {
     ajax_return("product_list");
     $("#edit").parent().css("display", "none");
+    $("#previous_id").parent().css("display", "none");
 });
 
 function edit(id, name, order_qty, cossh){
+    $('input[type="checkbox"]').prop("checked", true);
+    $('#previous_id').val(id);
     $('#modal-title').text(name);
     $('#name').val(name);
     $('#product_id').val(id);
@@ -20,6 +23,7 @@ function edit(id, name, order_qty, cossh){
 }
 
 function reset_modal(){
+    $('input[type="checkbox"]').prop("checked", false);
     $('#modal-title').text("Add Product");
     $('#name').val("");
     $('#product_id').val("");

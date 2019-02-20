@@ -12,14 +12,13 @@ class ProductNotFound(Exception):
 class Site():
     _tablename = "Sites"
 
-    def __init__(self, id):
+    def __init__(self, name):
         try:
-            self._tablename = Database.find(self._tablename, "id", id)[0]
+            self._tablename = Database.find(self._tablename, "name", name)[0]
         except IndexError:
-            raise ProductNotFound(id)
-        self.id = id
-        self.name = self._tablename[1]
-        self.address = self._tablename[2]
+            raise ProductNotFound(name)
+        self.name = name
+        self.address = self._tablename[1]
 
     @classmethod
     def new_site(cls, **kwargs):
@@ -31,22 +30,19 @@ class Site():
             kwargs
         )
 
-        #Grab newly added site ID
-        site_id = Database.find(cls._tablename, "id", kwargs['id'])[0][0]
         #Pull products from DB
         products = Database.get("Products")
 
         for product in products:
             #Add a new record for each product to the stock table for the site
             kwargs['product_id'] = product[0]
-            kwargs['site_id'] = site_id
-            Database.insert_into("Stock", ["product_id", "site_id"],
+            Database.insert_into("Stock", ["product_id", "name"],
             kwargs
         )
     
     @classmethod
-    def delete_site(cls, id):
-        Database.delete(cls._tablename, "id", id)
+    def delete_site(cls, name):
+        Database.delete(cls._tablename, "name", name)
 
     @classmethod
     def get_sites(cls):
@@ -54,7 +50,15 @@ class Site():
         content = {}
         sites =  Database.get("Sites")
         for site in sites:
-            content = {'id': site[0], 'name': site[1], 'address': site[2]}
+            content = {'name': site[0], 'address': site[1]}
             data.append(content)
             content = {}
         return jsonify(data)
+    
+    @classmethod
+    def update_site(cls, **kwargs):
+        if kwargs['previous_name'] != kwargs['name']:
+            Database.update(cls._tablename, "name", kwargs['name'], "name", kwargs['previous_name'])
+        
+        Database.update(cls._tablename, "address", kwargs['address'], "name", kwargs['name'])
+        

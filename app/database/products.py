@@ -61,3 +61,14 @@ class Product():
                 data.append(content)
                 content = {}
         return jsonify(data)
+    
+    @classmethod
+    def update_product(cls, **kwargs):
+        if kwargs['previous_id'] != kwargs['name']:
+            Database.update(cls._tablename, "id", kwargs['id'], "id", kwargs['previous_id'])
+            
+            
+        
+        Database.update(cls._tablename, "name", kwargs['name'], "id", kwargs['id'])
+        Database.update(cls._tablename, "cossh", kwargs['cossh'], "id", kwargs['id'])
+        Database.update(cls._tablename, "order_qty", kwargs['order_qty'], "id", kwargs['id'])

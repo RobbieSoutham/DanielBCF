@@ -54,8 +54,12 @@ class sites(FlaskForm):
         'Site Address:', [
             DataRequired("Please enter a site address.")
     ])
-    site_id = StringField(
-        'Site ID:'
+
+    previous_name = StringField(
+        ''
+    )
+    edit = BooleanField(
+        ''
     )
     
 class products(FlaskForm):
@@ -74,6 +78,10 @@ class products(FlaskForm):
         'Order Quantity:', [
             DataRequired("Please enter an order quantity.")
     ])
+
+    previous_id = StringField(
+        ''
+    )
     edit = BooleanField(
         ''
     )

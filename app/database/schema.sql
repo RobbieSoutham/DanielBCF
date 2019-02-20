@@ -49,22 +49,21 @@ CREATE TABLE Products(
 );
 
 CREATE TABLE Sites(
-    id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(32) NOT NULL,
+    name VARCHAR(32) NOT NULL UNIQUE,
     address VARCHAR(256) NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (name)
 );
 
 CREATE TABLE Stock(
     id INT NOT NULL AUTO_INCREMENT,
     product_id VARCHAR(32) NOT NULL,
-    site_id INT NOT NULL,
+    site_id VARCHAR(32) NOT NULL,
     stock_healthy BOOLEAN DEFAULT True,
         -- NULL = ordered
         -- false = low
         -- true = healthy
 
     PRIMARY KEY (id),
-    FOREIGN KEY (product_id) REFERENCES Products(id) ON DELETE CASCADE,
-    FOREIGN KEY (site_id) REFERENCES Sites(id) ON DELETE CASCADE
+    FOREIGN KEY (product_id) REFERENCES Products(id) ON UPDATE CASCADE,
+    FOREIGN KEY (site_id) REFERENCES Sites(name) ON UPDATE CASCADE
 );

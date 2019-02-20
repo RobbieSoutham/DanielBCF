@@ -29,9 +29,10 @@ class Database(object):
     @classmethod
     def insert_into(cls, table, attributes, values):
         print("INSERT INTO {} ({}) VALUES ({})".format(
-        table,
-        ', '.join(attributes),
-        ', '.join(['{}'.format(values[a]) for a in attributes])))
+                table,
+                ', '.join(attributes),
+                ', '.join(['"{}"'.format(values[a]) for a in attributes])
+        ))
     
         for a in attributes:
             if a not in values:
@@ -45,8 +46,9 @@ class Database(object):
 
     @classmethod
     def update(cls, table, attribute, value1, value2, value3):
+        print("UPDATE {} SET {} = '{}' WHERE {} = '{}'".format(table, attribute, value1, value2, value3))
         with cls() as c: c.execute(
-            "UPDATE {} SET {} = {} WHERE {} = '{}'".format(table, attribute, value1, value2, value3)
+            "UPDATE {} SET {} = '{}' WHERE {} = '{}'".format(table, attribute, value1, value2, value3)
         )
 
     @classmethod
