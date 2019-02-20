@@ -33,6 +33,7 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.user_loader(User)
 
+mail = Mail(app)
 sg = sendgrid.SendGridAPIClient(apikey="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")
 from_email = Email("no-reply@DanielBCF.tk")
 
@@ -89,7 +90,7 @@ def register():
         manager_t = s.dumps(form.email.data)
 
 
-        msg = message("sf", sender="no-reply@danielbcf.tk", recipients="rjsoutham@gmail.com")
+        msg = Message("sf", sender="no-reply@danielbcf.tk", recipients="rjsoutham@gmail.com")
         msg.body = "sdf"
         mail.send(message)
         return redirect(url_for("login"))
