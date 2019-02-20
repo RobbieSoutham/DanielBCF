@@ -84,7 +84,10 @@ def register():
             
             #Generate tokens for verification
             manager_t = s.dumps(form.email.data)
-            user_t = s.dumps(form.email.data)
+            user_t = s.dumps(form.email.data, salt="confirm_email")
+
+            print(manager_t)
+            print(user_t)
 
             #Send user confirmation email
             
@@ -108,7 +111,7 @@ def register():
             )
             response = sg.client.mail.send.post(request_body=mail.get())
             print(response.status_code)
-
+            
             flash("Registration complete. Please check your email for verification.", "success")
             return redirect(url_for("login"))
     else:
@@ -118,7 +121,7 @@ def register():
 @app.route("/confirm_email/<token>")
 def confirm_email(token):
     try:
-        email = s.loads(token)
+        email = s.loads(token, salt="confirm_email")
     except:
         return "Error"
     print(email)

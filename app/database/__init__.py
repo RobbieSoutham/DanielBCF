@@ -31,7 +31,7 @@ class Database(object):
         print("INSERT INTO {} ({}) VALUES ({})".format(
         table,
         ', '.join(attributes),
-        ', '.join(['"{}"'.format(values[a]) for a in attributes])))
+        ', '.join(['{}'.format(values[a]) for a in attributes])))
     
         for a in attributes:
             if a not in values:
@@ -51,11 +51,15 @@ class Database(object):
 
     @classmethod
     def delete(cls, table, column, value):
+        print(("DELETE FROM {} WHERE {}={}".format(
+                table,
+                column,
+                "{}".format(value))))
         with cls() as c:
             c.execute("DELETE FROM {} WHERE {}={}".format(
                 table,
                 column,
-                "{}".format(value)
+                "'{}'".format(value)
         ))
 
     @classmethod
