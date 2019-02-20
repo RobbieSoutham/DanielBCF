@@ -60,7 +60,7 @@ class Temp_user(UserMixin):
     def user_verify(cls, email):
         temp_user = Database.find(cls._tablename, "email", email)[0]
         if temp_user[5] == 1:
-            self.verify(temp_user)
+            cls.verify(temp_user)
         else:
             Database.update(cls._tablename, "user_verified", "1", "email", email)
     
@@ -69,7 +69,7 @@ class Temp_user(UserMixin):
         temp_user = Database.find(cls._tablename, "email", email)[0]
         print(temp_user)
         if temp_user[4] == 1:
-            self.verify(temp_user)
+            cls.verify(temp_user)
         else:
             Database.update(cls._tablename, "manager_verified", "1", "email", email)
     
