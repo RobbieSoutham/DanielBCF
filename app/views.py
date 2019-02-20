@@ -92,7 +92,7 @@ def register():
 
         msg = Message("sf", sender="no-reply@danielbcf.tk", recipients="rjsoutham@gmail.com")
         msg.body = "sdf"
-        mail.send(message)
+        mail.send(msg)
         return redirect(url_for("login"))
         
 
