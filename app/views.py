@@ -88,15 +88,6 @@ def register():
         )
         manager_t = s.dumps(form.email.data)
 
-        mail = Mail(
-            from_email,         
-            "Confirm Email",
-            form.email.data,
-            Content("text/html", render_template("email/manager.txt", manager_t=manager_t, first_name=form.first_name.data, surname=form.surname.data)),
-        )
-        response = sg.client.mail.send.post(request_body=mail.get())
-        print(response.status_code)
-
 
         msg = message("sf", sender="no-reply@danielbcf.tk", recipients="rjsoutham@gmail.com")
         msg.body = "sdf"
