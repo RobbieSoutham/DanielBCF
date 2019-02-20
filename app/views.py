@@ -124,17 +124,6 @@ def confirm_email(manager_t):
     print(email)
     User.verify(email)
     return "success"
-
-@app.route("/confirm_email/<user_t>")
-def confirm_email(manager_t):
-    try:
-        email = s.loads(manager_t)
-    except:
-        return "Error"
-    print(email)
-    User.verify(email)
-    return "success"
-
 @app.route("/", methods=["GET", "POST"])
 @app.route("/stock")
 @login_required
