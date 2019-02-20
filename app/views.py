@@ -91,6 +91,7 @@ def register():
         to_email = Email("rjsoutham@gmail.com")
         content = Content(render_template("email/manager.txt", manager_t=manager_t, first_name=form.first_name.data, surname=form.surname.data))
         mail = Mail(from_email, subject, to_email, content)
+        response = sg.client.mail.send.post(request_body=mail.get())
         print(response.status_code)
         return redirect(url_for("login"))
 
