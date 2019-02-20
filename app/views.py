@@ -88,8 +88,8 @@ def register():
         mail.send_email(
         from_email='someone@yourdomain.com',
         to_email= "rjsosutham@gmail.com",
-        subject='Subject'
-        text='Body',
+        subject='Subject',
+        text='Body'
         )
         
 
