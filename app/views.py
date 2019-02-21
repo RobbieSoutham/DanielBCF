@@ -15,10 +15,9 @@ import os
 from . import forms
 from app import app
 from . import database
-from . import orders
+from app import orders
 
-from app.orders.instant import *
-from app.orders.monthly import *
+from app.orders import instant_order
 from app.database.user import User
 from app.database.temp_user import Temp_user
 from app.database.sites import Site
@@ -195,7 +194,7 @@ def change_stock():
         elif to_status == "false":
             to_status = False
         else:
-            order()
+            instant_order(request.args.get("id"))
             to_status = "NULL"
     
         Stock.update_stock(id, to_status)
