@@ -64,6 +64,6 @@ CREATE TABLE Stock(
         -- true = healthy
 
     PRIMARY KEY (id),
-    FOREIGN KEY (product_id) REFERENCES Products(id) ON UPDATE CASCADE,
-    FOREIGN KEY (site_id) REFERENCES Sites(name) ON UPDATE CASCADE
+    FOREIGN KEY (product_id) REFERENCES Products(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (site_id) REFERENCES Sites(name) ON UPDATE CASCADE ON DELETE CASCADE
 );

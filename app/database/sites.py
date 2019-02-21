@@ -36,7 +36,8 @@ class Site():
         for product in products:
             #Add a new record for each product to the stock table for the site
             kwargs['product_id'] = product[0]
-            Database.insert_into("Stock", ["product_id", "name"],
+            kwargs['site_id'] = kwargs['nam'] 
+            Database.insert_into("Stock", ["product_id", "site_id"],
             kwargs
         )
     

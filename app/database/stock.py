@@ -50,4 +50,3 @@ class Stock():
     @classmethod
     def update_stock(cls, id, to_status):
         Database.update(cls._tablename, "stock_healthy", to_status, "id", id)
-        return "Sucess"

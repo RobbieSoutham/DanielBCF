@@ -1,11 +1,9 @@
 function ajax_insert(item, route){
-    console.log(item.id);
     if (route == "sites_list"){
         html = "<option value='" + item.name + "'>" + item.name + "</option>";
         return html;
     }
     else if (route == "stock_list"){
-        status = ""
         stat_class = ""
         site = $("#sites").val();
         out_btn_state = "btn_enabled";
@@ -31,7 +29,7 @@ function ajax_insert(item, route){
                 low_btn_state = "btn_disabled";
                 out_btn_state = "btn_enabled";
             }
-            console.log("sdfsdfsdf");
+            console.log(item.stock_healthy)
             btns_html = "<td><center><div class='btn-group' role='group'><button type='button' onclick='confirm(" + item.id + ", false);' class='btn btn-warning " + low_btn_state + "'>Low</button><button type='button' onclick='confirm(" + item.id + ", undefined);' class='btn btn-danger " + out_btn_state + "'>Out</button></div></center></td>"
             html = "<tr><td class='name'>" + item.name + "</td>center><td class='status' style='background-color: " + colour + ";'>" + status + "</td></center>" +  btns_html;
             return html;

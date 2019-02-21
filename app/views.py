@@ -15,7 +15,10 @@ import os
 from . import forms
 from app import app
 from . import database
+from . import orders
 
+from app.orders.instant import *
+from app.orders.monthly import *
 from app.database.user import User
 from app.database.temp_user import Temp_user
 from app.database.sites import Site
@@ -33,7 +36,7 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.user_loader(User)
 
-#sg = sendgrid.SendGridAPIClient(apikey="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")
+#sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
 #from_email = Email("no-reply@DanielBCF.tk")
 
 s = URLSafeSerializer(app.config["SECRET_KEY"])
@@ -162,7 +165,8 @@ def products():
         form = forms.products(request.form)
         return render_template("products.html", form=form)
     else:
-        return render_template("denied.html")
+        flash("Only the manager can use this page.", "danger")
+    return redirect(url_for("login"))
 
 
 
@@ -171,8 +175,13 @@ def products():
 @app.route("/sites")
 @login_required
 def sites():
-    form = forms.sites(request.form)
-    return render_template("sites.html", form=form)
+    if current_user.email == "rob@devthe.com":
+        form = forms.sites(request.form)
+        return render_template("sites.html", form=form)
+    else:
+        flash("Only the manager can use this page.", "danger")
+        return redirect(url_for("login"))
+
 #AJAX routs
 @app.route("/change_stock")
 @login_required
@@ -186,6 +195,7 @@ def change_stock():
         elif to_status == "false":
             to_status = False
         else:
+            order()
             to_status = "NULL"
     
         Stock.update_stock(id, to_status)
@@ -217,15 +227,18 @@ def stock_list():
 @app.route("/sites_list")
 @login_required
 def sites_list():
-    return Site.get_sites()
+    if request.is_xhr:
+        return Site.get_sites()
+    else:
+        return abort(404)
 
 @app.route("/product_list")
 @login_required
 def product_list():
-    #if request.is_xhr:
-    return Product.get_products()
-    #else:
-       # return abort(404)
+    if request.is_xhr:
+        return Product.get_products()
+    else:
+        return abort(404)
 
 
 @app.route("/modal_forms", methods=["GET", "POST"])
@@ -244,18 +257,17 @@ def modal_forms():
             if request.form.get('page') == "sites":
                     #User on sites page
                     if form.edit.data == 0:
-                        try:
+                        #try:
                             #Adding site
                             Site.new_site(
                                 name = form.name.data,
-                                address = form.address.data
-                                        
+                                address = form.address.data             
                             )
                             return jsonify(1)
-                        except IntegrityError:
-                            return jsonify("This site is already in the database.")
-                        except:
-                            return jsonify("An error occurred, the product was not updated.")
+                        #except IntegrityError:
+                            #return jsonify("This site is already in the database.")
+                        #except:
+                            #return jsonify("An error occurred, the product was not added.")
                             
                     else:
                         #try:
