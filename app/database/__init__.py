@@ -51,8 +51,13 @@ class Database(object):
 
     @classmethod
     def delete(cls, table, column, value):
+        print("DELETE FROM {} WHERE {} = {}".format(
+                table,
+                column,
+                "{}".format(value)
+        ))
         with cls() as c:
-            c.execute("DELETE FROM {} WHERE {} = '{}'".format(
+            c.execute("DELETE FROM {} WHERE {} = {}".format(
                 table,
                 column,
                 "{}".format(value)

@@ -4,6 +4,7 @@ from app.database import Database
 import os
 #from sendgrid.helpers.mail import *
 
+
 #sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
 #from_email = Email("no-reply@DanielBCF.tk")
 
@@ -20,11 +21,15 @@ def instant_order(stock_id):
 
 def get_order():
     low_stock =  []
-    results = Database.join("Products.order_qty, Products.id, Stock.stock_healthy, site_id", "Stock", "Products", "product_id", "id")
+    results = Database.join("Products.order_qty, Products.id, Stock.stock_healthy, Stock.site_id, Stock.id", "Stock", "Products", "product_id", "id")
     for result in results:
         if result[2] == None:
+            
             address = Database.find("Sites", "name", result[3])[0][1]
             low_stock.append([result[0], result[1], address])
+
+            #Set the all the stock that was low to ordered
+            Database.update("Stock", "stock_healthy", "Null", "stock_healthy", 0)
 
     order = ""
 

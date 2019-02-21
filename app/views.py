@@ -12,12 +12,13 @@ from itsdangerous import URLSafeSerializer
 import os
 #from sendgrid.helpers.mail import *
 
+
 from . import forms
 from app import app
 from . import database
 from app import orders
 
-from app.orders import instant_order
+from app.orders import get_order
 from app.database.user import User
 from app.database.temp_user import Temp_user
 from app.database.sites import Site
@@ -194,6 +195,7 @@ def change_stock():
         elif to_status == "false":
             to_status = False
         else:
+            get_order()
             instant_order(request.args.get("id"))
             to_status = "NULL"
     
@@ -281,12 +283,9 @@ def modal_forms():
                             #return jsonify("An error occurred, the site was not updated.")
             else:
                 #User on products page
-                print("***")
-                print(form.edit.data)
                 if form.edit.data == False:
                     try:
                         #Adding Product
-                        print("sdf")
                         Product.new_product(
                             id = form.product_id.data,
                             name = form.name.data,
