@@ -102,7 +102,7 @@ def register():
         user_t = s.dumps(form.email.data, salt="confirm_email")
         print(manager_t)
         print(user_t)
-        '''
+        
         #Send user confirmation email
         mail = Mail(
             from_email,
@@ -126,7 +126,7 @@ def register():
         print(response.status_code)
         print(response.body)
         print(response.headers)
-        '''
+        
         flash("Registration complete. Please check your email for verification.", "success")
         return redirect(url_for("login"))
     else:
