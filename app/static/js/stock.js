@@ -54,7 +54,6 @@ function ajax_follow(){
     $(".btn_disabled").attr("disabled", true);
 }
 function confirm(id, to_status){
-
     //Pass the item id and the change as parameters the set_stock function if confirmed
     $(".change").attr("onclick","ajax_change('change_stock', {id: " + id + ", to_status: '" + to_status + "'});");  
     $('#modal_confirm').modal('show');

@@ -224,19 +224,21 @@ def change_stock():
     if request.is_xhr:
         id = request.args.get("id")
         to_status = request.args.get("to_status")
+
         if to_status == "true":
             to_status = True
         elif to_status == "false":
             to_status = False
         else:
-            instant_order(request.args.get("id"))
+            #instant_order(request.args.get("id"))
             to_status = "NULL"
+        
         try:
             Stock.update_stock(id, to_status)
             return "Ok"
         except:
             flash("An error occurred, the stock was not updated", "danger")
-        return redirect(url_for("stock"))
+            return redirect(url_for("stock")) 
     else:
         return abort(404)
 
