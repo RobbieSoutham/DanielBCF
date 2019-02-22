@@ -104,7 +104,7 @@ def register():
         #Send user confirmation email
         mail = Mail(
             from_email,
-            "User Confirmation",
+            "Confirm email",
             Email(form.email.data),
             Content("text/html", render_template("email/user.html", user_t=user_t, first_name=form.first_name.data, surname=form.surname.data)),
         )
@@ -116,13 +116,15 @@ def register():
         #Send manager confirmation email
         mail = Mail(
             from_email,         
-            "Confirm Email",
+            "User confirmation",
             Email("rjsoutham@gmail.com"),
             Content("text/html", render_template("email/manager.html", manager_t=manager_t, first_name=form.first_name.data, surname=form.surname.data)),
         )
         response = sg.client.mail.send.post(request_body=mail.get())
         print(response.status_code)
-
+        print(response.body)
+        print(response.headers)
+    
         flash("Registration complete. Please check your email for verification.", "success")
         return redirect(url_for("login"))
     else:
@@ -150,7 +152,7 @@ def confirm_account(token):
         email = s.loads(token)
     except:
         flash("Invalid token.", "success")
-    return redirect(url_for("login"))
+        return redirect(url_for("login"))
 
     #Verify the user on the managers side 
     Temp_user.manager_verify(email)
