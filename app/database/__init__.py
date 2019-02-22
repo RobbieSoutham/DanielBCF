@@ -39,7 +39,6 @@ class Database(object):
 
     @classmethod
     def update(cls, table, attribute, value1, value2, value3):
-        
         if value1 == "NULL":
             print("UPDATE {} SET {} = {} WHERE {} = '{}'".format(table, attribute, value1, value2, value3)
             )
