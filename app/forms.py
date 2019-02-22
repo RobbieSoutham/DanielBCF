@@ -85,3 +85,18 @@ class products(FlaskForm):
     edit = BooleanField(
         ''
     )
+
+class settings(FlaskForm):
+    man_email = StringField(
+        'Manager email:', [
+            InputRequired("Please enter an email address."),
+            Email("This field requires a valid email address.")
+    ])
+    sup_email = StringField(
+        'Supplier email:', [
+            DataRequired("Please enter the suppliers email.")
+    ])
+    del_time = StringField(
+        'Average supplier delivery time:', [
+        DataRequired("Please enter a delivery time.")
+    ])

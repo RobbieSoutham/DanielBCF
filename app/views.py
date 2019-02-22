@@ -11,14 +11,18 @@ from itsdangerous import URLSafeSerializer
 #import sendgrid
 import os
 #from sendgrid.helpers.mail import *
+from configparser import ConfigParser
 
 
 from . import forms
 from app import app
 from . import database
 from app import orders
+from app import repleneshedjob
 
+from app.orders import instant_order
 from app.orders import get_order
+from app.repleneshedjob import rep
 from app.database.user import User
 from app.database.temp_user import Temp_user
 from app.database.sites import Site
@@ -38,6 +42,8 @@ login_manager.user_loader(User)
 
 #sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
 #from_email = Email("no-reply@DanielBCF.tk")
+
+config = ConfigParser()
 
 s = URLSafeSerializer(app.config["SECRET_KEY"])
 
@@ -143,18 +149,29 @@ def confirm_account(token):
     flash("Account verified.", "success")
     return redirect(url_for("login"))
 
-@app.route("/", methods=["GET", "POST"])
 @app.route("/stock")
 @login_required
 def stock():
     return render_template("stock.html")
 
 
-@app.route("/", methods=["GET", "POST"])
 @app.route("/COSSH")
 @login_required
 def cossh():
     return render_template("cossh.html")
+
+@app.route("/sites", methods=["GET", "POST"])
+@app.route("/settings")
+@login_required
+def settings():
+    config.read("app/config.ini")
+    man_email = config.get("Settings", "man_email")
+    sup_email = config.get("Settings", "sup_email")
+    del_time = config.get("Settings", "del_time")
+    file = open("config.ini", "w")
+    if request.method == "GET" or not form.validate():
+        form = forms.settings(request.form)
+        return render_template("settings.html", form=form, man_email=man_email, sup_email=sup_email, del_time=del_time)
 
 
 @app.route("/products")
@@ -167,11 +184,8 @@ def products():
     else:
         flash("Only the manager can use this page.", "danger")
     return redirect(url_for("login"))
+    con
 
-
-
-
-@app.route("/sites", methods=["GET", "POST"])
 @app.route("/sites")
 @login_required
 def sites():
@@ -195,11 +209,12 @@ def change_stock():
         elif to_status == "false":
             to_status = False
         else:
-            get_order()
-            instant_order(request.args.get("id"))
+            #get_order()
+            rep()
+            #instant_order(request.args.get("id"))
             to_status = "NULL"
     
-        Stock.update_stock(id, to_status)
+        #Stock.update_stock(id, to_status)
         return "Ok"
     else:
         return abort(404)

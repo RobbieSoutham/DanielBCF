@@ -62,7 +62,7 @@ CREATE TABLE Stock(
         -- NULL = ordered
         -- false = low
         -- true = healthy
-
+    order_date DATE DEFAULT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (product_id) REFERENCES Products(id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (site_id) REFERENCES Sites(name) ON UPDATE CASCADE ON DELETE CASCADE

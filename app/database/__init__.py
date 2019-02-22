@@ -44,18 +44,22 @@ class Database(object):
 
     @classmethod
     def update(cls, table, attribute, value1, value2, value3):
-        print("UPDATE {} SET {} = {} WHERE {} = '{}'".format(table, attribute, value1, value2, value3))
-        with cls() as c: c.execute(
+        print("UPDATE {} SET {} = '{}' WHERE {} = '{}'".format(table, attribute, value1, value2, value3))
+        if value1 == "NULL":
+            with cls() as c: c.execute(
             "UPDATE {} SET {} = {} WHERE {} = '{}'".format(table, attribute, value1, value2, value3)
-        )
+            )
+        else:
+            with cls() as c: c.execute(
+                "UPDATE {} SET {} = '{}' WHERE {} = '{}'".format(table, attribute, value1, value2, value3)
+            )
 
     @classmethod
     def delete(cls, table, column, value):
         print("DELETE FROM {} WHERE {} = {}".format(
                 table,
                 column,
-                "{}".format(value)
-        ))
+                "{}".format(value)))
         with cls() as c:
             c.execute("DELETE FROM {} WHERE {} = {}".format(
                 table,

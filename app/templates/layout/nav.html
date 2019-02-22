@@ -1,0 +1,36 @@
+<div class="page-header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            
+          <a class ="navbar-brand" href="{{ url_for('stock') }}">DanielBCF<br><small class="text-muted">Stock management</small></a>
+          <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav mFr-auto">
+              <li class="nav-item">
+                <a class="nav-link" id="nav_stock" href="{{ url_for('stock') }}">Stock</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" id="nav_cossh" href="COSSH">COSSH</a>
+              </li>
+              <!--Giving the link to products route for the manager only-->
+              {% if "rob@devthe.com" in current_user.email %}
+              <li class="nav-item">
+                <a class="nav-link"  id="nav_products" href="{{ url_for('products') }}">Products</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" id="nav_sites" href="{{ url_for('sites') }}">Sites</a>
+                </li>
+              {% endif %}               
+            </ul>
+          </div>
+            <div id="collapse">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" panded="false">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+          <div id="welcome">
+            <span>Hi {{ current_user.first_name }}! </span>
+            <a href="{{ url_for('logout') }}">Logout</a>  
+          </div>
+        </div>
+        
+        </nav>
+      </div>

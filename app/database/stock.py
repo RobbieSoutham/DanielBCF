@@ -5,6 +5,7 @@ Products module.
 
 from . import Database
 from flask import jsonify
+import datetime
 
 class ProductNotFound(Exception):
     pass
@@ -49,4 +50,6 @@ class Stock():
 
     @classmethod
     def update_stock(cls, id, to_status):
+        if to_status == "NULL":
+            Database.update(cls._tablename, "order_date", datetime.date.today(), "id", id)
         Database.update(cls._tablename, "stock_healthy", to_status, "id", id)
