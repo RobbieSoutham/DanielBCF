@@ -1,8 +1,8 @@
 from app import database
 from app.database import Database
-#import sendgrid
+import sendgrid
 import os
-#from sendgrid.helpers.mail import *
+from sendgrid.helpers.mail import *
 from configparser import ConfigParser
 
 config = ConfigParser()
