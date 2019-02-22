@@ -100,7 +100,9 @@ def register():
         #Generate tokens for verification
         manager_t = s.dumps(form.email.data)
         user_t = s.dumps(form.email.data, salt="confirm_email")
-
+        print(manager_t)
+        print(user_t)
+        '''
         #Send user confirmation email
         mail = Mail(
             from_email,
@@ -124,7 +126,7 @@ def register():
         print(response.status_code)
         print(response.body)
         print(response.headers)
-    
+        '''
         flash("Registration complete. Please check your email for verification.", "success")
         return redirect(url_for("login"))
     else:
@@ -249,6 +251,7 @@ def change_stock():
 def delete_site():
     if request.is_xhr:
         Site.delete_site(request.args.get("name"))
+        return "ok"
     else:
         return abort(404)
 
@@ -257,6 +260,7 @@ def delete_site():
 def delete_product():  
     if request.is_xhr:
         Product.delete_product(request.args.get("id"))
+        return "ok"
     else:
         return abort(404)
 

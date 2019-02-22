@@ -55,7 +55,7 @@ class Temp_user(UserMixin):
         )
 
         #Delete temp user instance
-        Database.delete(cls._tablename, "email", temp_user[0])
+        Database.delete(cls._tablename, "email", "'" + temp_user[0] + "'")
 
 
     @classmethod
