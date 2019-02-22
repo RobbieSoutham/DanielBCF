@@ -8,9 +8,9 @@ from flask import (
 from bcrypt import hashpw, gensalt, checkpw
 from MySQLdb import IntegrityError
 from itsdangerous import URLSafeSerializer
-#import sendgrid
+import sendgrid
 import os
-#from sendgrid.helpers.mail import *
+from sendgrid.helpers.mail import *
 from configparser import ConfigParser
 
 
