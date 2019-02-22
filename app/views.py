@@ -234,7 +234,7 @@ def change_stock():
         elif to_status == "false":
             to_status = False
         else:
-            #instant_order(request.args.get("id"))
+            instant_order(request.args.get("id"))
             to_status = "NULL"
         
         try:
