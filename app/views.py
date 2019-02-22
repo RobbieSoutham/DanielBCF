@@ -51,6 +51,7 @@ config = ConfigParser()
 s = URLSafeSerializer(app.config["SECRET_KEY"])
 
 @app.route("/login", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 def login():
     form = forms.login(request.form)
 
