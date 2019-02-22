@@ -1,9 +1,6 @@
-#!/usr/bin/env python
-"""
-Database module.
-"""
-from MySQLdb import connect
+#Database module.
 
+from MySQLdb import connect
 from .. import app
 from flask import jsonify
 
@@ -11,8 +8,9 @@ import json
 
 
 class Database(object):
-    """ Base Database Class """
+    #Base Database class
     def __enter__(self):
+        #Setup DB
         self.conn = connect(
             host=app.config['MYSQL_HOST'],
             user=app.config['MYSQL_USERNAME'],
@@ -23,15 +21,12 @@ class Database(object):
         return self.cursor
 
     def __exit__(self, exc_type, exc_value, traceback):
+        #Commit changes and close the connection on exit
         self.conn.commit()
         self.conn.close()
 
     @classmethod
     def insert_into(cls, table, attributes, values):
-        print("INSERT INTO {} ({}) VALUES ({})".format(
-                table,
-                ', '.join(attributes),
-                ', '.join(['"{}"'.format(values[a]) for a in attributes])))
         for a in attributes:
             if a not in values:
                 raise TypeError("Attribute {} not in values.".format(a))
@@ -44,7 +39,6 @@ class Database(object):
 
     @classmethod
     def update(cls, table, attribute, value1, value2, value3):
-        print("UPDATE {} SET {} = '{}' WHERE {} = '{}'".format(table, attribute, value1, value2, value3))
         if value1 == "NULL":
             with cls() as c: c.execute(
             "UPDATE {} SET {} = {} WHERE {} = '{}'".format(table, attribute, value1, value2, value3)
@@ -56,10 +50,6 @@ class Database(object):
 
     @classmethod
     def delete(cls, table, column, value):
-        print("DELETE FROM {} WHERE {} = {}".format(
-                table,
-                column,
-                "{}".format(value)))
         with cls() as c:
             c.execute("DELETE FROM {} WHERE {} = {}".format(
                 table,
@@ -69,11 +59,6 @@ class Database(object):
 
     @classmethod
     def find(cls, table, column, value):
-        print("SELECT * FROM {} WHERE {}='{}'".format(
-                    table,
-                    column,
-                    "{}".format(value)
-            ))
         with cls() as c:
             c.execute(
                 "SELECT * FROM {} WHERE {}='{}'".format(

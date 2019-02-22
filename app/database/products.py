@@ -1,7 +1,4 @@
-#!/usr/bin/env python
-"""
-Products module.
-"""
+#Products module
 
 from . import Database
 from flask import jsonify
@@ -24,28 +21,23 @@ class Product():
     @classmethod
     def new_product(cls, **kwargs):
         kwargs['name'] = kwargs['name'].title()
-        print(cls._tablename,
-            ["id", "name", "order_qty", "cossh"],
-            kwargs)
-
         Database.insert_into(
             cls._tablename,
             ["id", "name", "order_qty", "cossh"],
             kwargs
         )
     
-    
         #Pull sites from DB
         sites = Database.get("Sites")
-        print(sites)
+
         for site in sites:
             #Add a new record for each site to the stock table for the site
-            print(site[0])
             kwargs['site_id'] = site[0]
             kwargs['product_id'] = kwargs['id']
             Database.insert_into("Stock", ["product_id", "site_id"],
             kwargs
             )
+
     @classmethod
     def delete_product(cls, id):
         Database.delete(cls._tablename, "id", id)
@@ -57,6 +49,7 @@ class Product():
         content = {}
         results = Database.get("Products")
 
+        #Return products data as JSON
         for result in results:
                 content = {'id': result[0], 'name': result[1], 'order_qty': result[2]}
                 data.append(content)

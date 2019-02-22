@@ -31,9 +31,8 @@ class Temp_user(UserMixin):
     def new_user(cls, **kwargs):
         kwargs['first_name'] = kwargs['first_name'].title()
         kwargs['surname'] = kwargs['surname'].title()
-        
+        kwargs['password'] = hashpw(kwargs['password'], gensalt()).decode("utf-8")
         #Hash the password and convert it back into unicode to be stored in the DB
-        kwargs['password'] = hashpw(kwargs['password'], gensalt()).decode('unicode_escape')
         Database.insert_into(
             cls._tablename,
             ["email", "first_name", "surname", "password"],
@@ -47,28 +46,35 @@ class Temp_user(UserMixin):
 
     @classmethod
     def verify(cls, temp_user):
+        #Setup user as real user
         User.new_user(
             email = temp_user[0],
             first_name = temp_user[1],
             surname = temp_user[2],
             password = temp_user[3],
         )
+
+        #Delete temp user instance
         Database.delete(cls._tablename, "email", temp_user[0])
 
 
     @classmethod
     def user_verify(cls, email):
+        #Set as user verified
         temp_user = Database.find(cls._tablename, "email", email)[0]
         if temp_user[5] == 1:
+            #Setup real user if also manager verified
             cls.verify(temp_user)
         else:
             Database.update(cls._tablename, "user_verified", "1", "email", email)
     
     @classmethod
     def manager_verify(cls, email):
+        #Set as manager verified
         temp_user = Database.find(cls._tablename, "email", email)[0]
         print(temp_user)
         if temp_user[4] == 1:
+            #Setup real user if also manager verified
             cls.verify(temp_user)
         else:
             Database.update(cls._tablename, "manager_verified", "1", "email", email)

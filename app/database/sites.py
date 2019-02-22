@@ -1,7 +1,5 @@
-#!/usr/bin/env python
-"""
-Products module.
-"""
+#Products module.
+
 
 from flask import jsonify
 from . import Database
@@ -50,6 +48,8 @@ class Site():
         data = []
         content = {}
         sites =  Database.get("Sites")
+        
+        #Return site data as JSON
         for site in sites:
             content = {'name': site[0], 'address': site[1]}
             data.append(content)
@@ -59,6 +59,7 @@ class Site():
     @classmethod
     def update_site(cls, **kwargs):
         if kwargs['previous_name'] != kwargs['name']:
+            #If the name (primary key) has been changed, update it first
             Database.update(cls._tablename, "name", kwargs['name'], "name", kwargs['previous_name'])
         
         Database.update(cls._tablename, "address", kwargs['address'], "name", kwargs['name'])

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- Dont show HTML until css is loaded -->
+<html lang="en" style="display:none">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,12 +23,11 @@
 
     <!-- Page specific head -->
     {% block head %}{% endblock %}
-    
-    <!-- Genericons core CSS -->
-    <!--link href="{{ url_for('static', filename='vendor/genericons/genericons/genericons.css') }}" rel="stylesheet"-->
 
     <!-- Main css file -->
     <link href="{{ url_for('static', filename='css/all.css') }}" rel="stylesheet">
+
+    <!-- JS modules -->
     <script src={{ url_for('static', filename='js/ajax_calls.js') }}></script>
     <script src={{ url_for('static', filename='js/search.js') }}></script>
     <script src={{ url_for('static', filename='js/nav.js') }}></script>
@@ -35,10 +35,9 @@
 
   <body>
     <!-- Main Content -->
-    <!-- Wrap content with <main id="wrap"><main>
-          when using the footer block to push the footer down. -->
     <main id="wrap">
       <div class=message_container>
+      <!-- Setup flash message -->
       {% with messages = get_flashed_messages(with_categories=True) %}
       {% if messages %}
         {% for category, message in messages %}
@@ -50,8 +49,6 @@
       {% block content %}{% endblock %}
     </main>
 
-    <!-- The footer is placed within its own block to render properly -->
-    {% block footer %}{% endblock %}
 
     <!-- Page specific script files -->
     {% block scripts %}{% endblock %}

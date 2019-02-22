@@ -40,24 +40,28 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.user_loader(User)
 
-#sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
-#from_email = Email("no-reply@DanielBCF.tk")
+#Sendgrid setup
+sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
+from_email = Email("no-reply@DanielBCF.tk")
 
+#Setup config parser object
 config = ConfigParser()
 
+#Setup Serializer object
 s = URLSafeSerializer(app.config["SECRET_KEY"])
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    """Index at site root. Loads index.html"""
     form = forms.login(request.form)
 
     if form.validate_on_submit():
+        #Check if user exists
         user = User.login(
             form.email.data,
             form.password.data.encode("utf-8"),
         )
         if user:
+            #If user exists log them in
             login_user(user, remember=form.remember_me.data)
             flash("Logged in successfully.", "success")
             return redirect(url_for("stock"))
@@ -73,56 +77,53 @@ def logout():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    """Register. Loads register.html"""
     form = forms.registration(request.form)
     
     if request.method == "GET" or not form.validate():
         return render_template("register.html", form=form)
-       
+    
+    #If the user is not already registered attempt to set up a temp user
     elif not User.registered(form.email.data):
-            try:
-                Temp_user.new_user(
-                    email = form.email.data,
-                    first_name = form.first_name.data,
-                    surname = form.surname.data,
-                    password = form.password.data.encode("utf-8"),
-                )
-            except IntegrityError:
-                flash("User with email already exists.", "danger")
-                return redirect(url_for("register"))
-            
-            #Generate tokens for verification
-            manager_t = s.dumps(form.email.data)
-            user_t = s.dumps(form.email.data, salt="confirm_email")
-
-            print(manager_t)
-            print(user_t)
-
-            #Send user confirmation email
-            '''
-            mail = Mail(
-                from_email,
-                "User Confirmation",
-                Email(form.email.data),
-                Content("text/html", render_template("email/user.html", user_t=user_t, first_name=form.first_name.data, surname=form.surname.data)),
+        #Check if they are already a temp user
+        try:
+            Temp_user.new_user(
+                email = form.email.data,
+                first_name = form.first_name.data,
+                surname = form.surname.data,
+                password = form.password.data.encode("utf-8"),
             )
-            response = sg.client.mail.send.post(request_body=mail.get())
-            print(response.status_code)
-            print(response.body)
-            print(response.headers)
-
-            #Send manager confirmation email
-            mail = Mail(
-                from_email,         
-                "Confirm Email",
-                Email("rjsoutham@gmail.com"),
-                Content("text/html", render_template("email/manager.html", manager_t=manager_t, first_name=form.first_name.data, surname=form.surname.data)),
-            )
-            response = sg.client.mail.send.post(request_body=mail.get())
-            print(response.status_code)
-            '''
-            flash("Registration complete. Please check your email for verification.", "success")
+        except IntegrityError:
+            flash("Please verify your email address!", "danger")
             return redirect(url_for("login"))
+            
+        #Generate tokens for verification
+        manager_t = s.dumps(form.email.data)
+        user_t = s.dumps(form.email.data, salt="confirm_email")
+
+        #Send user confirmation email
+        mail = Mail(
+            from_email,
+            "User Confirmation",
+            Email(form.email.data),
+            Content("text/html", render_template("email/user.html", user_t=user_t, first_name=form.first_name.data, surname=form.surname.data)),
+        )
+        response = sg.client.mail.send.post(request_body=mail.get())
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+
+        #Send manager confirmation email
+        mail = Mail(
+            from_email,         
+            "Confirm Email",
+            Email("rjsoutham@gmail.com"),
+            Content("text/html", render_template("email/manager.html", manager_t=manager_t, first_name=form.first_name.data, surname=form.surname.data)),
+        )
+        response = sg.client.mail.send.post(request_body=mail.get())
+        print(response.status_code)
+
+        flash("Registration complete. Please check your email for verification.", "success")
+        return redirect(url_for("login"))
     else:
         flash("User with email already exists.", "danger")
         return redirect(url_for("register"))  
@@ -130,10 +131,13 @@ def register():
 @app.route("/confirm_email/<token>")
 def confirm_email(token):
     try:
+        #Convert token into users email
         email = s.loads(token, salt="confirm_email")
     except:
-        return "Error"
-    print(email)
+        flash("Invalid token.", "success")
+        return redirect(url_for("login"))
+
+    #Verify the user on the users side 
     Temp_user.user_verify(email)
     flash("Email verified.", "success")
     return redirect(url_for("login"))
@@ -141,10 +145,13 @@ def confirm_email(token):
 @app.route("/confirm_account/<token>")
 def confirm_account(token):
     try:
+        #Convert token into users email
         email = s.loads(token)
     except:
-        return "Error"
-    print(email)
+        flash("Invalid token.", "success")
+    return redirect(url_for("login"))
+
+    #Verify the user on the managers side 
     Temp_user.manager_verify(email)
     flash("Account verified.", "success")
     return redirect(url_for("login"))
@@ -155,41 +162,53 @@ def stock():
     return render_template("stock.html")
 
 
-@app.route("/COSSH")
+@app.route("/cossh")
 @login_required
 def cossh():
     return render_template("cossh.html")
 
-@app.route("/sites", methods=["GET", "POST"])
-@app.route("/settings")
+@app.route("/settings", methods=["GET", "POST"])
 @login_required
 def settings():
-    config.read("app/config.ini")
-    man_email = config.get("Settings", "man_email")
-    sup_email = config.get("Settings", "sup_email")
-    del_time = config.get("Settings", "del_time")
-    file = open("config.ini", "w")
-    if request.method == "GET" or not form.validate():
+    if is_manager():
         form = forms.settings(request.form)
-        return render_template("settings.html", form=form, man_email=man_email, sup_email=sup_email, del_time=del_time)
-
-
+        config.read("app/config.ini")
+        man_email = config.get("Settings", "man_email")
+        sup_email = config.get("Settings", "sup_email")
+        del_time = config.get("Settings", "del_time")
+        file = open("config.ini", "w")
+        if request.method == "GET" or not form.validate():         
+            return render_template("settings.html", form=form, man_email=man_email, sup_email=sup_email, del_time=del_time)
+        else:
+            #Update config
+            config["Settings"] = {
+                'man_email': form.man_email.data,
+                'sup_email': form.sup_email.data,
+                'del_time': form.del_time.data
+            }
+            with open('app/config.ini', "w") as f:
+                config.write(f)
+                flash("Successfully updated.", "success")
+                return redirect("settings")
+    else:
+        flash("Only the manager can use this page.", "danger")
+        return redirect(url_for("stock"))
+        
 @app.route("/products")
 @login_required
 def products():
     form = forms.products(request.form)
-    if current_user.email == "rob@devthe.com":
+    if is_manager():
         form = forms.products(request.form)
         return render_template("products.html", form=form)
     else:
         flash("Only the manager can use this page.", "danger")
-    return redirect(url_for("login"))
-    con
+        return redirect(url_for("login"))
 
 @app.route("/sites")
 @login_required
 def sites():
-    if current_user.email == "rob@devthe.com":
+    if is_manager():
         form = forms.sites(request.form)
         return render_template("sites.html", form=form)
     else:
@@ -209,27 +228,32 @@ def change_stock():
         elif to_status == "false":
             to_status = False
         else:
-            #get_order()
-            rep()
-            #instant_order(request.args.get("id"))
+            instant_order(request.args.get("id"))
             to_status = "NULL"
-    
-        #Stock.update_stock(id, to_status)
-        return "Ok"
+        try:
+            Stock.update_stock(id, to_status)
+            return "Ok"
+        except:
+            flash("An error occurred, the stock was not updated", "danger")
+        return redirect(url_for("stock"))
     else:
         return abort(404)
 
 @app.route("/delete_site")
 @login_required
 def delete_site():
-    Site.delete_site(request.args.get("name"))
-    return ""
+    if request.is_xhr:
+        Site.delete_site(request.args.get("name"))
+    else:
+        return abort(404)
 
 @app.route("/delete_product")
 @login_required
-def delete_product():
-    Product.delete_product(request.args.get("id"))
-    return ""
+def delete_product():  
+    if request.is_xhr:
+        Product.delete_product(request.args.get("id"))
+    else:
+        return abort(404)
 
 @app.route("/stock_list")
 @login_required
@@ -273,20 +297,20 @@ def modal_forms():
             if request.form.get('page') == "sites":
                     #User on sites page
                     if form.edit.data == 0:
-                        #try:
+                        try:
                             #Adding site
                             Site.new_site(
                                 name = form.name.data,
                                 address = form.address.data             
                             )
                             return jsonify(1)
-                        #except IntegrityError:
-                            #return jsonify("This site is already in the database.")
-                        #except:
-                            #return jsonify("An error occurred, the product was not added.")
+                        except IntegrityError:
+                            return jsonify("This site is already in the database.")
+                        except:
+                            return jsonify("An error occurred, the product was not added.")
                             
                     else:
-                        #try:
+                        try:
                             #Changing site
                             Site.update_site(
                                 previous_name = form.previous_name.data,
@@ -294,8 +318,8 @@ def modal_forms():
                                 address = form.address.data
                             )
                             return jsonify(1)
-                        #except:
-                            #return jsonify("An error occurred, the site was not updated.")
+                        except:
+                            return jsonify("An error occurred, the site was not updated.")
             else:
                 #User on products page
                 if form.edit.data == False:
@@ -312,7 +336,7 @@ def modal_forms():
                     except:
                         return jsonify("An error occurred, the product was not added.")
                 else:
-                    #try:
+                    try:
                         #Changing Product
                         Product.update_product(
                             previous_id = form.previous_id.data,
@@ -322,9 +346,30 @@ def modal_forms():
                             cossh = form.cossh.data
                         )
                         return jsonify(1)
-                    #except:
-                       # return jsonify("An error occurred, the product was not updated.")
+                    except:
+                       return jsonify("An error occurred, the product was not updated.")
         else:
             for fieldName, errorMessages in form.errors.items():
                 for error in errorMessages:
                     return jsonify(error)
+
+
+@app.context_processor
+def get_man_email():
+    #Get managers email for permissions
+    config.read("app/config.ini")
+    man_email = config.get("Settings", "man_email")
+
+    #Return email for use in templates
+    return dict(man_email=man_email)
+
+def is_manager():
+    form = forms.settings(request.form)
+    config.read("app/config.ini")
+    man_email = config.get("Settings", "man_email")
+    
+    #Check if the current user is the manger
+    if current_user.email == man_email:
+        return True
+    else:
+        return False

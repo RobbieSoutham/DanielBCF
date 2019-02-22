@@ -1,7 +1,5 @@
-#!/usr/bin/env python
-"""
-User module.
-"""
+#User module.
+
 from bcrypt import hashpw, gensalt, checkpw
 from flask_login import UserMixin
 
@@ -28,7 +26,6 @@ class User(UserMixin):
 
     @classmethod
     def new_user(cls, **kwargs):
-        
         Database.insert_into(
             cls._tablename,
             ["email", "first_name", "surname", "password"],
@@ -43,6 +40,8 @@ class User(UserMixin):
     def login(cls, email, password):
         try:
             user = cls(email)
+            print(user.password)
+            #Check if password given matches password stored for given email
             if checkpw(password, user.password.encode("utf-8")):
                 return user
         except UserNotFound:
@@ -50,6 +49,7 @@ class User(UserMixin):
             
     @classmethod
     def registered(cls, email):
+        #Check if email already registered as full user
         if not Database.find(cls._tablename, "email", email):
             return False
         else:

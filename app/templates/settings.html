@@ -2,6 +2,7 @@
 {% extends "layout/base.html" %}
 {% include "layout/nav.html" %}
 
+
 {% block head %}
     <link href="{{ url_for('static', filename='css/settings.css') }}" rel="stylesheet" />
     <script src={{ url_for('static', filename='js/settings.js') }} ></script>
@@ -10,6 +11,7 @@
 {% endblock %}
 
 {% block content %}
+
 <div id="container">
     <div id="wrap">
         <form method="post">
@@ -20,7 +22,7 @@
                 {{ form.csrf_token }}
                 
                <center><input type="submit" class="btn btn-primary" value="Update"></center>
-            </form>      
+        </form>      
     <div>    
 </div>
 {% endblock %}

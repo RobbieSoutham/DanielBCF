@@ -40,6 +40,8 @@ class Stock():
         data = []
         content = {}
         results = Database.join("Stock.id, Products.name, Stock.site_id, Stock.stock_healthy", "Stock", "Products", "product_id", "id")
+
+        #Return required stock, products and site data as JSON
         for result in results:
                 print(result[3])
                 content = {'id': result[0], 'name': result[1], 'site_id': result[2], 'stock_healthy': result[3]}
@@ -51,5 +53,6 @@ class Stock():
     @classmethod
     def update_stock(cls, id, to_status):
         if to_status == "NULL":
+            #Add the date of order to the stock item to be replenished after the delivery time
             Database.update(cls._tablename, "order_date", datetime.date.today(), "id", id)
         Database.update(cls._tablename, "stock_healthy", to_status, "id", id)

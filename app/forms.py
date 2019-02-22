@@ -9,8 +9,8 @@ from flask_wtf import FlaskForm
 from . import app
 
 csrf = CSRFProtect(app)
-csrf.exempt("/sites")
 
+#Setting up forms
 class registration(FlaskForm):
     email = StringField(
         'Email Address', [
