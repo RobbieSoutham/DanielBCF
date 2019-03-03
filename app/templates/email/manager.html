@@ -1,8 +1,9 @@
 <div>
-    <text>Hi Daniel,</text>
+    <text>Hi Daniel,
 
     {{ first_name }} {{ surname }} would like to register an account for the website, please follow the link to activate their account:
     {{ url_for("confirm_account", token=manager_t, _external=true) }}
 
     Many thanks.
+    </text>
 </div>
