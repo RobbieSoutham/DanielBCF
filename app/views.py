@@ -41,7 +41,7 @@ login_manager.login_view = "login"
 login_manager.user_loader(User)
 
 #Sendgrid setup
-sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
+sg = sendgrid.SendGridAPIClient(apikey=os.environ.get("SENDGRID_API_KEY"))
 from_email = Email("no-reply@DanielBCF.tk")
 
 #Setup config parser object
@@ -103,29 +103,25 @@ def register():
         print(manager_t)
         print(user_t)
         
-        #Send user confirmation email
+        #Form user confirmation email
         mail = Mail(
             from_email,
             "Confirm email",
             Email(form.email.data),
             Content("text/html", render_template("email/user.html", user_t=user_t, first_name=form.first_name.data, surname=form.surname.data)),
         )
-        response = sg.client.mail.send.post(request_body=mail.get())
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
+        #Send email
+        sg.client.mail.send.post(request_body=mail.get())
 
-        #Send manager confirmation email
+        #Form manager confirmation email
         mail = Mail(
             from_email,         
             "User confirmation",
             Email("rjsoutham@gmail.com"),
             Content("text/html", render_template("email/manager.html", manager_t=manager_t, first_name=form.first_name.data, surname=form.surname.data)),
         )
-        response = sg.client.mail.send.post(request_body=mail.get())
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
+        #Send email
+        sg.client.mail.send.post(request_body=mail.get())
         
         flash("Registration complete. Please check your email for verification.", "success")
         return redirect(url_for("login"))
