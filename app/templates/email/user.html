@@ -1,9 +1,7 @@
 <div>
-    <text>Hi {{ first_name }},
+    <h1>Hi {{ first_name }},</h1>
     
-        To continue, please confirm your email with the link below and wait patiently for the manager to confirm your identity.
-        {{ url_for("confirm_email", token=user_t, _external=true) }}
+    <p>To continue, please confirm your email by clicking <a href="{{ url_for('confirm_email', token=user_t, _external=true) }}"><strong>here</strong></a> and wait patiently for the manager to confirm your identity.</p>        <br>
     
-        Many thanks.
-    </text>
+    <p>Many thanks.</p>
 </div>
