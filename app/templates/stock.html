@@ -10,41 +10,39 @@
 {% endblock %}
 
 {% block content %}
+<div class="modal" id="modal_init" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+         <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Please select a site</h5>
+        </button>
+        </div>
+        <div class="modal-body">
+            <select id="sites">
+        </select>
+        </div>
+        <div class="modal-footer">
+            <button onclick="load_content();" type="button" class="btn btn-primary" data-dismiss="modal">Continue</button>
+        </div>
+        </div>
     </div>
-    <div class="modal" id="modal_init" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
+</div>
+    
+<div class="modal" id="modal_confirm" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title">Please select a site</h5>
-                  </button>
+                </button>
                 </div>
                 <div class="modal-body">
-                  <select id="sites">
-
-                  </select>
+                    <h5 class="modal-title">Are you sure you would like to make this change?</h5>
                 </div>
                 <div class="modal-footer">
-                  <button onclick="load_content();" type="button" class="btn btn-primary" data-dismiss="modal">Continue</button>
-                </div>
-              </div>
-            </div>
-    </div>
-    
-    <div class="modal" id="modal_confirm" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    </button>
-                    </div>
-                    <div class="modal-body">
-                        <h5 class="modal-title">Are you sure you would like to make this change?</h5>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn change" onclick="" type="button" class="btn btn-success" data-dismiss="modal">Yes</button>
-                      <button type="button" class="btn" data-dismiss="modal">No</button>
-                    </div>
+                    <button type="button" class="btn change" onclick="" type="button" class="btn btn-success" data-dismiss="modal">Yes</button>
+                    <button type="button" class="btn" data-dismiss="modal">No</button>
                 </div>
             </div>
+        </div>
     </div>
 
 <div id="container">

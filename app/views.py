@@ -137,7 +137,7 @@ def confirm_email(token):
         #Convert users token into users email
         email = s.loads(token, salt="confirm_email")
     except:
-        #If unable to convert, the token does not exist and niether does the user
+        #If unable to convert, the token does not exist and neither does the user
         flash("Invalid token.", "danger")
         return redirect(url_for("login"))
 
@@ -176,11 +176,14 @@ def cossh():
 def settings():
     if is_manager():
         form = forms.settings(request.form)
+
+        #Open the config
         config.read("app/config.ini")
+        #Pull the values needed from the config
         man_email = config.get("Settings", "man_email")
         sup_email = config.get("Settings", "sup_email")
         del_time = config.get("Settings", "del_time")
-        file = open("config.ini", "w")
+        
         if request.method == "GET" or not form.validate():         
             return render_template("settings.html", form=form, man_email=man_email, sup_email=sup_email, del_time=del_time)
         else:

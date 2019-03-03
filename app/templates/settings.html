@@ -11,7 +11,6 @@
 {% endblock %}
 
 {% block content %}
-
 <div id="container">
     <div id="wrap">
         <form method="post">
@@ -21,10 +20,27 @@
                 {{ render_field(form.del_time, value=del_time) }}
                 {{ form.csrf_token }}
                 
-               <center><input type="submit" class="btn btn-primary" value="Update"></center>
+               <center><input onclick="$('#modal_confirm').modal('show');" class="btn btn-primary" value="Update"></center>
         </form>      
-    <div>    
+    <div>
 </div>
+<div class="modal" id="modal_confirm" role="dialog" data-backdrop="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                </button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="modal-title">Are you sure you would like to make this change?</h5>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn change" onclick="$('form').submit();" type="button" class="btn btn-success" data-dismiss="modal">Yes</button>
+                  <button type="button" class="btn" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+</div>
+
 {% endblock %}
 {% block scripts %}
 <script>
