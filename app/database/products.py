@@ -51,7 +51,7 @@ class Product():
 
         #Return products data as JSON
         for result in results:
-                content = {'id': result[0], 'name': result[1], 'order_qty': result[2]}
+                content = {'id': result[0], 'name': result[1], 'order_qty': result[2], "cossh": result[3]}
                 data.append(content)
                 content = {}
         return jsonify(data)

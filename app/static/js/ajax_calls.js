@@ -7,6 +7,7 @@ function ajax_return(route, append_to = "tbody"){
             var html = '';
             status = "";
             $.each(data, function (i, item) {
+                console.log(data)
                 html += ajax_insert(item, route);
             });
 
