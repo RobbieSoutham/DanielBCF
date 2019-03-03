@@ -43,6 +43,7 @@ login_manager.user_loader(User)
 #Sendgrid setup
 sg = sendgrid.SendGridAPIClient(apikey=os.environ.get("SENDGRID_API_KEY"))
 from_email = Email("no-reply@DanielBCF.tk")
+from_email.name = "DanielBCF"
 
 #Setup config parser object
 config = ConfigParser()
