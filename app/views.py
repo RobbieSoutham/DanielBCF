@@ -91,23 +91,24 @@ def register():
                 email = form.email.data,
                 first_name = form.first_name.data,
                 surname = form.surname.data,
+                #Turn into byte object for use with bcrypt
                 password = form.password.data.encode("utf-8"),
             )
         except IntegrityError:
+            #If they are a temp user
             flash("Please verify your email address!", "danger")
             return redirect(url_for("login"))
             
         #Generate tokens for verification
         manager_t = s.dumps(form.email.data)
         user_t = s.dumps(form.email.data, salt="confirm_email")
-        print(manager_t)
-        print(user_t)
         
         #Form user confirmation email
         mail = Mail(
             from_email,
             "Confirm email",
             Email(form.email.data),
+            #Parse the user token, first name and surname into the template
             Content("text/html", render_template("email/user.html", user_t=user_t, first_name=form.first_name.data, surname=form.surname.data)),
         )
         #Send email
@@ -118,6 +119,7 @@ def register():
             from_email,         
             "User confirmation",
             Email("rjsoutham@gmail.com"),
+            #Parse the manager token, first name and surname into the template
             Content("text/html", render_template("email/manager.html", manager_t=manager_t, first_name=form.first_name.data, surname=form.surname.data)),
         )
         #Send email
@@ -132,10 +134,11 @@ def register():
 @app.route("/confirm_email/<token>")
 def confirm_email(token):
     try:
-        #Convert token into users email
+        #Convert users token into users email
         email = s.loads(token, salt="confirm_email")
     except:
-        flash("Invalid token.", "success")
+        #If unable to convert, the token does not exist and niether does the user
+        flash("Invalid token.", "danger")
         return redirect(url_for("login"))
 
     #Verify the user on the users side 
@@ -146,10 +149,10 @@ def confirm_email(token):
 @app.route("/confirm_account/<token>")
 def confirm_account(token):
     try:
-        #Convert token into users email
+        #Convert managers token into users email
         email = s.loads(token)
     except:
-        flash("Invalid token.", "success")
+        flash("Invalid token.", "danger")
         return redirect(url_for("login"))
 
     #Verify the user on the managers side 
