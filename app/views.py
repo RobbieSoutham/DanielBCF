@@ -93,7 +93,7 @@ def register():
                 first_name = form.first_name.data,
                 surname = form.surname.data,
                 #Turn into byte object for use with bcrypt
-                password = form.password.data.decode().encode("utf-8"),
+                password = form.password.data.encode("utf-8"),
             )
         except IntegrityError:
             #If they are a temp user
