@@ -15,13 +15,13 @@ class registration(FlaskForm):
     email = StringField(
         'Email Address:', [
             InputRequired("Please enter your email address:"),
-            Email("This field requires a valid email address:"),
+            Email("Please enter a valid email address."),
             length(max=32)
             
         ]
     )
     first_name = StringField('First Name:', [
-        DataRequired("Please enter your first name:"),
+        DataRequired("Please enter your first name."),
         length(max=32)
         ]
     )
@@ -42,8 +42,8 @@ class registration(FlaskForm):
 class login(FlaskForm):
     email = StringField(
         'Email Address:', [
-            InputRequired("Please enter your email address"),
-            Email("This field requires a valid email address"),
+            InputRequired("Please enter your email address."),
+            Email("Please enter a valid email address."),
             length(max=32)
         ]
     )
