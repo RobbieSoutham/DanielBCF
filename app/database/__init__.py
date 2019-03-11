@@ -67,6 +67,11 @@ class Database(object):
 
     @classmethod
     def find(cls, table, column, value):
+        print("SELECT * FROM {} WHERE {}='{}'".format(
+                    table,
+                    column,
+                    "{}".format(value)
+        ))
         with cls() as c:
             c.execute(
                 "SELECT * FROM {} WHERE {}='{}'".format(
