@@ -60,7 +60,7 @@ def login():
         #Check if user exists
         user = User.login(
             form.email.data,
-            form.password.encode("utf-8"),
+            form.password.data.encode("utf-8"),
         )
         if user:
             #If user exists log them in
