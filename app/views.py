@@ -90,8 +90,8 @@ def register():
         try:
             Temp_user.new_user(
                 email = form.email.data,
-                first_name = form.first_name.data,
-                surname = format(form.surname.data),
+                first_name = form.first_name.data.encode("utf-8"),
+                surname = format(form.surname.data).encode("utf-8"),
                 #Turn into byte object for use with bcrypt
                 password = form.password.data.encode("utf-8"),
             )
