@@ -1,7 +1,5 @@
-#!/usr/bin/env python
-"""
-Temp user module.
-"""
+#Temp user module.
+
 from bcrypt import hashpw, gensalt, checkpw
 from flask_login import UserMixin
 
