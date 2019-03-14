@@ -1,7 +1,4 @@
-#!/usr/bin/env python
-"""
-Products module.
-"""
+#Products module.
 
 from . import Database
 from flask import jsonify
