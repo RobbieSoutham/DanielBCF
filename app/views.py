@@ -137,30 +137,30 @@ def confirm_email(token):
     try:
         #Convert users token into users email
         email = s.loads(token, salt="confirm_email")
+        
+        #Verify the user on the users side 
+        Temp_user.user_verify(email)
+        flash("Email verified.", "success")
+        return redirect(url_for("login"))
     except:
         #If unable to convert, the token does not exist and neither does the user
         flash("Invalid token.", "danger")
         return redirect(url_for("login"))
-
-    #Verify the user on the users side 
-    Temp_user.user_verify(email)
-    flash("Email verified.", "success")
-    return redirect(url_for("login"))
 
 @app.route("/confirm_account/<token>")
 def confirm_account(token):
     try:
         #Convert managers token into users email
         email = s.loads(token)
+        
+        #Verify the user on the managers side 
+        Temp_user.manager_verify(email)
+        flash("Account verified.", "success")
+        return redirect(url_for("login"))
     except:
         flash("Invalid token.", "danger")
         return redirect(url_for("login"))
-
-    #Verify the user on the managers side 
-    Temp_user.manager_verify(email)
-    flash("Account verified.", "success")
-    return redirect(url_for("login"))
-
+    
 @app.route("/stock")
 @login_required
 def stock():
