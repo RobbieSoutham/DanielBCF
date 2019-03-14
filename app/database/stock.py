@@ -52,5 +52,4 @@ class Stock():
         if to_status == "NULL":
             #Add the date of order to the stock item to be replenished after the delivery time
             Database.update(cls._tablename, "order_date", datetime.date.today(), "id", id)
-        print("*****************")
         Database.update(cls._tablename, "stock_healthy", to_status, "id", id)
