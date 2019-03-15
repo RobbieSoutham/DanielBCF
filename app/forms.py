@@ -52,7 +52,9 @@ class login(FlaskForm):
         ]
     )
     remember_me = BooleanField(
-        'Remember me:'
+        'Remember me:', [
+        DataRequired()
+        ]
     )
 
 class sites(FlaskForm):
@@ -72,9 +74,7 @@ class sites(FlaskForm):
     #Not for user
     #Allow us to determine if the form returned is editing a site or adding a new one
     edit = BooleanField(
-        '',[
-        DataRequired()
-        ]
+        ''
     )
     #Allows us to identify the name of the product being edited
     previous_name = StringField(
