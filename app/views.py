@@ -52,23 +52,26 @@ s = URLSafeSerializer(app.config["SECRET_KEY"])
 @app.route("/login", methods=["GET", "POST"])
 @app.route("/", methods=["GET", "POST"])
 def login():
-    form = forms.login(request.form)
+    if current_user.is_authenticated:
+        return redirect(url_for("stock"))
+    else:
+        form = forms.login(request.form)
 
-    if form.validate_on_submit():
-        #Check if user exists
-        user = User.login(
-            form.email.data,
-            form.password.data.encode("utf-8"),
-        )
-        if user:
-            #If user exists log them in
-            print(form.remember_me.data)
-            login_user(user, remember=form.remember_me.data)
-            flash("Logged in successfully.", "success")
-            return redirect(url_for("stock"))
-        
-        flash("Error! Login details incorrect.", "danger")
-    return render_template("index.html", form=form)
+        if form.validate_on_submit():
+            #Check if user exists
+            user = User.login(
+                form.email.data,
+                form.password.data.encode("utf-8"),
+            )
+            if user:
+                #If user exists log them in
+                print(form.remember_me.data)
+                login_user(user, remember=form.remember_me.data)
+                flash("Logged in successfully.", "success")
+                return redirect(url_for("stock"))
+
+            flash("Error! Login details incorrect.", "danger")
+        return render_template("index.html", form=form)
 
 @app.route("/logout")
 @login_required
