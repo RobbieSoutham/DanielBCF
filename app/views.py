@@ -18,7 +18,7 @@ from . import forms
 from app import app
 from . import database
 from app import orders
-from app import repleneshedjob
+from app import repleneshjob
 
 from app.orders import instant_order
 from app.orders import get_order
