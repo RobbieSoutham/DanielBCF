@@ -18,11 +18,9 @@ from . import forms
 from app import app
 from . import database
 from app import orders
-from app import replenishjob
 
 from app.orders import instant_order
 from app.orders import get_order
-from app.repleneshedjob import rep
 from app.database.user import User
 from app.database.temp_user import Temp_user
 from app.database.sites import Site
