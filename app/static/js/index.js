@@ -1,8 +1,8 @@
 $("#remember_me").change(function() {
     if(this.checked) {
-        $("#remember_me").value("")
+        $("#remember_me").val("")
     }
     else{
-      $("#remember_me").value("1")
+      $("#remember_me").val("1")
     }
 });
