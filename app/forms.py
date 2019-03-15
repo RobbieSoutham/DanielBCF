@@ -52,8 +52,7 @@ class login(FlaskForm):
         ]
     )
     remember_me = BooleanField(
-        'Remember me:',
-        false_values=(False, 'false', 0, '0')
+        'Remember me:'
     )
 
 class sites(FlaskForm):
