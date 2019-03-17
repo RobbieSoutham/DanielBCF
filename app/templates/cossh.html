@@ -2,15 +2,12 @@
 {% include "layout/nav.html" %}
 
 {% block head %}
-    <link href="{{ url_for('static', filename='css/cossh.css') }}" rel="stylesheet" />
-    <script src={{ url_for('static', filename='js/cossh.js') }} ></script>
-    
-    <title>COSSH</title>
+<link href="{{ url_for('static', filename='css/cossh.css') }}" rel="stylesheet" />
+<script src={{ url_for('static', filename='js/cossh.js') }} ></script>
+<title>COSSH</title>
 {% endblock %}
 
 {% block content %}
-    </div>
-
 <div id="container">
     <input class="form-control" id="search" type="text" placeholder="Search..">
     <table class="table  table-bordered" id="cossh">
