@@ -7,5 +7,5 @@ $(function(){
     ajax_return("product_list");
 });
 
-ajax_follow(){
+function ajax_follow(){
 }
