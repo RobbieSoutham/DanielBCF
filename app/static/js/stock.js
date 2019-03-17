@@ -38,11 +38,11 @@ function ajax_insert(item, route){
 }
 $(function() {
     ajax_return("sites_list", "#sites");
-    $('#modal_init').modal('show');
+    $("#modal_init").modal("show");
 });
 
 function load_content(){
-    $('#modal_init').modal('hide');
+    $("#modal_init").modal("hide");
     
     //Pull stock JSON from route
     ajax_return("stock_list", "tbody");
