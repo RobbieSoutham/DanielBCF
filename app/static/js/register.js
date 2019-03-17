@@ -1,3 +1,4 @@
 $(function(){
-    $('#password').parent().parent().css("margin", "0");
+    #Readjust password styling
+    $("#password").parent().parent().css("margin", "0");
 });
