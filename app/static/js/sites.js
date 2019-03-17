@@ -42,3 +42,6 @@ function load_content(){
     $("td").remove();
     ajax_return("sites_list");
 }
+
+ajax_follow(){
+}
