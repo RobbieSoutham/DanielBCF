@@ -15,22 +15,22 @@ $(function() {
 
 function edit(name, address){
     //Change modal for editing a site, enter site_id to send to flask form
-    $('#previous_name').val(name);
-    $('#modal-title').text(name);
-    $('#modal').modal('show');
-    $('input[type="checkbox"]').prop("checked", true);
+    $("#previous_name").val(name);
+    $("#modal-title").text(name);
+    $("#modal").modal('show');
+    $"input[type="checkbox"]").prop("checked", true);
     $('#name').val(name);
     $('#address').val(address);
     
 }
 function reset_modal(){
     //Reset modal so values dont stick for adding a site
-    $('input[type="checkbox"]').prop("checked", false);
+    $("input[type='checkbox']").prop("checked", false);
     $("#name").val("");
     $("#address").val("");
     $("#name").val("");
     $("#modal-title").text("Add Site");
-    $('#modal').modal('hide');
+    $("#modal").modal("hide");
 }
 
 function delete_site(name){
@@ -44,4 +44,3 @@ function load_content(){
 }
 
 function ajax_follow(){
-}
