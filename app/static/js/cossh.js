@@ -9,4 +9,3 @@ function ajax_follow(){
 $(function(){
     ajax_return("product_list");
 });
-
