@@ -35,7 +35,6 @@ from flask_login import LoginManager, UserMixin, \
 #Flask login setup
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = "login"
 login_manager.user_loader(User)
 
 #Sendgrid setup
@@ -48,6 +47,16 @@ config = ConfigParser()
 
 #Setup Serializer object
 s = URLSafeSerializer(app.config["SECRET_KEY"])
+
+#Setup login_required decorator
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if not current_user.is_authenticated: 
+            flash("Please login to view this page!", "danger")
+            return redirect(url_for("login"))
+        return f(*args, **kwargs)
+    return wrap
 
 @app.route("/login", methods=["GET", "POST"])
 @app.route("/", methods=["GET", "POST"])
@@ -65,7 +74,7 @@ def login():
             )
             if user:
                 #If user exists log them in
-                print(form.remember_me)
+                print(form.remember_me.data)
                 login_user(user, remember=form.remember_me.data)
                 flash("Logged in successfully.", "success")
                 return redirect(url_for("stock"))
@@ -162,7 +171,7 @@ def confirm_account(token):
     except:
         flash("Invalid token.", "danger")
         return redirect(url_for("login"))
-    
+
 @app.route("/stock")
 @login_required
 def stock():
@@ -275,8 +284,7 @@ def stock_list():
     if request.is_xhr:
         return Stock.get_stock()
     else:
-        return Stock.get_stock()
-    
+        return abort(404)
 
 @app.route("/sites_list")
 @login_required
@@ -293,7 +301,6 @@ def product_list():
         return Product.get_products()
     else:
         return abort(404)
-
 
 @app.route("/modal_forms", methods=["GET", "POST"])
 @login_required

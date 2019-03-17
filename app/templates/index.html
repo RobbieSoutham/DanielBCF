@@ -15,7 +15,7 @@
     <form method="post">
         {{ render_field(form.email) }}
         {{ render_field(form.password) }}
-        {{ render_field(form.remember_me, value="") }}
+        {{ render_field(form.remember_me) }}
         {{ form.csrf_token }}
         <small id="register" class="form-text text-muted">Need an account? Register <a href="{{ url_for('register') }}">here</a>.</small>
         <input type="submit" class="btn btn-primary" value="Login">

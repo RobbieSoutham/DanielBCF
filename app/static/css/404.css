@@ -1,5 +1,12 @@
-h1{
-    text-align: center;
-    color: white;
+div {
+    display: table; 
+    width: 100%; 
+    height: 200px; 
+    text-align: center; 
+  }
+  p {
+    display: table-cell;
     vertical-align: middle;
-}
+    color: white;
+    font-size: 100px !important;
+  }
