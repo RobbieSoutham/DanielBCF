@@ -34,7 +34,6 @@
 
   <body>
     <!-- Main Content -->
-    <main id="wrap">
       <div class=message_container>
       <!-- Setup flash message -->
       {% with messages = get_flashed_messages(with_categories=True) %}
@@ -46,7 +45,6 @@
       {% endwith %}
       </div>
       {% block content %}{% endblock %}
-    </main>
 
 
     <!-- Page specific script files -->
