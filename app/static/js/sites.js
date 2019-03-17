@@ -44,3 +44,4 @@ function load_content(){
 }
 
 function ajax_follow(){
+}
