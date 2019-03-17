@@ -27,9 +27,9 @@ class Temp_user(UserMixin):
 
     @classmethod
     def new_user(cls, **kwargs):
-        kwargs['first_name'] = kwargs['first_name'].title()
-        kwargs['surname'] = kwargs['surname'].title()
-        kwargs['password'] = hashpw(kwargs['password'], gensalt()).decode("utf-8")
+        kwargs["first_name"] = kwargs["first_name"].title()
+        kwargs["surname"] = kwargs["surname"].title()
+        kwargs["password"] = hashpw(kwargs["password"], gensalt()).decode("utf-8")
         #Hash the password and convert it back into unicode to be stored in the DB
         Database.insert_into(
             cls._tablename,
