@@ -66,6 +66,3 @@ def make_order(order):
                 Content("text/plain", order),
             )
     response = sg.client.mail.send.post(request_body=mail.get())
-    print(response.status_code)
-    print(response.body)
-    print(response.headers)
