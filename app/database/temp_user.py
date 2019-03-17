@@ -70,7 +70,6 @@ class Temp_user(UserMixin):
     def manager_verify(cls, email):
         #Set as manager verified
         temp_user = Database.find(cls._tablename, "email", email)[0]
-        print(temp_user)
         if temp_user[4] == 1:
             #Setup real user if also manager verified
             cls.verify(temp_user)
