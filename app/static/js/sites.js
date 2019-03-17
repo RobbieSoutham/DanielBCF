@@ -43,5 +43,5 @@ function load_content(){
     ajax_return("sites_list");
 }
 
-ajax_follow(){
+function ajax_follow(){
 }
