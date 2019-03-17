@@ -40,7 +40,7 @@ function ajax_submit(page){
         type: "POST",
         url: $SCRIPT_ROOT + "/modal_forms",
         dataType: "json",
-        #Send page with form to distinguish between forms
+        //Send page with form to distinguish between forms
         data: $("form").serialize() + "&page=" + page,
     
         success: function (data) {
