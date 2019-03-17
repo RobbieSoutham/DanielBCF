@@ -23,14 +23,15 @@ function edit(id, name, order_qty, cossh){
 }
 
 function reset_modal(){
-    $('input[type="checkbox"]').prop("checked", false);
-    $('#modal-title').text("Add Product");
-    $('#name').val("");
-    $('#product_id').val("");
-    $('#order_qty').val("");
-    $('#cossh').val("");
-    $('#modal').modal('hide');
+    $("input[type='checkbox']").prop("checked", false);
+    $("#modal-title").text("Add Product");
+    $("#name").val("");
+    $("#product_id").val("");
+    $("#order_qty").val("");
+    $("#cossh").val("");
+    $("#modal").modal("hide");
 }
+
 function ajax_follow(){
 
 }
