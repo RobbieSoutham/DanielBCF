@@ -60,7 +60,6 @@ class Site():
     def update_site(cls, **kwargs):
         if kwargs["previous_name"] != kwargs["name"]:
             #If the name (primary key) has been changed, update it first
-            Database.update(cls._tablename, "name", kwargs["name'", "name", kwargs["previous_name"])
+            Database.update(cls._tablename, "name", kwargs["name", "name", kwargs["previous_name"])
         
-        Database.update(cls._tablename, "address", kwargs['address'], "name", kwargs["name"])
-        
+        Database.update(cls._tablename, "address", kwargs["address"], "name", kwargs["name"])
