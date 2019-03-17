@@ -2,14 +2,15 @@
 {% extends "layout/base.html" %}
 
 {% block head %}
-    <link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet">
-    <script src="{{ url_for('static', filename='js/register.js') }}"></script>
-    <div class="page-header">
-        <h1>Register</h1>
-    </div>
+<link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet">
+<script src="{{ url_for('static', filename='js/register.js') }}"></script>
+<title>Register</title>
 {% endblock %}
 
 {% block content %}
+<div class="page-header">
+<h1>Register</h1>
+</div>
 <div class="container" id="form">
     <form method="post" novalidate>
         {{ render_field(form.email) }}
