@@ -1,4 +1,4 @@
-<!---->{% macro render_field(field) %}
+{% macro render_field(field) %}
 <div class="form-group col">
     {{ field.label(class="control-label") }}
     {{ field(class="form-control", **kwargs) | safe }}
@@ -11,4 +11,4 @@
 {% endfor %}
 </ul>
 {% endif %}
-{% endmacro %}--!>
+{% endmacro %}
