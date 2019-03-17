@@ -40,7 +40,6 @@ class User(UserMixin):
     def login(cls, email, password):
         try:
             user = cls(email)
-            print(user.password)
             #Check if password given matches password stored for given email
             if checkpw(password, user.password.encode("utf-8")):
                 return user
