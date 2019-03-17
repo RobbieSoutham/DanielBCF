@@ -10,6 +10,7 @@ config = ConfigParser()
 
 sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
 from_email = Email("no-reply@DanielBCF.tk")
+from_email.name = "DanielBCF"
 
 def instant_order(stock_id):
     #Get dat needed for order
