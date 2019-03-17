@@ -73,7 +73,6 @@ def login():
             )
             if user:
                 #If user exists log them in
-                print(form.remember_me.data)
                 login_user(user, remember=form.remember_me.data)
                 flash("Logged in successfully.", "success")
                 return redirect(url_for("stock"))

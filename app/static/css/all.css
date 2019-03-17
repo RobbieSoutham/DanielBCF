@@ -145,9 +145,31 @@ form{
 #delete:hover{
 	filter: invert(0.5) sepia(1) saturate(100) hue-rotate(20deg);
 }
+
 #add:hover{
 	filter: invert(0.5) sepia(1) saturate(5) hue-rotate(100deg);
 }
+
 #password{
 	margin-right: 0px !important;
+}
+
+@media only screen and (max-width: 1026px) {
+    #welcome {
+        display: none;
+	}
+	.navbar-brand{
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.navbar-collapse{
+		border-top: 1px solid black;
+	}
+}
+
+@include media-breakpoint-down(xs) {
+    .container {
+        margin-left: 0;
+        margin-right: 0;
+    }
 }

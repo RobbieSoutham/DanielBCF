@@ -54,7 +54,8 @@ class login(FlaskForm):
     password = PasswordField(
         "Password:", [
         DataRequired("Please enter a password.")
-    ])
+        ]
+    )
     remember_me = BooleanField(
         "Remember me:"
     )
