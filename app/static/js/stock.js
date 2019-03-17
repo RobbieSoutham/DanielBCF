@@ -29,7 +29,6 @@ function ajax_insert(item, route){
                 low_btn_state = "btn_disabled";
                 out_btn_state = "btn_enabled";
             }
-            console.log(item.stock_healthy)
             btns_html = "<td><center><div class='btn-group' role='group'><button type='button' onclick='confirm(" + item.id + ", false);' class='btn btn-warning " + low_btn_state + "'>Low</button><button type='button' onclick='confirm(" + item.id + ", undefined);' class='btn btn-danger " + out_btn_state + "'>Out</button></div></center></td>"
             html = "<tr><td class='name'>" + item.name + "</td>center><td class='status' style='background-color: " + colour + ";'>" + status + "</td></center>" +  btns_html;
             return html;
