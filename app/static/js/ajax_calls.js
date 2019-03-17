@@ -2,9 +2,9 @@ function ajax_return(route, append_to = "tbody"){
     $.ajax({
         type: "GET",
         url: $SCRIPT_ROOT + route,
-        dataType: 'json',
+        dataType: "json",
         success: function (data) {
-            var html = '';
+            var html = "";
             status = "";
             $.each(data, function (i, item) {
                 html += ajax_insert(item, route);
@@ -40,7 +40,8 @@ function ajax_submit(page){
         type: "POST",
         url: $SCRIPT_ROOT + "/modal_forms",
         dataType: "json",
-        data: $('form').serialize() + "&page=" + page,
+        #Send page with form to distinguish between forms
+        data: $("form").serialize() + "&page=" + page,
     
         success: function (data) {
             if (data == true){
