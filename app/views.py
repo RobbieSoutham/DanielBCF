@@ -13,7 +13,6 @@ import os
 from sendgrid.helpers.mail import *
 from configparser import ConfigParser
 
-
 from . import forms
 from app import app
 from . import database
@@ -374,10 +373,9 @@ def modal_forms():
                 for error in errorMessages:
                     return jsonify(error)
 
-
+#Routes for manager permissions
 @app.context_processor
 def get_man_email():
-    #Get managers email for permissions
     config.read("app/config.ini")
     man_email = config.get("Settings", "man_email")
 
