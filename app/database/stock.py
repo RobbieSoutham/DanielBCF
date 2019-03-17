@@ -40,8 +40,7 @@ class Stock():
 
         #Return required stock, products and site data as JSON
         for result in results:
-                print(result[3])
-                content = {'id': result[0], 'name': result[1], 'site_id': result[2], 'stock_healthy': result[3]}
+                content = {"id": result[0], "name": result[1], "site_id": result[2], "stock_healthy": result[3]}
                 data.append(content)
                 content = {}
 
