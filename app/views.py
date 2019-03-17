@@ -240,11 +240,11 @@ def change_stock():
     if request.is_xhr:
         id = request.args.get("id")
         to_status = request.args.get("to_status")
-
+        print(id, to_status)
         if to_status == "true":
-            to_status = True
+            to_status = 1
         elif to_status == "false":
-            to_status = False
+            to_status = 0
         else:
             instant_order(request.args.get("id"))
             to_status = "NULL"
