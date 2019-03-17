@@ -308,7 +308,6 @@ def modal_forms():
         return abort(404)
     else:
         #Load the form depending on the page theyre on
-        print(request.form.get('page'))
         if request.form.get('page') == "sites":
             form = forms.sites(request.form)
         else:
