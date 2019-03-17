@@ -1,6 +1,7 @@
 html{
 	display: block !important;
 }
+
 body {
 	background-image: url(../images/bg/login.jpg)
 }
@@ -138,6 +139,7 @@ form{
 	float: right;
 	padding-bottom: 5px;
 }
+
 #delete > img{
 	filter: invert(0.5) sepia(1) saturate(100) hue-rotate(0deg);
 }
