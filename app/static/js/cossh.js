@@ -3,9 +3,10 @@ function ajax_insert(item){
     return html;
 }
 
+function ajax_follow(){
+}
+
 $(function(){
     ajax_return("product_list");
 });
 
-function ajax_follow(){
-}
