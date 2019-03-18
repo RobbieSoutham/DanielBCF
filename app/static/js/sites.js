@@ -18,7 +18,7 @@ function edit(name, address){
     $("#previous_name").val(name);
     $("#modal-title").text(name);
     $("#modal").modal("show");
-    $"input[type='checkbox']").prop("checked", true);
+    $("input[type='checkbox']").prop("checked", true);
     $("#name").val(name);
     $("#address").val(address);
     
