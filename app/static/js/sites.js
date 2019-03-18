@@ -17,10 +17,10 @@ function edit(name, address){
     //Change modal for editing a site, enter site_id to send to flask form
     $("#previous_name").val(name);
     $("#modal-title").text(name);
-    $("#modal").modal('show');
+    $("#modal").modal("show");
     $"input[type='checkbox']").prop("checked", true);
-    $('#name').val(name);
-    $('#address').val(address);
+    $("#name").val(name);
+    $("#address").val(address);
     
 }
 function reset_modal(){
