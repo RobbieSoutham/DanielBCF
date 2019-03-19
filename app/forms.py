@@ -99,7 +99,9 @@ class products(FlaskForm):
         ]
     )
     cossh = StringField(
-        "COSSH:"
+        "COSSH:", [
+            length(max=32)
+        ]
     )
     order_qty = IntegerField(
         "Order Quantity:", [
