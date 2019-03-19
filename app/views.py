@@ -341,14 +341,18 @@ def modal_forms():
             else:
                 #User on products page
                 if form.edit.data == False:
-                    #Adding Product
-                    Product.new_product(
-                        id = form.product_id.data,
-                        name = form.name.data,
-                        order_qty = form.order_qty.data,
-                        cossh = form.cossh.data
-                    )
-                    return jsonify(1)  
+                    try:
+                        #Adding Product
+                        Product.new_product(
+                            id = form.product_id.data,
+                            name = form.name.data,
+                            order_qty = form.order_qty.data,
+                            cossh = form.cossh.data
+                                
+                        )
+                        return jsonify(1)  
+                    except:
+                        return jsonify("An error occurred, the product was not added.")
                 else:
                     try:
                         #Changing Product
