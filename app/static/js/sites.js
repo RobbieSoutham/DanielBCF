@@ -39,7 +39,7 @@ function delete_site(name){
 }
 
 function load_content(){
-    $("td").remove();
+    $("tr").remove();
     ajax_return("sites_list");
 }
 
