@@ -35,7 +35,6 @@ function reset_modal(){
 
 function delete_site(name){
     ajax_change("delete_site", {"name": "'" + name + "'"});
-    load_content();
 }
 
 function load_content(){
