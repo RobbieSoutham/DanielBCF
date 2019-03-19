@@ -42,6 +42,6 @@ function delete_product(id){
 }
 
 function load_content(){
-    $("td").remove();
+    $("tr").remove();
     ajax_return("product_list");
 }
