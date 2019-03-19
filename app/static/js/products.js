@@ -38,7 +38,6 @@ function ajax_follow(){
 
 function delete_product(id){
     ajax_change("delete_product", {"id": "'" + id + "'"});
-    load_content();
 }
 
 function load_content(){
