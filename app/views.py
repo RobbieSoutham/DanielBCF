@@ -347,9 +347,8 @@ def modal_forms():
                         name = form.name.data,
                         order_qty = form.order_qty.data,
                         cossh = form.cossh.data
-                                
-                     )
-                     return jsonify(1)  
+                    )
+                    return jsonify(1)  
                 else:
                     try:
                         #Changing Product
