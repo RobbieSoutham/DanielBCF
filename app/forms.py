@@ -121,14 +121,15 @@ class products(FlaskForm):
 class settings(FlaskForm):
     man_email = StringField(
         "Manager email:", [
-            InputRequired("Please enter an email address."),
-            Email("This field requires a valid email address."),
+            InputRequired("Please enter an the managers."),
+            Email("Please enter a valid email address."),
             length(max=256)
         ]
     )
     sup_email = StringField(
         "Supplier email:", [
             DataRequired("Please enter the suppliers email."),
+            Email("Please enter a valid email address."),
             length(max=32)
         ]
     )
