@@ -123,7 +123,7 @@ class settings(FlaskForm):
         "Manager email:", [
             InputRequired("Please enter an the managers."),
             Email("Please enter a valid email address."),
-            length(max=256)
+            length(max=32)
         ]
     )
     sup_email = StringField(
