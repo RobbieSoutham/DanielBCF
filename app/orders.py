@@ -42,7 +42,7 @@ def get_order():
             low_stock.append([result[0], result[1], address])
 
             #Set the all the stock that was low to ordered
-            Database.update("Stock", "stock_healthy", "Null", "stock_healthy", 0)
+            Database.update("Stock", "stock_healthy", None, "stock_healthy", 0)
 
     order = ""
 
