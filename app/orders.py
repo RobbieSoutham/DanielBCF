@@ -61,7 +61,7 @@ def make_order(order):
     #Send order email
     mail = Mail(
                 from_email,
-                "DanielBCF Stock order",
+                "DanielBCF Stock Order",
                 Email(sup_email),
                 Content("text/plain", order),
             )
