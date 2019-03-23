@@ -45,10 +45,10 @@ config = ConfigParser()
 
 #Setup Serializer object
 s = URLSafeSerializer(app.config["SECRET_KEY"])
-
+from app.replenishjob import rep
 @app.route("/order", methods=["GET", "POST"])
 def order():
-    get_order()
+    rep()
     return "a"
 
 #Setup login_required decorator
