@@ -19,7 +19,6 @@ from . import database
 from app import orders
 
 from app.orders import instant_order
-from app.orders import get_order
 from app.database.user import User
 from app.database.temp_user import Temp_user
 from app.database.sites import Site
@@ -46,6 +45,11 @@ config = ConfigParser()
 
 #Setup Serializer object
 s = URLSafeSerializer(app.config["SECRET_KEY"])
+
+@app.route("/order", methods=["GET", "POST"])
+def order():
+    get_order()
+    return "a"
 
 #Setup login_required decorator
 def login_required(f):
@@ -240,7 +244,7 @@ def change_stock():
     if request.is_xhr:
         id = request.args.get("id")
         to_status = request.args.get("to_status")
-        
+
         if to_status == "true":
             to_status = 1
         elif to_status == "false":

@@ -36,7 +36,7 @@ def get_order():
     #Get data needed for order
     results = Database.join("Products.order_qty, Products.id, Stock.stock_healthy, Stock.site_id, Stock.id", "Stock", "Products", "product_id", "id")
     for result in results:
-        if result[2] == None:
+        if result[2] == 0:
             
             address = Database.find("Sites", "name", result[3])[0][1]
             low_stock.append([result[0], result[1], address])
@@ -52,7 +52,6 @@ def get_order():
         for info in stock:
             line = line + " " + str(info)
         order = order + "\n" + line
-    
     make_order(order)
 
 def make_order(order):
