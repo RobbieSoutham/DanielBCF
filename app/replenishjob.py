@@ -22,5 +22,5 @@ def rep():
         #If the delivery time has passed set the stock level as healthy
         print(stock[4])
         if stock[4] - today >= del_time:
-            Database.update("Stock", "stock_healthy", "1", "stock_healthy", "1")
+            Database.update("Stock", "stock_healthy", "1", "stock_healthy", 1)
             Database.update("Stock", "stock_healthy", "1", "order_date", "Null")
