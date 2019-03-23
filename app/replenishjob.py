@@ -23,3 +23,5 @@ def rep():
         print(stock[4])
         if stock[4] - today >= del_time:
             Database.update("Stock", "stock_healthy", 1, "stock_healthy", "Null")
+
+rep()
