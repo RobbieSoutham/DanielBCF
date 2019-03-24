@@ -1,7 +1,7 @@
 function ajax_insert(item){
-    btn1 = "<button type='btn' class='buttons' id='edit' onclick=\"edit('" + item.id + "', '" + item.name + "', " + item.order_qty + ", '" + item.cossh + "');\"><img src='" + $SCRIPT_ROOT + "/static/open-iconic-master/svg/pencil.svg' alt='pencil'></button>";
-    btn2 = "<button class='buttons' id='delete' onclick='delete_product(\"" + item.id + "\");'><img src='" + $SCRIPT_ROOT + "/static/open-iconic-master/svg/x.svg' alt='x'></button><center>";
-    html = "<tr><td>" + item.name + "</td><td> " + item.id + "</td><td>" + item.order_qty + "</td><td><a href=" + item.cossh + ">" + item.cossh + "</a></td><td><center>" + btn1 + btn2 + "<center></td>";
+    var btn1 = "<button type='btn' class='buttons' id='edit' onclick=\"edit('" + item.id + "', '" + item.name + "', " + item.order_qty + ", '" + item.cossh + "');\"><img src='" + $SCRIPT_ROOT + "/static/open-iconic-master/svg/pencil.svg' alt='pencil'></button>";
+    var btn2 = "<button class='buttons' id='delete' onclick='delete_product(\"" + item.id + "\");'><img src='" + $SCRIPT_ROOT + "/static/open-iconic-master/svg/x.svg' alt='x'></button><center>";
+    var html = "<tr><td>" + item.name + "</td><td> " + item.id + "</td><td>" + item.order_qty + "</td><td><a href=" + item.cossh + ">" + item.cossh + "</a></td><td><center>" + btn1 + btn2 + "<center></td>";
     return html;
 }
 $(function() {
