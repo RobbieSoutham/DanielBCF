@@ -18,7 +18,7 @@ function edit(id, name, order_qty, cossh){
     $("#product_id").val(id);
     $("#order_qty").val(order_qty);
     $("#cossh").val(cossh);
-    $("#modal").modal('show');
+    $("#modal").modal("show");
     
 }
 
