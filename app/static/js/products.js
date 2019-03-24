@@ -11,14 +11,14 @@ $(function() {
 });
 
 function edit(id, name, order_qty, cossh){
-    $('input[type="checkbox"]').prop("checked", true);
-    $('#previous_id').val(id);
-    $('#modal-title').text(name);
-    $('#name').val(name);
-    $('#product_id').val(id);
-    $('#order_qty').val(order_qty);
-    $('#cossh').val(cossh);
-    $('#modal').modal('show');
+    $("input[type=;checkbox']").prop("checked", true);
+    $("#previous_id").val(id);
+    $("#modal-title").text(name);
+    $("#name").val(name);
+    $("#product_id").val(id);
+    $("#order_qty").val(order_qty);
+    $("#cossh").val(cossh);
+    $("#modal").modal('show');
     
 }
 
