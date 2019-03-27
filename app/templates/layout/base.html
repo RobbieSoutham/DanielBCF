@@ -16,8 +16,8 @@
 
     <script>
       //Creating script root variable to use urls dynamically outside of the template
-      $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-      $END_POINT = {{request.endpoint|tojson|safe}};
+      var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+      var $END_POINT = {{request.endpoint|tojson|safe}};
     </script>
 
     <!-- Page specific head -->
